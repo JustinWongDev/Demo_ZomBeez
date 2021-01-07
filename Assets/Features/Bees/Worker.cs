@@ -20,7 +20,7 @@ public class Worker : Enemy
     //Movement & Rotation Variables
     [Header("Movement")]
     public float speed = 50.0f;
-    private float rotationSpeed = 5.0f;
+    public float rotationSpeed = 5.0f;
     private float adjRotSpeed;
     private Quaternion targetRotation;
     public GameObject target;
@@ -81,9 +81,15 @@ public class Worker : Enemy
 
     private void Update()
     {
-        MoveTowardsTarget(hive.transform.position);
+        //MoveTowardsTarget(hive.transform.position);
 
-        //FSMController();
+        FSMController();
+    }
+
+    public void Initialise(GameObject hive, GameObject initTarget)
+    {
+        this.hive = hive;
+        this.target = initTarget;
     }
 
     /// <summary>
@@ -91,6 +97,31 @@ public class Worker : Enemy
     /// </summary>
     /// <param name="targetPos"></param>
     private void MoveTowardsTarget(Vector3 targetPos)
+    {
+        //Rotate and move towards target if out of range
+        if (Vector3.Distance(targetPos, transform.position) > targetRadius)
+        {
+            //Consume fuel
+            //currentFuel -= Time.deltaTime;
+
+            //Lerp Towards target
+            targetRotation = Quaternion.LookRotation(targetPos - transform.position);
+            adjRotSpeed = Mathf.Min(rotationSpeed * Time.deltaTime, 1);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, adjRotSpeed);
+
+            //if (currentFuel <= 0)
+            //{
+            //    rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime / 3);
+            //}
+            //else
+            //{
+            //    rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime);
+            //}
+            rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime);
+        }
+    }
+
+    private void OrbitTarget(Vector3 targetPos)
     {
         //Rotate and move towards target if out of range
         //if (Vector3.Distance(targetPos, transform.position) > targetRadius)
@@ -162,6 +193,6 @@ public class Worker : Enemy
 
     private void Idle()
     {
-        MoveTowardsTarget(hive.transform.position);
+        OrbitTarget(hive.transform.position);
     }
 }

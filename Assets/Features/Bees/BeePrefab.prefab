@@ -204,7 +204,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 2
+  m_Time: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 3
@@ -213,7 +213,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.17566872
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -222,7 +222,7 @@ TrailRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.3857143
+        value: 0.054629087
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -243,7 +243,7 @@ TrailRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 38550
+      ctime1: 29105
       ctime2: 52235
       ctime3: 65535
       ctime4: 0
@@ -254,7 +254,7 @@ TrailRenderer:
       atime1: 8288
       atime2: 15420
       atime3: 21781
-      atime4: 38936
+      atime4: 29105
       atime5: 51464
       atime6: 65535
       atime7: 65535
@@ -299,14 +299,15 @@ MonoBehaviour:
   deathEffect: {fileID: 0}
   deathSound: {fileID: 0}
   scoutFit: 0
-  speed: 50
+  speed: 80
+  rotationSpeed: 20
   target: {fileID: 0}
-  targetRadius: 200
+  targetRadius: 5
   separationDistance: 25
   cohesionDistance: 50
   separationStrength: 250
   cohesionStrength: 25
-  motherShip: {fileID: 0}
+  hive: {fileID: 0}
   idlePosition: {x: 0, y: 0, z: 0}
   currentFuel: 0
   totalFuel: 0
