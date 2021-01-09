@@ -6,13 +6,15 @@ using System.Linq;
 
 public class Hive : MonoBehaviour
 {
-    [Header("Variables")]
+    [Header("Bees")]
     public int initCount = 5;
-    public int maxScouts = 5;
-    public int maxAttack = 2;
+    public int maxScoutCount = 5;
+    public int maxAttackerCount = 2;
 
-    private float forageTimer;
+    [Header("Resource")]
     public float forageTime = 10.0f;
+    private float forageTimer;
+    public int collectedResource = 0;
 
     [Header("Models")]
     public GameObject beePrefab;
@@ -79,7 +81,7 @@ public class Hive : MonoBehaviour
     private void SetScouts()
     {
         //Initialise scouts
-        if (scouts.Count < maxScouts && GameManager.live.gameStart)
+        if (scouts.Count < maxScoutCount && GameManager.live.gameStart)
         { 
             //Sort bees in order of scoutFit
             List<Worker> potentialScouts = new List<Worker>();

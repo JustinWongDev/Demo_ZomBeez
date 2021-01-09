@@ -4122,9 +4122,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initCount: 100
-  maxScouts: 50
-  maxAttack: 2
+  maxScoutCount: 20
+  maxAttackerCount: 2
   forageTime: 10
+  collectedResource: 0
   beePrefab: {fileID: 2152678096591918965, guid: d5f6b260a29b2e94086c11c0e35d76fd,
     type: 3}
   workers: []

@@ -12,8 +12,11 @@ public class FollowHuman : MonoBehaviour
 
     void TrackHuman()
     {
-        Vector3 newPos = human.gameObject.transform.position;
-        newPos.y += distAboveHuman;
-        transform.position = newPos;
+        if (human)
+        {
+            Vector3 newPos = human.gameObject.transform.position;
+            newPos.y += distAboveHuman;
+            transform.position = newPos;
+        }
     }
 }

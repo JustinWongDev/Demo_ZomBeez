@@ -4,9 +4,8 @@ using UnityEngine;
 public class Worker : Enemy
 {
     //Stats
-    public float collectionTime = 6.0f;
-    public int capacity = 5;
     public float damage = 20;
+
 
     private float attackOrFlee;
     [HideInInspector]
@@ -34,6 +33,13 @@ public class Worker : Enemy
     public float cohesionStrength = 25.0f;
     private Vector3 cohesionPos = new Vector3(0f, 0f, 0f);
     private int boidIndex = 0;
+
+    [Header("Foraging")]
+    public float collectionTime = 6.0f;
+    private float collectionTimer = 0.0f;
+    public int maxCapacity = 5;
+    public int collectedResource = 0;
+    public float forageRadius = 20.0f;
 
     [Header("General")]
     public BeeBehaviours beeBehaviour;
@@ -102,7 +108,7 @@ public class Worker : Enemy
 
         //Randomise Stats
         collectionTime = MAX_COLLECTION_TIME * UnityEngine.Random.Range(0.5f, 1.0f);
-        capacity = (int)(MAX_CAPACITY * UnityEngine.Random.Range(0.5f, 1.0f));
+        maxCapacity = (int)(MAX_CAPACITY * UnityEngine.Random.Range(0.5f, 1.0f));
         damage = MAX_DAMAGE * UnityEngine.Random.Range(0.5f, 1.0f);
         speed = MAX_SPEED * UnityEngine.Random.Range(0.5f, 1.0f);
         health = MAX_HEALTH * UnityEngine.Random.Range(0.5f, 1.0f);
@@ -126,7 +132,7 @@ public class Worker : Enemy
         float healthScore = health / MAX_HEALTH;
         float damageScore = damage / MAX_DAMAGE;
 
-        float carryScore = capacity / MAX_CAPACITY;
+        float carryScore = maxCapacity / MAX_CAPACITY;
         float collectScore = collectionTime / MAX_COLLECTION_TIME;
 
         attackFit = (healthScore * 0.2f) + (damage * 0.5f) - (carryScore * 0.2f) - (collectScore * 0.1f);
@@ -197,9 +203,50 @@ public class Worker : Enemy
     #region Forage
     private void Forage()
     {
-        print("FORAGING");
+        //Check if resource available or target alive
+        if (target.GetComponent<HumanController>().resource <= 0 || target == null)
+        {
+            humanEmpty = true;
+        }
+
+        //If full capacity or resource unavailable, return to hive, otherwise...
+        if (collectedResource >= maxCapacity | humanEmpty)
+        {
+            MoveTowardsTarget(hive.transform.position);
+
+            if (Vector3.Distance(transform.position, hive.transform.position) <= targetRadius)
+            {
+                hive.collectedResource += collectedResource;
+                collectedResource = 0;
+                beeBehaviour = BeeBehaviours.Idle;
+            }
+        }
+        //Move to target
+        else
+        {
+            MoveTowardsTarget(target.transform.position);
+        }
+
+        CollectResource();
     }
     #endregion
+
+    void CollectResource()
+    {
+        //Must be within foraging distance and human must have resource available
+        if (Vector3.Distance(transform.position, target.transform.position) <= forageRadius &&
+           target.GetComponent<HumanController>().resource > 0)
+        {
+            //Must spend time within radius before collecting resource
+            if (Time.time > collectionTimer)
+            {
+                target.GetComponent<HumanController>().LoseResource(1);
+                collectedResource += 1;
+
+                collectionTimer = Time.time + collectionTime;
+            }
+        }
+    }
 
     #region Scout
     private void Scout()

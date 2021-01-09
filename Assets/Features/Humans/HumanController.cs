@@ -24,6 +24,7 @@ public class HumanController : NavAgent
 
     private Vector3 mousePos;
 
+    [Header("Animations")]
     public Animator animator;
 
     private void Update()
@@ -50,6 +51,28 @@ public class HumanController : NavAgent
         }
 
         MovePlayer();
+    }
+
+    public void LoseResource(int val)
+    {
+        resource -= val;
+
+        if (resource <= 0)
+        {
+            animator.SetBool("isDead", true);
+            Destroy(this.gameObject, 5.0f);
+        }
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        currentHealth -= dmg;
+
+        if (currentHealth <= 0)
+        {
+            animator.SetBool("isDead", true);
+            Destroy(this.gameObject, 5.0f);
+        }
     }
 
     void MovePlayer()
