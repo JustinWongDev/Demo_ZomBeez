@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Worker : Enemy
@@ -13,6 +11,7 @@ public class Worker : Enemy
     private float attackOrFlee;
     [HideInInspector]
     public float scoutFit = 0;
+    public float attackFit = 0;
     private const float MAX_SPEED = 80;
     private const int MAX_COLLECTION_TIME = 6;
     private const int MAX_CAPACITY = 5;
@@ -37,6 +36,15 @@ public class Worker : Enemy
     private int boidIndex = 0;
 
     [Header("General")]
+    public BeeBehaviours beeBehaviour;
+    public enum BeeBehaviours
+    {
+        Idle,
+        Scout,
+        Forage,
+        Attack,
+        Flee
+    }
     public Hive hive;
     private Vector3 idlePosition;
     private float idleTimer = 0;
@@ -51,6 +59,8 @@ public class Worker : Enemy
     public float detectTimer = 0.25f;
     public float scoutTime = 5.0f;
 
+    [Header("Foraging")]
+    public bool humanEmpty = false;
     private int newHumanResource = 0;
     private HumanController newHuman = null;
 
@@ -68,17 +78,17 @@ public class Worker : Enemy
     GameManager gameManager;
     Rigidbody rb;
 
-    public enum BeeBehaviours
-    { 
-        Idle,
-        Scout, 
-        Forage, 
-        Attack,
-        Flee
-    }
-    public BeeBehaviours beeBehaviour;
-
     private void Start()
+    {
+        Setup();
+    }
+
+    private void Update()
+    {
+        FSMController();
+    }
+
+    private void Setup()
     {
         //gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         gameManager = FindObjectOfType<GameManager>();
@@ -90,24 +100,42 @@ public class Worker : Enemy
         beeBehaviour = BeeBehaviours.Idle;
         target = hive.gameObject;
 
-        //Queue scout for when game starts
-        GameManager.live.gameStartDel += SetToScout;
-    }
+        //Randomise Stats
+        collectionTime = MAX_COLLECTION_TIME * UnityEngine.Random.Range(0.5f, 1.0f);
+        capacity = (int)(MAX_CAPACITY * UnityEngine.Random.Range(0.5f, 1.0f));
+        damage = MAX_DAMAGE * UnityEngine.Random.Range(0.5f, 1.0f);
+        speed = MAX_SPEED * UnityEngine.Random.Range(0.5f, 1.0f);
+        health = MAX_HEALTH * UnityEngine.Random.Range(0.5f, 1.0f);
+        detectRadius = MAX_DETECTION * UnityEngine.Random.Range(0.5f, 1.0f);
 
-    private void Update()
+        //Calculate scout and attack heuristics
+        HeuristicAttack();
+        HeuristicScout();
+}
+
+    private void HeuristicScout()
     {
-        FSMController();
+        float speedScore = speed / MAX_SPEED;
+        float detectScore = detectRadius / MAX_DETECTION;
+
+        scoutFit = speedScore * 0.8f + detectScore * 0.2f;
+    }    
+    
+    private void HeuristicAttack()
+    {
+        float healthScore = health / MAX_HEALTH;
+        float damageScore = damage / MAX_DAMAGE;
+
+        float carryScore = capacity / MAX_CAPACITY;
+        float collectScore = collectionTime / MAX_COLLECTION_TIME;
+
+        attackFit = (healthScore * 0.2f) + (damage * 0.5f) - (carryScore * 0.2f) - (collectScore * 0.1f);
     }
 
     public void Initialise(Hive hive, GameObject initTarget)
     {
         this.hive = hive;
         this.target = initTarget;
-    }
-
-    private void SetToScout()
-    {
-        beeBehaviour = BeeBehaviours.Scout;
     }
 
     /// <summary>
@@ -119,49 +147,12 @@ public class Worker : Enemy
         //Rotate and move towards target if out of range
         if (Vector3.Distance(targetPos, transform.position) > targetRadius)
         {
-            //Consume fuel
-            //currentFuel -= Time.deltaTime;
-
             //Lerp Towards target
             targetRotation = Quaternion.LookRotation(targetPos - transform.position);
             adjRotSpeed = Mathf.Min(rotationSpeed * Time.deltaTime, 1);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, adjRotSpeed);
-
-            //if (currentFuel <= 0)
-            //{
-            //    rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime / 3);
-            //}
-            //else
-            //{
-            //    rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime);
-            //}
             rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime);
         }
-    }
-
-    private void OrbitTarget(Vector3 targetPos)
-    {
-        //Rotate and move towards target if out of range
-        //if (Vector3.Distance(targetPos, transform.position) > targetRadius)
-        //{
-            //Consume fuel
-            //currentFuel -= Time.deltaTime;
-
-            //Lerp Towards target
-            targetRotation = Quaternion.LookRotation(targetPos - transform.position);
-            adjRotSpeed = Mathf.Min(rotationSpeed * Time.deltaTime, 1);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, adjRotSpeed);
-
-            //if (currentFuel <= 0)
-            //{
-            //    rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime / 3);
-            //}
-            //else
-            //{
-            //    rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime);
-            //}
-            rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime);
-        //}
     }
 
     /// <summary>
@@ -189,21 +180,28 @@ public class Worker : Enemy
         }
     }
 
+    #region Flee
     private void Flee()
     {
         throw new NotImplementedException();
     }
+    #endregion
 
+    #region Attack
     private void Attack()
     {
         throw new NotImplementedException();
     }
+    #endregion
 
+    #region Forage
     private void Forage()
     {
-        throw new NotImplementedException();
+        print("FORAGING");
     }
+    #endregion
 
+    #region Scout
     private void Scout()
     {
         //If no new human found...
@@ -259,11 +257,6 @@ public class Worker : Enemy
         }
     }
 
-    private void Idle()
-    {
-        OrbitTarget(hive.transform.position);
-    }
-
     private HumanController DetectNewHuman()
     {
         //Go through all active humans
@@ -289,4 +282,20 @@ public class Worker : Enemy
             return newHuman;
         }
     }
+#endregion
+
+    #region Idle
+    private void Idle()
+    {
+        OrbitTarget(hive.transform.position);
+    }
+
+    private void OrbitTarget(Vector3 targetPos)
+    {
+        targetRotation = Quaternion.LookRotation(targetPos - transform.position);
+        adjRotSpeed = Mathf.Min(rotationSpeed * Time.deltaTime, 1);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, adjRotSpeed);
+        rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime);
+    }
+    #endregion
 }

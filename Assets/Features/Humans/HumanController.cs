@@ -5,12 +5,18 @@ using UnityEngine;
 public class HumanController : NavAgent
 {
     [Header("Stats")]
-    public int resource = 20;
+    public float currentHealth;
+    public float maxHealth = MAX_HEALTH;
+    public int resource = MAX_RESOURCE;
+
+    private const float MAX_HEALTH = 100.0f;
+    private const int MAX_RESOURCE = 20;
+    private const float MAX_SPEED = 10.0f;
 
     [Header("Movement")]
     public Pathfinding currentPathing = Pathfinding.none;
     public enum Pathfinding { none, astar };
-    public float maxSpeed = 10.0f;
+    public float maxSpeed = MAX_SPEED;
     public float minDistance = 0.01f;
     public float acceleration = 5.0f;
     public float deceleration = 25.0f;

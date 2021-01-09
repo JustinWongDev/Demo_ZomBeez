@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public delegate void OnGameStart();
     public OnGameStart gameStartDel;
 
+    public bool gameStart = false;
+
     private void Awake()
     {
         live = this;
@@ -14,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        gameStart = true;
+
         gameStartDel?.Invoke();
     }
 }

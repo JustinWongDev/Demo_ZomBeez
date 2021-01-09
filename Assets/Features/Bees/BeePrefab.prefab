@@ -295,10 +295,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19d5c8aa60984ec4690d99f6ddd4ba82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
   deathEffect: {fileID: 0}
   deathSound: {fileID: 0}
+  health: 100
+  collectionTime: 6
+  capacity: 5
+  damage: 20
   scoutFit: 0
+  attackFit: 0
   speed: 80
   rotationSpeed: 50
   target: {fileID: 0}
@@ -307,11 +311,15 @@ MonoBehaviour:
   cohesionDistance: 50
   separationStrength: 250
   cohesionStrength: 25
-  hive: {fileID: 0}
-  idlePosition: {x: 0, y: 0, z: 0}
-  currentFuel: 0
-  totalFuel: 0
   beeBehaviour: 0
+  hive: {fileID: 0}
+  detectRadius: 50
+  scoutRadiusX: 40
+  scoutRadiusY: 5
+  scoutRadiusZ: 70
+  detectTimer: 2
+  scoutTime: 2
+  humanEmpty: 0
 --- !u!1 &2152678096859781237
 GameObject:
   m_ObjectHideFlags: 0

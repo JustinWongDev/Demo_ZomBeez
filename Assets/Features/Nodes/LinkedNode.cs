@@ -20,7 +20,7 @@ public class LinkedNode : MonoBehaviour
 
     private void Update()
     {
-        DrawLineToLinkedNodes();
+        //DrawLineToLinkedNodes();
     }
 
     void DrawLineToLinkedNodes()
