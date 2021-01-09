@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b46738613726e45abcd10ae0300df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initCount: 10
+  initCount: 20
   beePrefab: {fileID: 2152678096591918965, guid: d5f6b260a29b2e94086c11c0e35d76fd,
     type: 3}
 --- !u!1 &1192634875780554754
