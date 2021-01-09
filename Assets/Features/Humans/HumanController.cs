@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class HumanController : NavAgent
 {
+    [Header("Stats")]
+    public int resource = 20;
+
     [Header("Movement")]
     public Pathfinding currentPathing = Pathfinding.none;
     public enum Pathfinding { none, astar };

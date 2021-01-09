@@ -51,7 +51,7 @@ MonoBehaviour:
   greedyPaintList: 
   currentPathIndex: 0
   currentNodeIndex: 0
-  currentPathing: 0
+  currentPathing: 1
   maxSpeed: 20
   minDistance: 0.01
   acceleration: 0.5

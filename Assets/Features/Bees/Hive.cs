@@ -10,9 +10,16 @@ public class Hive : MonoBehaviour
     [Header("Models")]
     public GameObject beePrefab;
 
+    [Header("Humans")]
+    //public HumanController[] activeHumans;
+    //public HumanController[] foundHumans;
+
+    public List<HumanController> activeHumans = new List<HumanController>();
+    public List<HumanController> detectedHumans = new List<HumanController>();
+
     private void Start()
     {
-        GameManager.live.gameStartDel += SpawnBees;
+        SpawnBees();
     }
 
     void SpawnBees()
@@ -21,8 +28,8 @@ public class Hive : MonoBehaviour
         {
             //USE OBJECT POOLING
             GameObject go = Instantiate(beePrefab);
-            go.transform.position = this.transform.position;
-            go.GetComponent<Worker>().Initialise(FindObjectOfType<Hive>().gameObject, go.GetComponent<Worker>().hive.gameObject);
+            go.transform.position = transform.position;
+            go.GetComponent<Worker>().Initialise(this, gameObject);
 
         }
     }
