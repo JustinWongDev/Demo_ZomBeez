@@ -6,6 +6,14 @@ using System.Linq;
 
 public class Hive : MonoBehaviour
 {
+    #region Static Singleton
+    public static Hive live;
+    private void Awake()
+    {
+        live = this;
+    }
+    #endregion
+
     [Header("Bees")]
     public int initCount = 5;
     public int maxScoutCount = 5;
@@ -38,6 +46,11 @@ public class Hive : MonoBehaviour
         SetScouts();
 
         PeriodicHumanSort();
+    }
+
+    public void AddActiveHuman(HumanController newHuman)
+    {
+        activeHumans.Add(newHuman);
     }
 
     #region Resource Foraging Management

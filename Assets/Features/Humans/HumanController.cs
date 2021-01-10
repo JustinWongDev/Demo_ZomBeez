@@ -13,6 +13,8 @@ public class HumanController : NavAgent
     private const int MAX_RESOURCE = 20;
     private const float MAX_SPEED = 10.0f;
 
+    private bool isDead = false;
+
     [Header("Movement")]
     public Pathfinding currentPathing = Pathfinding.none;
     public enum Pathfinding { none, astar };
@@ -22,13 +24,25 @@ public class HumanController : NavAgent
     public float deceleration = 25.0f;
     private float currentSpeed = 0;
 
+    [Header("Drop")]
+    public float dropHeight = 20.0f;
     private Vector3 mousePos;
+    private Vector3 lastPos;
+    private bool isDropped = false;
+    private bool isGrounded = false;
 
     [Header("Animations")]
     public Animator animator;
 
+
     private void Update()
     {
+        //Hold and drop 
+        HoldAndDrop();
+
+        //Start moving
+        CheckToStartMoving();
+
         //Left click: A* search
         //if(Input.GetMouseButtonDown(1))
         //{
@@ -53,12 +67,65 @@ public class HumanController : NavAgent
         MovePlayer();
     }
 
+    private void HoldAndDrop()
+    {
+        if (!isDropped)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                isDropped = true;
+                currentPath.Clear();
+                currentNodeIndex = findClosestWaypoint();
+                currentPath.Add(currentNodeIndex);
+            }
+
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            //If ray hits...
+            if (Physics.Raycast(ray, out hit))
+            {
+                //print(hit.collider.name);
+
+                //Hover over ray hit
+                Vector3 pos = hit.point;
+                pos.y += dropHeight;
+                transform.position = pos;
+                lastPos = pos;
+
+                //Draw line indicating drop location
+                Debug.DrawLine(transform.position, hit.point, Color.green);
+            }
+            else
+            {
+                //Hover over last ray hit
+                transform.position = lastPos;
+
+                Vector3 pos = lastPos;
+                pos.y -= dropHeight;
+
+                //Draw line indicating drop location
+                Debug.DrawLine(transform.position, pos, Color.green);
+            }
+        }
+        else
+        {
+            isDropped = true;
+            animator.SetTrigger("isDropped");
+        }
+
+
+        //Drop on click
+    }
+
+
     public void LoseResource(int val)
     {
         resource -= val;
 
         if (resource <= 0)
         {
+            isDead = true;
             animator.SetBool("isDead", true);
             Destroy(this.gameObject, 5.0f);
         }
@@ -70,6 +137,7 @@ public class HumanController : NavAgent
 
         if (currentHealth <= 0)
         {
+            isDead = true;
             animator.SetBool("isDead", true);
             Destroy(this.gameObject, 5.0f);
         }
@@ -78,7 +146,7 @@ public class HumanController : NavAgent
     void MovePlayer()
     {
         //Move player
-        if (currentPath.Count > 0)
+        if (currentPath.Count > 0 && !isDead)
         {
             Vector3 targetPos = graphNodes.graphNodes[currentPath[currentPathIndex]].transform.position;
 
@@ -149,5 +217,31 @@ public class HumanController : NavAgent
         }
 
         return closestWaypoint;
+    }
+
+    void CheckToStartMoving()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("2D Blend Tree"))
+        {
+            currentPathing = Pathfinding.astar;
+        }
+
+
+
+        //if (animator.GetAnimatorTransitionInfo(0).IsName("TransToBlend"))
+        //{
+        //    print("Movement started");
+        //    currentPathing = Pathfinding.astar;
+        //}
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.transform.gameObject.tag == "Floor")
+        {
+            isGrounded = true;
+            animator.SetTrigger("isGrounded");
+
+        }
     }
 }

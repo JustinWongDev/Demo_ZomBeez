@@ -279,7 +279,7 @@ BoxCollider:
   m_GameObject: {fileID: 2152678096591918965}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.32826644, y: 0.3, z: 0.6024892}
   m_Center: {x: 0.0036444291, y: 0, z: 0.009111106}
@@ -298,8 +298,6 @@ MonoBehaviour:
   deathEffect: {fileID: 0}
   deathSound: {fileID: 0}
   health: 100
-  collectionTime: 6
-  capacity: 5
   damage: 20
   scoutFit: 0
   attackFit: 0
@@ -311,6 +309,10 @@ MonoBehaviour:
   cohesionDistance: 50
   separationStrength: 250
   cohesionStrength: 25
+  collectionTime: 6
+  maxCapacity: 5
+  collectedResource: 0
+  forageRadius: 20
   beeBehaviour: 0
   hive: {fileID: 0}
   detectRadius: 50

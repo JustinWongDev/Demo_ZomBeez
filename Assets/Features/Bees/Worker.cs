@@ -229,7 +229,6 @@ public class Worker : Enemy
 
         CollectResource();
     }
-    #endregion
 
     void CollectResource()
     {
@@ -247,6 +246,8 @@ public class Worker : Enemy
             }
         }
     }
+
+    #endregion
 
     #region Scout
     private void Scout()
@@ -270,7 +271,7 @@ public class Worker : Enemy
             else
             {
                 MoveTowardsTarget(idlePosition);
-                Debug.DrawLine(transform.position, idlePosition, Color.white);
+                //Debug.DrawLine(transform.position, idlePosition, Color.white);
             }
 
             //Every few seconds, check for new resources
@@ -284,7 +285,7 @@ public class Worker : Enemy
         else
         {
             target = hive.gameObject;
-            Debug.DrawLine(transform.position, hive.gameObject.transform.position, Color.green);
+            //Debug.DrawLine(transform.position, hive.gameObject.transform.position, Color.green);
 
             MoveTowardsTarget(target.transform.position);
 

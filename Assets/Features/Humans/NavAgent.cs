@@ -22,8 +22,7 @@ public class NavAgent : MonoBehaviour
         graphNodes = GameObject.FindObjectOfType<WaypointGraph>().GetComponent<WaypointGraph>();
 
         //Add initial node index 
-        //EDIT THIS WHEN DROPPING HUMAN INTO RANDOM LOCATION 
-        currentPath.Add(currentNodeIndex);
+        //currentPath.Add(currentNodeIndex);
     }
 
     /// <summary>
