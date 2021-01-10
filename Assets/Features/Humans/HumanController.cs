@@ -11,7 +11,7 @@ public class HumanController : NavAgent
 
     private const float MAX_HEALTH = 100.0f;
     private const int MAX_RESOURCE = 20;
-    private const float MAX_SPEED = 10.0f;
+    private const float MAX_SPEED = 20.0f;
 
     private bool isDead = false;
 
