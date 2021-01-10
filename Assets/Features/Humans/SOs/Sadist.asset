@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sadist
   m_EditorClassIdentifier: 
   currentType: 2
-  model: {fileID: 0}
+  model: {fileID: 4350735675874715651, guid: caf6239961a72fa4c8d0c44d082ed15c, type: 3}
   max_Health: 100
   max_Resource: 20
   max_Speed: 20

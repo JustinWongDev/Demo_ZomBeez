@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Keeper
   m_EditorClassIdentifier: 
   currentType: 1
-  model: {fileID: 0}
+  model: {fileID: 4052942305581678128, guid: afbb6af4ddfe9f2459695fbc1bf6f82e, type: 3}
   max_Health: 100
   max_Resource: 20
   max_Speed: 20

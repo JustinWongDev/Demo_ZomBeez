@@ -1,247 +1,258 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using static UnityEngine.Camera;
 
-public class HumanController : NavAgent
+namespace Features.Humans
 {
-    [Header("Stats")]
-    public float currentHealth;
-    public float maxHealth = MAX_HEALTH;
-    public int resource = MAX_RESOURCE;
-
-    private const float MAX_HEALTH = 100.0f;
-    private const int MAX_RESOURCE = 20;
-    private const float MAX_SPEED = 20.0f;
-
-    private bool isDead = false;
-
-    [Header("Movement")]
-    public Pathfinding currentPathing = Pathfinding.none;
-    public enum Pathfinding { none, astar };
-    public float maxSpeed = MAX_SPEED;
-    public float minDistance = 0.01f;
-    public float acceleration = 5.0f;
-    public float deceleration = 25.0f;
-    private float currentSpeed = 0;
-
-    [Header("Drop")]
-    public float dropHeight = 20.0f;
-    private Vector3 mousePos;
-    private Vector3 lastPos;
-    private bool isDropped = false;
-    private bool isGrounded = false;
-
-    [Header("Animations")]
-    public Animator animator;
-
-
-    private void Update()
+    public class HumanController : NavAgent
     {
-        //Hold and drop 
-        HoldAndDrop();
+        //Stats
+        private float currentHealth;
+        private float maxHealth;
+        public int resource;
+        private bool isDead = false;
 
-        //Start moving
-        CheckToStartMoving();
+        [Header("Movement")]
+        public Pathfinding currentPathing = Pathfinding.None;
+        public enum Pathfinding { None, Astar };
+        public float minDistance = 0.01f;
+        public float acceleration = 5.0f;
+        public float deceleration = 25.0f;
+        private float currentSpeed = 0;
+        private float maxSpeed;
 
-        //Left click: A* search
-        //if(Input.GetMouseButtonDown(1))
-        //{
-        //    currentPath = AStarSearch(currentPath[currentPathIndex], findClosestWaypoint());
-        //    currentPathIndex = 0;
-        //}
+        [Header("Drop")]
+        public float dropHeight = 20.0f;
+        private Vector3 mousePos;
+        private Vector3 lastPos;
+        private bool isDropped = false;
+        private bool isGrounded = false;
 
-        //Auto random pathing
-        switch (currentPathing)
+        [Header("Animations")]
+        public Animator animator;
+        public GameObject modelHolder;
+
+        
+        private static readonly int IsDropped = Animator.StringToHash("isDropped");
+        private static readonly int IsDead = Animator.StringToHash("isDead");
+        private static readonly int Property = Animator.StringToHash("Velocity Z");
+        private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
+
+
+        private void Update()
         {
-            case Pathfinding.none:
-                break;
-            case Pathfinding.astar:
-                if(currentNodeIndex == currentPath[currentPath.Count-1])
-                {
-                    currentPath = AStarSearch(currentPath[currentPathIndex], UnityEngine.Random.Range(0, graphNodes.graphNodes.Length));
-                    currentPathIndex = 0;
-                }
-                break;
-        }
+            //Hold and drop 
+            HoldAndDrop();
 
-        MovePlayer();
-    }
+            //Start moving
+            CheckToStartMoving();
 
-    private void HoldAndDrop()
-    {
-        if (!isDropped)
-        {
-            if (Input.GetMouseButtonDown(0))
+            //Left click: A* search
+            //if(Input.GetMouseButtonDown(1))
+            //{
+            //    currentPath = AStarSearch(currentPath[currentPathIndex], findClosestWaypoint());
+            //    currentPathIndex = 0;
+            //}
+
+            //Auto random pathing
+            switch (currentPathing)
             {
-                isDropped = true;
-                currentPath.Clear();
-                currentNodeIndex = findClosestWaypoint();
-                currentPath.Add(currentNodeIndex);
+                case Pathfinding.None:
+                    break;
+                case Pathfinding.Astar:
+                    if(currentNodeIndex == currentPath[currentPath.Count-1])
+                    {
+                        currentPath = AStarSearch(currentPath[currentPathIndex], UnityEngine.Random.Range(0, graphNodes.graphNodes.Length));
+                        currentPathIndex = 0;
+                    }
+                    break;
             }
 
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            MovePlayer();
+        }
 
-            //If ray hits...
-            if (Physics.Raycast(ray, out hit))
+        public void Initialise(HumanSO so)
+        {
+            //Instantiate model
+            GameObject go = Instantiate(so.model, modelHolder.transform);
+            //Link animator
+            animator = go.GetComponent<Animator>();
+            
+            //Set stats
+            maxHealth = so.max_Health * Random.Range(0.8f, 1.2f);
+            currentHealth = maxHealth;
+            maxSpeed = so.max_Speed * Random.Range(0.8f, 1.2f);
+            resource = (int)(so.max_Resource * Random.Range(0.5f, 1.2f));
+        }
+        
+        private void HoldAndDrop()
+        {
+            if (!isDropped)
             {
-                //print(hit.collider.name);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    isDropped = true;
+                    currentPath.Clear();
+                    currentNodeIndex = findClosestWaypoint();
+                    currentPath.Add(currentNodeIndex);
+                }
 
-                //Hover over ray hit
-                Vector3 pos = hit.point;
-                pos.y += dropHeight;
-                transform.position = pos;
-                lastPos = pos;
+                RaycastHit hit;
+                Ray ray = main.ScreenPointToRay(Input.mousePosition);
 
-                //Draw line indicating drop location
-                Debug.DrawLine(transform.position, hit.point, Color.green);
+                //If ray hits...
+                var transformPosition = transform.position;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    //print(hit.collider.name);
+
+                    //Hover over ray hit
+                    Vector3 pos = hit.point;
+                    pos.y += dropHeight;
+                    transform.position = pos;
+                    lastPos = pos;
+
+                    //Draw line indicating drop location
+                    Debug.DrawLine(transformPosition, hit.point, Color.green);
+                }
+                else
+                {
+                    //Hover over last ray hit
+                    transform.position = lastPos;
+
+                    Vector3 pos = lastPos;
+                    pos.y -= dropHeight;
+
+                    //Draw line indicating drop location
+                    Debug.DrawLine(transformPosition, pos, Color.green);
+                }
             }
             else
             {
-                //Hover over last ray hit
-                transform.position = lastPos;
-
-                Vector3 pos = lastPos;
-                pos.y -= dropHeight;
-
-                //Draw line indicating drop location
-                Debug.DrawLine(transform.position, pos, Color.green);
+                isDropped = true;
+                animator.SetTrigger(IsDropped);
             }
         }
-        else
+
+
+        public void LoseResource(int val)
         {
-            isDropped = true;
-            animator.SetTrigger("isDropped");
-        }
+            resource -= val;
 
-
-        //Drop on click
-    }
-
-
-    public void LoseResource(int val)
-    {
-        resource -= val;
-
-        if (resource <= 0)
-        {
-            isDead = true;
-            animator.SetBool("isDead", true);
-            Destroy(this.gameObject, 5.0f);
-        }
-    }
-
-    public void TakeDamage(float dmg)
-    {
-        currentHealth -= dmg;
-
-        if (currentHealth <= 0)
-        {
-            isDead = true;
-            animator.SetBool("isDead", true);
-            Destroy(this.gameObject, 5.0f);
-        }
-    }
-
-    void MovePlayer()
-    {
-        //Move player
-        if (currentPath.Count > 0 && !isDead)
-        {
-            Vector3 targetPos = graphNodes.graphNodes[currentPath[currentPathIndex]].transform.position;
-
-            //Set speed
-            if (currentSpeed < maxSpeed)
+            if (resource <= 0)
             {
-                currentSpeed += maxSpeed * Time.deltaTime * acceleration;
+                isDead = true;
+                animator.SetBool(IsDead, true);
+                Destroy(this.gameObject, 5.0f);
             }
+        }
 
-            //Move towards next node
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
+        public void TakeDamage(float dmg)
+        {
+            currentHealth -= dmg;
 
-            //Face direction
-            Vector3 targetDir = targetPos - transform.position;
-            float step = currentSpeed * Time.deltaTime;
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-            transform.rotation = Quaternion.LookRotation(newDir);
-
-            //Inc path index
-            if (Vector3.Distance(transform.position, graphNodes.graphNodes[currentPath[currentPathIndex]].transform.position) <= minDistance)
+            if (currentHealth <= 0)
             {
-                if (currentPathIndex < currentPath.Count - 1)
+                isDead = true;
+                animator.SetBool(IsDead, true);
+                Destroy(this.gameObject, 5.0f);
+            }
+        }
+
+        void MovePlayer()
+        {
+            //Move player
+            if (currentPath.Count > 0 && !isDead)
+            {
+                var targetPos = graphNodes.graphNodes[currentPath[currentPathIndex]].transform.position;
+
+                //Set speed
+                if (currentSpeed < maxSpeed)
                 {
-                    currentPathIndex++;
+                    currentSpeed += maxSpeed * Time.deltaTime * acceleration;
+                }
+
+                //Move towards next node
+                Transform transform1;
+                (transform1 = transform).position = Vector3.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
+
+                //Face direction
+                var targetDir = targetPos - transform1.position;
+                var step = currentSpeed * Time.deltaTime;
+                var newDir = Vector3.RotateTowards(transform1.forward, targetDir, step, 0.0f);
+                transform.rotation = Quaternion.LookRotation(newDir);
+
+                //Inc path index
+                if (Vector3.Distance(transform.position, graphNodes.graphNodes[currentPath[currentPathIndex]].transform.position) <= minDistance)
+                {
+                    if (currentPathIndex < currentPath.Count - 1)
+                    {
+                        currentPathIndex++;
+                    }
+                }
+
+                //Store current node index
+                currentNodeIndex = graphNodes.graphNodes[currentPath[currentPathIndex]].GetComponent<LinkedNode>().index;
+            }
+        
+        
+            //Set speed
+            if (currentSpeed > 0 && currentPathing == Pathfinding.None)
+            {
+                currentSpeed -= maxSpeed * Time.deltaTime * deceleration;
+            }
+
+            //Update anim variables
+            animator.SetFloat(Property, currentSpeed);
+        
+        }
+
+        private int findClosestWaypoint()
+        {
+            //Convert mouse coordinates to world position
+            if (!(main is null))
+            {
+                Ray ray = main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out RaycastHit hit))
+                {
+                    mousePos = hit.point;
                 }
             }
 
-            //Store current node index
-            currentNodeIndex = graphNodes.graphNodes[currentPath[currentPathIndex]].GetComponent<LinkedNode>().index;
-        }
-        
-        
-        //Set speed
-        if (currentSpeed > 0 && currentPathing == Pathfinding.none)
-        {
-            currentSpeed -= maxSpeed * Time.deltaTime * deceleration;
-        }
+            Debug.DrawLine(main.transform.position, mousePos, Color.red);
 
-        //Update anim variables
-        animator.SetFloat("Velocity Z", currentSpeed);
-        
-    }
+            float distance = Mathf.Infinity;
+            int closestWaypoint = 0;
 
-    private int findClosestWaypoint()
-    {
-        //Convert mouse coordinates to world position
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            mousePos = hit.point;
-        }
-
-        Debug.DrawLine(Camera.main.transform.position, mousePos, Color.red);
-
-        float distance = Mathf.Infinity;
-        int closestWaypoint = 0;
-
-        //Find closest node to mouse position
-        for (int i = 0; i < graphNodes.graphNodes.Length; i++)
-        {
-            if (Vector3.Distance(mousePos, graphNodes.graphNodes[i].transform.position) <= distance)
+            //Find closest node to mouse position
+            for (int i = 0; i < graphNodes.graphNodes.Length; i++)
             {
-                distance = Vector3.Distance(mousePos, graphNodes.graphNodes[i].transform.position);
-                closestWaypoint = i;
+                if (Vector3.Distance(mousePos, graphNodes.graphNodes[i].transform.position) <= distance)
+                {
+                    distance = Vector3.Distance(mousePos, graphNodes.graphNodes[i].transform.position);
+                    closestWaypoint = i;
+                }
+            }
+
+            return closestWaypoint;
+        }
+
+        void CheckToStartMoving()
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("2D Blend Tree"))
+            {
+                currentPathing = Pathfinding.Astar;
             }
         }
 
-        return closestWaypoint;
-    }
-
-    void CheckToStartMoving()
-    {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("2D Blend Tree"))
+        private void OnCollisionStay(Collision collision)
         {
-            currentPathing = Pathfinding.astar;
-        }
+            if (collision.transform.gameObject.CompareTag("Floor"))
+            {
+                isGrounded = true;
+                animator.SetTrigger(IsGrounded);
 
-
-
-        //if (animator.GetAnimatorTransitionInfo(0).IsName("TransToBlend"))
-        //{
-        //    print("Movement started");
-        //    currentPathing = Pathfinding.astar;
-        //}
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.transform.gameObject.tag == "Floor")
-        {
-            isGrounded = true;
-            animator.SetTrigger("isGrounded");
-
+            }
         }
     }
 }

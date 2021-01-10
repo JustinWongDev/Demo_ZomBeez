@@ -69,16 +69,14 @@ MonoBehaviour:
   greedyPaintList: 
   currentPathIndex: 0
   currentNodeIndex: 0
-  currentHealth: 0
-  maxHealth: 100
   resource: 20
   currentPathing: 0
-  maxSpeed: 20
   minDistance: 0.01
   acceleration: 0.5
   deceleration: 2.5
   dropHeight: 20
   animator: {fileID: 3831305225861357972}
+  modelHolder: {fileID: 8823551780943341613}
 --- !u!65 &6665576988276187116
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -189,6 +187,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Civ
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305597998615561219, guid: 6a7a9474c1f9d1444b7aec1e06acae50,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a7a9474c1f9d1444b7aec1e06acae50, type: 3}

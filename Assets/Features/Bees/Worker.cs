@@ -1,4 +1,5 @@
 ﻿using System;
+using Features.Humans;
 using UnityEngine;
 
 public class Worker : Enemy

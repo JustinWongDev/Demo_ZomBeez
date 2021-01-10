@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Features.Humans;
 using UnityEngine;
 
 public class HumanManager : MonoBehaviour
@@ -9,22 +10,25 @@ public class HumanManager : MonoBehaviour
 
     [Header("Scriptables")]
     public HumanSO[] scriptables;
-
+    
     public void PickHuman()
     {
-        HumanController civ = Instantiate(humanPrefab);
-        Hive.live.activeHumans.Add(civ);
+        HumanController prefab = Instantiate(humanPrefab);
+        prefab.Initialise(scriptables[0]);
+        Hive.live.activeHumans.Add(prefab);
     }
 
     public void PickKeeper()
     {
-        HumanController civ = Instantiate(humanPrefab);
-        Hive.live.activeHumans.Add(civ);
+        HumanController prefab = Instantiate(humanPrefab);
+        prefab.Initialise(scriptables[1]);
+        Hive.live.activeHumans.Add(prefab);
     }
 
     public void PickSadist()
     {
-        HumanController civ = Instantiate(humanPrefab);
-        Hive.live.activeHumans.Add(civ);
+        HumanController prefab = Instantiate(humanPrefab);
+        prefab.Initialise(scriptables[2]);
+        Hive.live.activeHumans.Add(prefab);
     }
 }

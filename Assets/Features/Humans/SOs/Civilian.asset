@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Civilian
   m_EditorClassIdentifier: 
   currentType: 0
-  model: {fileID: 0}
+  model: {fileID: 3305597998615561219, guid: 6a7a9474c1f9d1444b7aec1e06acae50, type: 3}
   max_Health: 100
   max_Resource: 20
   max_Speed: 20
