@@ -16,12 +16,14 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/SOs/HumanSO.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Foraging/ItemSO.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Foraging/ForageSite.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/Hive.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -70,6 +72,8 @@
       <workItem from="1610315159369" duration="2170000" />
       <workItem from="1610317922134" duration="622000" />
       <workItem from="1610324682960" duration="8534000" />
+      <workItem from="1610337909673" duration="5100000" />
+      <workItem from="1610343397379" duration="1749000" />
     </task>
     <servers />
   </component>

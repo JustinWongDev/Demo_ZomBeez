@@ -18,7 +18,41 @@ namespace Features.Humans
         [HideInInspector]
         public int resource;
         private bool isDead = false;
-        private Dfa myDfa;
+
+        //DFA
+        private int newState = 0;
+        private int currentState = -1;
+        private int currentBehaviour = 0;
+        public int CurrentBehaviour
+        {
+            get { return currentBehaviour;}
+            set { currentBehaviour = value; }
+        }
+
+        private int[,] myDFA = new int [3, 5];
+        private int[,] dfaCiv = new int[,]
+        {
+            {1, 0, 0, 2, 2},            //seek
+            {0, -1, -1, -1, -1 },       //ability
+            {1, 2, 2, 2, 2 },           //flee
+            {0, -1, -1, -1, -1 }        //steal
+        };
+        
+        private int[,] dfaKeeper = new int[,]
+        {
+            {0, -1, -1, -1, -1},            //seek
+            {1, 3, 1, 1, 2 },               //ability
+            {1, 3, 3, 1, 2 },               //flee
+            {1, 3, 3, 1, 2 }                //steal
+        };
+        
+        private int[,] dfaSadist = new int[,]
+        {
+            {1, 0, 0, 1, 2},            //seek
+            {1, 0, 0, 1, 2 },       //ability
+            {1, 0, 0, 1, 2 },           //flee
+            {0, -1, -1, -1, -1 }        //steal
+        };
 
         [Header("Movement")]
         public Pathfinding currentPathing = Pathfinding.None;
@@ -50,36 +84,20 @@ namespace Features.Humans
 
         private void Update()
         {
+            Behaviour();
+            
             //Hold and drop 
             HoldAndDrop();
 
-            //Start moving
+            //Start moving, after dropping to floor
             CheckToStartMoving();
 
-            //Left click: A* search
-            //if(Input.GetMouseButtonDown(1))
-            //{
-            //    currentPath = AStarSearch(currentPath[currentPathIndex], findClosestWaypoint());
-            //    currentPathIndex = 0;
-            //}
-
-            //Auto random pathing
-            switch (currentPathing)
-            {
-                case Pathfinding.None:
-                    break;
-                case Pathfinding.Astar:
-                    if(currentNodeIndex == currentPath[currentPath.Count-1])
-                    {
-                        currentPath = AStarSearch(currentPath[currentPathIndex], Forage());
-                        currentPathIndex = 0;
-                    }
-                    break;
-            }
+            Pathing();
 
             MovePlayer();
         }
 
+        #region Start up
         public void Initialise(HumanSO so)
         {
             //Instantiate model
@@ -97,7 +115,33 @@ namespace Features.Humans
             maxDamage = so.max_Damage * Random.Range(0.8f, 1.2f);
             
             //AI
-            myDfa = so.dfa;
+            switch (so.currentType)
+            {
+                case HumanType.civilian:
+                    newState = 0;
+                    currentState = 0;
+                    CurrentBehaviour = 0;
+                    
+                    myDFA = dfaCiv;
+                    break;
+                case HumanType.keeper:
+                    newState = 3;
+                    currentState = 3;
+                    CurrentBehaviour = 3;
+                    
+                    myDFA = dfaKeeper;
+                    break;
+                case HumanType.sadist:
+                    newState = 0;
+                    currentState = 0;
+                    CurrentBehaviour = 0;
+                    
+                    myDFA = dfaSadist;
+                    break;
+                default:
+                    print("Error in initialising DFA");
+                    break;
+            }
         }
         
         private void HoldAndDrop()
@@ -148,44 +192,184 @@ namespace Features.Humans
                 animator.SetTrigger(IsDropped);
             }
         }
+        #endregion
 
-
-        public void LoseResource(int val)
+        private void Behaviour()
         {
-            resource -= val;
-
-            if (resource <= 0)
+            //New state logic
+            if (newState != currentState)
             {
-                isDead = true;
-                animator.SetBool(IsDead, true);
-                Destroy(this.gameObject, 5.0f);
+                if (myDFA[CurrentBehaviour, 0] == 1)
+                {
+                    CurrentBehaviour = myDFA[CurrentBehaviour, newState + 1];
+                }
+
+                currentState = newState;
+            }
+    
+            //State logic 
+            switch (CurrentBehaviour)
+            {
+                case 0:
+                    Seek();
+                    break;
+                case 1:
+                    Ability();
+                    break;
+                case 2:
+                    Flee();
+                    break;
+                case 3:
+                    Steal();
+                    break;
+                default:
+                    print("Error: human behaviour");
+                    break;
             }
         }
 
-        public void TakeDamage(float dmg)
+        #region Seek
+        private int Seek()
         {
-        //Armour calc
-            float val = currentArmour - dmg;
-            if (val >= 0)
+            print("seeKING");
+            int forageIndex = findClosestWaypointToForage();
+            
+            if (forageIndex == -1)
             {
-                currentArmour -= dmg;
-                return;
+                return UnityEngine.Random.Range(0, graphNodes.graphNodes.Length);
             }
-            else if (val < 0)
+
+            return forageIndex;
+        }
+        
+        private int findClosestWaypointToForage()
+        {
+
+            //Store all forage sites
+            ForageSite [] allSites = FindObjectsOfType<ForageSite>();
+
+            //Find which active, forage site is closest 
+            ForageSite closestSite = null;
+            float closestDist = Mathf.Infinity;
+            
+            foreach (ForageSite site in allSites)
             {
-                currentArmour = 0;
+                float tempDist = Vector3.Distance(transform.position, site.transform.position);
                 
-        //Health calc
-                currentHealth += val;
-                
-        //Death logic
-                if (currentHealth <= 0)
+                if (tempDist < closestDist && 
+                    site.currentItem)
                 {
-                    isDead = true;
-                    animator.SetBool(IsDead, true);
-                    Destroy(this.gameObject, 5.0f);
+                    closestSite = site;
+                    closestDist = tempDist;
                 }
             }
+
+            //find which waypoint is closest to active, forage site
+            float distance = Mathf.Infinity;
+            int closestWaypoint = -1;
+
+            //Find closest node to site
+            for (int i = 0; i < graphNodes.graphNodes.Length; i++)
+            {
+                if (Vector3.Distance(closestSite.transform.position, graphNodes.graphNodes[i].transform.position) <= distance)
+                {
+                    distance = Vector3.Distance(closestSite.transform.position, graphNodes.graphNodes[i].transform.position);
+                    closestWaypoint = i;
+                }
+            }
+
+            return closestWaypoint;
+        }
+        
+        #endregion
+        
+        #region Ability
+        private void Ability()
+        {
+            print("ABILITYING");
+            //pred pray
+        }
+
+        #endregion
+        
+        #region Flee
+        private void Flee()
+        {
+            print("FLEEING");
+            //pred prey
+        }
+
+        #endregion
+        
+        #region Steal
+        private int Steal()
+        {
+            int stealIndex = findClosestWaypointToSteal();
+            
+            if (stealIndex == -1)
+            {
+                return UnityEngine.Random.Range(0, graphNodes.graphNodes.Length);
+            }
+
+            return stealIndex;
+        }
+        
+        private int findClosestWaypointToSteal()
+        {
+            //Locate Hive
+            Hive hive = FindObjectOfType<Hive>();
+            //Find which waypoint is closest to hive
+            float distance = Mathf.Infinity;
+            int closestWaypoint = -1;
+
+            //Find closest node to site
+            for (int i = 0; i < graphNodes.graphNodes.Length; i++)
+            {
+                if (Vector3.Distance(hive.transform.position, graphNodes.graphNodes[i].transform.position) <= distance)
+                {
+                    distance = Vector3.Distance(hive.transform.position, graphNodes.graphNodes[i].transform.position);
+                    closestWaypoint = i;
+                }
+            }
+
+            return closestWaypoint;
+        }
+        
+        #endregion
+
+        #region Navigation
+
+        void Pathing()
+        {
+            //Auto random pathing
+            switch (currentPathing)
+            {
+                case Pathfinding.None:
+                    break;
+                case Pathfinding.Astar:
+                    if(currentNodeIndex == currentPath[currentPath.Count-1])
+                    {
+                        switch (CurrentBehaviour)
+                        {
+                            case 0:             //seek
+                                currentPath = AStarSearch(currentPath[currentPathIndex], Seek());
+                                currentPathIndex = 0;
+                                break;
+                            case 1:             //ability
+                                break;
+                            case 2:             //flee
+                                break;
+                            case 3:             //steal
+                                currentPath = AStarSearch(currentPath[currentPathIndex], Steal());
+                                currentPathIndex = 0;
+                                break;
+                        }
+
+
+                    }
+                    break;
+            }
+            
         }
 
         void MovePlayer()
@@ -236,56 +420,7 @@ namespace Features.Humans
         
         }
 
-        private int Forage()
-        {
-            int forageIndex = findClosestWaypointToForage();
-            
-            if (forageIndex == -1)
-            {
-                return UnityEngine.Random.Range(0, graphNodes.graphNodes.Length);
-            }
-
-            return forageIndex;
-        }
-
-        private int findClosestWaypointToForage()
-        {
-
-            //Store all forage sites
-            ForageSite [] allSites = FindObjectsOfType<ForageSite>();
-
-            //Find which active, forage site is closest 
-            ForageSite closestSite = null;
-            float closestDist = Mathf.Infinity;
-            
-            foreach (ForageSite site in allSites)
-            {
-                float tempDist = Vector3.Distance(transform.position, site.transform.position);
-                
-                if (tempDist < closestDist && 
-                    site.currentItem)
-                {
-                    closestSite = site;
-                    closestDist = tempDist;
-                }
-            }
-
-            //find which waypoint is closest to active, forage site
-            float distance = Mathf.Infinity;
-            int closestWaypoint = -1;
-
-            //Find closest node to site
-            for (int i = 0; i < graphNodes.graphNodes.Length; i++)
-            {
-                if (Vector3.Distance(closestSite.transform.position, graphNodes.graphNodes[i].transform.position) <= distance)
-                {
-                    distance = Vector3.Distance(closestSite.transform.position, graphNodes.graphNodes[i].transform.position);
-                    closestWaypoint = i;
-                }
-            }
-
-            return closestWaypoint;
-        }
+        
 
         private int findClosestWaypoint()
         {
@@ -325,7 +460,46 @@ namespace Features.Humans
                 currentPathing = Pathfinding.Astar;
             }
         }
+        #endregion
+        
+        public void LoseResource(int val)
+        {
+            resource -= val;
 
+            if (resource <= 0)
+            {
+                isDead = true;
+                animator.SetBool(IsDead, true);
+                Destroy(this.gameObject, 5.0f);
+            }
+        }
+
+        public void TakeDamage(float dmg)
+        {
+        //Armour calc
+            float val = currentArmour - dmg;
+            if (val >= 0)
+            {
+                currentArmour -= dmg;
+                return;
+            }
+            else if (val < 0)
+            {
+                currentArmour = 0;
+                
+        //Health calc
+                currentHealth += val;
+                
+        //Death logic
+                if (currentHealth <= 0)
+                {
+                    isDead = true;
+                    animator.SetBool(IsDead, true);
+                    Destroy(this.gameObject, 5.0f);
+                }
+            }
+        }
+        
         private void OnCollisionStay(Collision collision)
         {
             if (collision.transform.gameObject.CompareTag("Floor"))

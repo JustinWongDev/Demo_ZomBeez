@@ -24,11 +24,19 @@ public class Hive : MonoBehaviour
     public float forageTime = 10.0f;
     private float forageTimer;
     public int collectedResource = 0;
+    public int initJelly = 3;
+    private int jellyAmount = 0;
+    public float jellyTime = 10.0f;
+    public int resourceToJellyRatio = 10;
+    private float jellyTimer = 0;
 
     [Header("Models")]
     public GameObject beePrefab;
+    public GameObject modelParent;
+    public Material empty;
+    public Material full;
 
-    [Header("Bees")]
+        [Header("Bees")]
     public List<Worker> workers = new List<Worker>();
     public List<Worker> scouts = new List<Worker>();
     public List<Worker> attackers = new List<Worker>();
@@ -39,6 +47,8 @@ public class Hive : MonoBehaviour
 
     private void Start()
     {
+        jellyAmount = initJelly;
+        
         SpawnBees();
     }
 
@@ -47,6 +57,10 @@ public class Hive : MonoBehaviour
         SetScouts();
 
         PeriodicHumanSort();
+        
+        ProduceJelly();
+
+        DisplayJelly();
     }
 
     public void AddActiveHuman(HumanController newHuman)
@@ -91,6 +105,52 @@ public class Hive : MonoBehaviour
         }
     }
     #endregion
+    
+    void DisplayJelly()
+    {
+        Transform[] segments = modelParent.GetComponentsInChildren<Transform>();
+        
+        if (jellyAmount > 0)
+        {
+            foreach (Transform t in segments)
+            {
+                if(t.gameObject.GetComponent<MeshRenderer>())
+                    t.gameObject.GetComponent<MeshRenderer>().material = full;
+            }
+        }
+        else
+        {
+            foreach (Transform t in segments)
+            {                
+                if(t.gameObject.GetComponent<MeshRenderer>())
+                    t.gameObject.GetComponent<MeshRenderer>().material = empty;
+            }
+        }
+    }
+
+    void ProduceJelly()
+    {
+        if (collectedResource >= resourceToJellyRatio)
+        {
+            if (jellyTimer >= jellyTime)
+            {
+                jellyAmount++;
+                jellyTimer = 0;
+            }
+            else
+            {
+                jellyTimer += Time.deltaTime;
+            }
+        }
+    }
+
+    void LoseJelly()
+    {
+        if(jellyAmount > 0)
+        {
+            jellyAmount--;
+        }
+    }
 
     private void SetScouts()
     {
@@ -120,6 +180,18 @@ public class Hive : MonoBehaviour
             go.transform.position = transform.position;
             go.GetComponent<Worker>().Initialise(this, gameObject);
             workers.Add(go.GetComponent<Worker>());
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<HumanController>() && jellyAmount > 0)
+        {
+            LoseJelly();
+            GameManager.live.jellyObtained++;
+            GameObject o;
+            (o = other.gameObject).GetComponent<HumanController>().TakeDamage(1000.0f);
+            Destroy(o, 2.0f);
         }
     }
 }

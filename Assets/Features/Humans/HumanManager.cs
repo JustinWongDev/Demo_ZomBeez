@@ -10,7 +10,7 @@ public class HumanManager : MonoBehaviour
 
     [Header("Scriptables")]
     public HumanSO[] scriptables;
-    
+
     public void PickHuman()
     {
         HumanController prefab = Instantiate(humanPrefab);
