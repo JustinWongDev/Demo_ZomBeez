@@ -10,10 +10,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Features/Foraging/ItemSO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Features/Foraging/ForageSite.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/SOs/HumanSO.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Foraging/ItemSO.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Foraging/ForageSite.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -61,6 +69,7 @@
       <workItem from="1610312523819" duration="1458000" />
       <workItem from="1610315159369" duration="2170000" />
       <workItem from="1610317922134" duration="622000" />
+      <workItem from="1610324682960" duration="8534000" />
     </task>
     <servers />
   </component>

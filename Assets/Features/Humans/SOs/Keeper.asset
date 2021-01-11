@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c557a6399b009449953d3d335632dc7, type: 3}
   m_Name: Keeper
   m_EditorClassIdentifier: 
-  currentType: 1
   model: {fileID: 4052942305581678128, guid: afbb6af4ddfe9f2459695fbc1bf6f82e, type: 3}
-  max_Health: 100
-  max_Resource: 20
-  max_Speed: 20
+  max_Health: 150
+  max_Armour: 40
+  max_Resource: 30
+  max_Speed: 10
+  max_Damage: 3
+  currentType: 1
+  dfa:
+    rows:
+    - row: 00000000ffffffffffffffffffffffffffffffff
+    - row: 0100000003000000010000000100000002000000
+    - row: 0100000003000000030000000100000002000000
+    - row: 0100000003000000030000000100000002000000

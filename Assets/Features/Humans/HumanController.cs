@@ -1,15 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using static UnityEngine.Camera;
 
 namespace Features.Humans
 {
     public class HumanController : NavAgent
     {
+        [Header("Items")]
+        public List<ItemSO> items = new List<ItemSO>();
+        
         //Stats
         private float currentHealth;
         private float maxHealth;
+        private float currentArmour;
+        private float maxArmour;
+        private float maxDamage;
+        [HideInInspector]
         public int resource;
         private bool isDead = false;
+        private Dfa myDfa;
 
         [Header("Movement")]
         public Pathfinding currentPathing = Pathfinding.None;
@@ -26,6 +35,7 @@ namespace Features.Humans
         private Vector3 lastPos;
         private bool isDropped = false;
         private bool isGrounded = false;
+        public bool IsGround => isGrounded;
 
         [Header("Animations")]
         public Animator animator;
@@ -61,7 +71,7 @@ namespace Features.Humans
                 case Pathfinding.Astar:
                     if(currentNodeIndex == currentPath[currentPath.Count-1])
                     {
-                        currentPath = AStarSearch(currentPath[currentPathIndex], UnityEngine.Random.Range(0, graphNodes.graphNodes.Length));
+                        currentPath = AStarSearch(currentPath[currentPathIndex], Forage());
                         currentPathIndex = 0;
                     }
                     break;
@@ -80,8 +90,14 @@ namespace Features.Humans
             //Set stats
             maxHealth = so.max_Health * Random.Range(0.8f, 1.2f);
             currentHealth = maxHealth;
+            maxArmour = so.max_Armour * Random.Range(0.8f, 1.2f);
+            currentArmour = maxArmour;
             maxSpeed = so.max_Speed * Random.Range(0.8f, 1.2f);
             resource = (int)(so.max_Resource * Random.Range(0.5f, 1.2f));
+            maxDamage = so.max_Damage * Random.Range(0.8f, 1.2f);
+            
+            //AI
+            myDfa = so.dfa;
         }
         
         private void HoldAndDrop()
@@ -148,13 +164,27 @@ namespace Features.Humans
 
         public void TakeDamage(float dmg)
         {
-            currentHealth -= dmg;
-
-            if (currentHealth <= 0)
+        //Armour calc
+            float val = currentArmour - dmg;
+            if (val >= 0)
             {
-                isDead = true;
-                animator.SetBool(IsDead, true);
-                Destroy(this.gameObject, 5.0f);
+                currentArmour -= dmg;
+                return;
+            }
+            else if (val < 0)
+            {
+                currentArmour = 0;
+                
+        //Health calc
+                currentHealth += val;
+                
+        //Death logic
+                if (currentHealth <= 0)
+                {
+                    isDead = true;
+                    animator.SetBool(IsDead, true);
+                    Destroy(this.gameObject, 5.0f);
+                }
             }
         }
 
@@ -206,6 +236,57 @@ namespace Features.Humans
         
         }
 
+        private int Forage()
+        {
+            int forageIndex = findClosestWaypointToForage();
+            
+            if (forageIndex == -1)
+            {
+                return UnityEngine.Random.Range(0, graphNodes.graphNodes.Length);
+            }
+
+            return forageIndex;
+        }
+
+        private int findClosestWaypointToForage()
+        {
+
+            //Store all forage sites
+            ForageSite [] allSites = FindObjectsOfType<ForageSite>();
+
+            //Find which active, forage site is closest 
+            ForageSite closestSite = null;
+            float closestDist = Mathf.Infinity;
+            
+            foreach (ForageSite site in allSites)
+            {
+                float tempDist = Vector3.Distance(transform.position, site.transform.position);
+                
+                if (tempDist < closestDist && 
+                    site.currentItem)
+                {
+                    closestSite = site;
+                    closestDist = tempDist;
+                }
+            }
+
+            //find which waypoint is closest to active, forage site
+            float distance = Mathf.Infinity;
+            int closestWaypoint = -1;
+
+            //Find closest node to site
+            for (int i = 0; i < graphNodes.graphNodes.Length; i++)
+            {
+                if (Vector3.Distance(closestSite.transform.position, graphNodes.graphNodes[i].transform.position) <= distance)
+                {
+                    distance = Vector3.Distance(closestSite.transform.position, graphNodes.graphNodes[i].transform.position);
+                    closestWaypoint = i;
+                }
+            }
+
+            return closestWaypoint;
+        }
+
         private int findClosestWaypoint()
         {
             //Convert mouse coordinates to world position
@@ -251,7 +332,7 @@ namespace Features.Humans
             {
                 isGrounded = true;
                 animator.SetTrigger(IsGrounded);
-
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
             }
         }
     }

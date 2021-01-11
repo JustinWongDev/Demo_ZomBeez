@@ -95,6 +95,7 @@ public class Worker : Enemy
         FSMController();
     }
 
+    #region Start up
     private void Setup()
     {
         //gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
@@ -144,8 +145,9 @@ public class Worker : Enemy
         this.hive = hive;
         this.target = initTarget;
     }
+#endregion
 
-    /// <summary>
+/// <summary>
     /// Move towards Vector3 parameter
     /// </summary>
     /// <param name="targetPos"></param>
@@ -312,7 +314,8 @@ public class Worker : Enemy
         for (int i = 0; i < hive.activeHumans.Count; i++)
         {
             //Check if human in detect range
-            if (Vector3.Distance(transform.position, hive.activeHumans[i].transform.position) <= detectRadius)
+            if (Vector3.Distance(transform.position, hive.activeHumans[i].transform.position) <= detectRadius &&
+                hive.activeHumans[i].IsGround)
             {
                 //Find best human 
                 if (hive.activeHumans[i].GetComponent<HumanController>().resource > newHumanResource)

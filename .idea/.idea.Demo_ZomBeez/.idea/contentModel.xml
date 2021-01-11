@@ -14,6 +14,10 @@
             <e p="Worker.cs" t="Include" />
           </e>
           <e p="FollowHuman.cs" t="Include" />
+          <e p="Foraging" t="Include">
+            <e p="ForageSite.cs" t="Include" />
+            <e p="ItemSO.cs" t="Include" />
+          </e>
           <e p="GameManager.cs" t="Include" />
           <e p="Humans" t="Include">
             <e p="HumanController.cs" t="Include" />

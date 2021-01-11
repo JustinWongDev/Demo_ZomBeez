@@ -17,3 +17,10 @@ MonoBehaviour:
   max_Health: 100
   max_Resource: 20
   max_Speed: 20
+  max_Damage: 2
+  dfa:
+    rows:
+    - row: 0100000000000000000000000200000002000000
+    - row: 00000000ffffffffffffffffffffffffffffffff
+    - row: 0100000002000000020000000200000002000000
+    - row: 00000000ffffffffffffffffffffffffffffffff
