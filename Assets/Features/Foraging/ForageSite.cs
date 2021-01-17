@@ -47,7 +47,7 @@ public class ForageSite : MonoBehaviour
         //When in proximity, give human item
         if (other.gameObject.GetComponent<HumanController>())
         {
-            other.gameObject.GetComponent<HumanController>().items.Add(currentItem);
+            other.gameObject.GetComponent<HumanController>().Inventory.items.Add(currentItem);
             currentItem = null;
             mesh.material = empty;
             spawnTimer = Time.time + timeToSpawn;

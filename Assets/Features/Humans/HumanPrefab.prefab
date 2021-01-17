@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8823551778967807065}
   - component: {fileID: 3076382866493402302}
-  - component: {fileID: 8823551778967807064}
   - component: {fileID: 6665576988276187116}
   - component: {fileID: 2463186199323747084}
+  - component: {fileID: 8823551778967807064}
+  - component: {fileID: 1718128901503343630}
+  - component: {fileID: 6481979539539619236}
   m_Layer: 0
   m_Name: HumanPrefab
   m_TagString: Untagged
@@ -51,34 +53,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8823551778967807064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8823551778967807142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bacc5ffb4d47a334fa08cdaaf3480e72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graphNodes: {fileID: 0}
-  openList: 
-  closedList: 
-  currentPath: 
-  greedyPaintList: 
-  currentPathIndex: 0
-  currentNodeIndex: 0
-  items: []
-  resource: 20
-  currentPathing: 0
-  minDistance: 0.01
-  acceleration: 0.5
-  deceleration: 2.5
-  dropHeight: 20
-  animator: {fileID: 0}
-  modelHolder: {fileID: 8823551780943341613}
 --- !u!65 &6665576988276187116
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -105,6 +79,63 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 9.085731
   m_Center: {x: 0, y: 10.705165, z: 0}
+--- !u!114 &8823551778967807064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823551778967807142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bacc5ffb4d47a334fa08cdaaf3480e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphNodes: {fileID: 0}
+  openList: 
+  closedList: 
+  currentPath: 
+  greedyPaintList: 
+  currentPathIndex: 0
+  currentNodeIndex: 0
+  settings:
+    _maxHealth: 100
+    _maxArmour: 0
+    _maxDamage: 10
+    _maxResource: 20
+  awareRadius: 30
+  currentPathing: 0
+  minDistance: 0.01
+  acceleration: 0.5
+  deceleration: 2.5
+  dropHeight: 20
+  animator: {fileID: 0}
+  modelHolder: {fileID: 8823551780943341613}
+--- !u!114 &1718128901503343630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823551778967807142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d8b4782e874f2d9c7e0baf8a90bd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
+--- !u!114 &6481979539539619236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823551778967807142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bcbc372d32bd9478f1923099e88a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8823551780943341613
 GameObject:
   m_ObjectHideFlags: 0

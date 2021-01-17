@@ -314,7 +314,7 @@ public class Worker : Enemy
         {
             //Check if human in detect range
             if (Vector3.Distance(transform.position, hive.activeHumans[i].transform.position) <= detectRadius &&
-                hive.activeHumans[i].IsGround)
+                hive.activeHumans[i].GetComponent<Droppable>().IsGround)
             {
                 //Find best human 
                 if (hive.activeHumans[i].GetComponent<HumanController>().CurrentResource > newHumanResource)

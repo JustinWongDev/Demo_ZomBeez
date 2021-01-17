@@ -20,7 +20,9 @@
           </e>
           <e p="GameManager.cs" t="Include" />
           <e p="Humans" t="Include">
+            <e p="Droppable.cs" t="Include" />
             <e p="HumanController.cs" t="Include" />
+            <e p="HumanInventory.cs" t="Include" />
             <e p="HumanManager.cs" t="Include" />
             <e p="HumanSettings.cs" t="Include" />
             <e p="NavAgent.cs" t="Include" />

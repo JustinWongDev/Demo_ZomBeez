@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
-using static UnityEngine.Camera;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
+public enum Pathfinding { None, Astar };
 
-    public class HumanController : NavAgent
+public class HumanController : NavAgent
     {
-        [Header("Items")]
-        public List<ItemSO> items = new List<ItemSO>();
-        
         //Stats
-        [SerializeField]
-        private HumanSettings settings;
-        public HumanSettings Settings {get {return settings;}}
+        [FormerlySerializedAs("settings")] [SerializeField]
+        private HumanSettings _settings;
+        public HumanSettings Settings {get {return _settings;}}
 
         private float _currentHealth;
         private float _currentArmour;
@@ -21,10 +19,13 @@ using Random = UnityEngine.Random;
         private float _currentResource;
         public float CurrentResource => _currentResource;
 
-        private bool isDead = false;
+        private bool _isDead = false;
         public float awareRadius = 30.0f;
-        private bool isAware = false;
-
+        private bool _isAware = false;
+        
+        //Items
+        private HumanInventory _inventory;
+        public HumanInventory Inventory => _inventory;
         
         //DFA
         private int newState = 0;
@@ -58,42 +59,24 @@ using Random = UnityEngine.Random;
 
         [Header("Movement")]
         public Pathfinding currentPathing = Pathfinding.None;
-        public enum Pathfinding { None, Astar };
         public float minDistance = 0.01f;
         public float acceleration = 5.0f;
         public float deceleration = 25.0f;
         private float currentSpeed = 0;
         private float maxSpeed;
 
-        [Header("Drop")]
-        public float dropHeight = 20.0f;
-        private Vector3 mousePos;
-        private Vector3 lastPos;
-        private bool isDropped = false;
-        private bool isGrounded = false;
-        public bool IsGround => isGrounded;
-
         [Header("Animations")]
-        public Animator animator;
         public GameObject modelHolder;
+        private Animator _animator;
 
-        
-        private static readonly int IsDropped = Animator.StringToHash("isDropped");
-        private static readonly int IsDead = Animator.StringToHash("isDead");
+        private static readonly int IsDead = Animator.StringToHash("_isDead");
         private static readonly int Property = Animator.StringToHash("Velocity Z");
-        private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
 
 
         private void Update()
         {
             newState = DfaLogic();
             Behaviour();
-            
-            //Hold and drop 
-            HoldAndDrop();
-
-            //Start moving, after dropping to floor
-            CheckToStartMoving();
 
             Pathing();
 
@@ -105,8 +88,11 @@ using Random = UnityEngine.Random;
         {
             //Instantiate model
             GameObject go = Instantiate(so.model, modelHolder.transform);
-            //Link animator
-            animator = go.GetComponent<Animator>();
+            //Link _animator
+            _animator = go.GetComponent<Animator>();
+            GetComponent<Droppable>().Initialise(this, _animator);
+            //Link _inventory
+            _inventory = GetComponent<HumanInventory>();
             
             //Set stats
             _currentHealth = Settings.MaxHealth * Random.Range(0.8f, 1.2f);
@@ -146,54 +132,6 @@ using Random = UnityEngine.Random;
             }
         }
         
-        private void HoldAndDrop()
-        {
-            if (!isDropped)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    isDropped = true;
-                    currentPath.Clear();
-                    currentNodeIndex = findClosestWaypoint();
-                    currentPath.Add(currentNodeIndex);
-                }
-
-                RaycastHit hit;
-                Ray ray = main.ScreenPointToRay(Input.mousePosition);
-
-                //If ray hits...
-                var transformPosition = transform.position;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    //print(hit.collider.name);
-
-                    //Hover over ray hit
-                    Vector3 pos = hit.point;
-                    pos.y += dropHeight;
-                    transform.position = pos;
-                    lastPos = pos;
-
-                    //Draw line indicating drop location
-                    Debug.DrawLine(transformPosition, hit.point, Color.green);
-                }
-                else
-                {
-                    //Hover over last ray hit
-                    transform.position = lastPos;
-
-                    Vector3 pos = lastPos;
-                    pos.y -= dropHeight;
-
-                    //Draw line indicating drop location
-                    Debug.DrawLine(transformPosition, pos, Color.green);
-                }
-            }
-            else
-            {
-                isDropped = true;
-                animator.SetTrigger(IsDropped);
-            }
-        }
         #endregion
 
         private int DfaLogic()
@@ -402,7 +340,7 @@ using Random = UnityEngine.Random;
         void MovePlayer()
         {
             //Move player
-            if (currentPath.Count > 0 && !isDead)
+            if (currentPath.Count > 0 && !_isDead)
             {
                 var targetPos = graphNodes.graphNodes[currentPath[currentPathIndex]].transform.position;
 
@@ -443,49 +381,8 @@ using Random = UnityEngine.Random;
             }
 
             //Update anim variables
-            animator.SetFloat(Property, currentSpeed);
+            _animator.SetFloat(Property, currentSpeed);
         
-        }
-
-        
-
-        private int findClosestWaypoint()
-        {
-            //Convert mouse coordinates to world position
-            if (!(main is null))
-            {
-                Ray ray = main.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    mousePos = hit.point;
-                }
-            }
-
-            Debug.DrawLine(main.transform.position, mousePos, Color.red);
-
-            float distance = Mathf.Infinity;
-            int closestWaypoint = 0;
-
-            //Find closest node to mouse position
-            for (int i = 0; i < graphNodes.graphNodes.Length; i++)
-            {
-                if (Vector3.Distance(mousePos, graphNodes.graphNodes[i].transform.position) <= distance)
-                {
-                    distance = Vector3.Distance(mousePos, graphNodes.graphNodes[i].transform.position);
-                    closestWaypoint = i;
-                }
-            }
-
-            return closestWaypoint;
-        }
-
-        void CheckToStartMoving()
-        {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("2D Blend Tree"))
-            {
-                currentPathing = Pathfinding.Astar;
-            }
         }
         #endregion
         
@@ -495,8 +392,8 @@ using Random = UnityEngine.Random;
 
             if (_currentResource <= 0)
             {
-                isDead = true;
-                animator.SetBool(IsDead, true);
+                _isDead = true;
+                _animator.SetBool(IsDead, true);
                 Destroy(this.gameObject, 5.0f);
             }
         }
@@ -520,27 +417,18 @@ using Random = UnityEngine.Random;
         //Death logic
                 if (_currentHealth <= 0)
                 {
-                    isDead = true;
-                    animator.SetBool(IsDead, true);
+                    _isDead = true;
+                    _animator.SetBool(IsDead, true);
                     Destroy(this.gameObject, 5.0f);
                 }
-            }
-        }
-        
-        private void OnCollisionStay(Collision collision)
-        {
-            if (collision.transform.gameObject.CompareTag("Floor"))
-            {
-                isGrounded = true;
-                animator.SetTrigger(IsGrounded);
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!isAware)
+            if (!_isAware)
             {
-                isAware = other.GetComponent<Worker>();
+                _isAware = other.GetComponent<Worker>();
             }
 
 
