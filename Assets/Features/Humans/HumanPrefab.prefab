@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3076382866493402302}
   - component: {fileID: 8823551778967807064}
   - component: {fileID: 6665576988276187116}
+  - component: {fileID: 2463186199323747084}
   m_Layer: 0
   m_Name: HumanPrefab
   m_TagString: Untagged
@@ -69,6 +70,7 @@ MonoBehaviour:
   greedyPaintList: 
   currentPathIndex: 0
   currentNodeIndex: 0
+  items: []
   resource: 20
   currentPathing: 0
   minDistance: 0.01
@@ -90,6 +92,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0325146, y: 0.52998924, z: 1.9949517}
   m_Center: {x: 0.08279395, y: 1.2536173, z: -0.004637003}
+--- !u!135 &2463186199323747084
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823551778967807142}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 9.085731
+  m_Center: {x: 0, y: 10.705165, z: 0}
 --- !u!1 &8823551780943341613
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,7 +129,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8823551780943341613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 8823551778967807065}

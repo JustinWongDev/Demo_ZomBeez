@@ -1,5 +1,4 @@
-﻿using Features.Humans;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FollowHuman : MonoBehaviour
 {

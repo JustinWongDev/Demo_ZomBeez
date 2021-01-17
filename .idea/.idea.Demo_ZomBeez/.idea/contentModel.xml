@@ -22,6 +22,7 @@
           <e p="Humans" t="Include">
             <e p="HumanController.cs" t="Include" />
             <e p="HumanManager.cs" t="Include" />
+            <e p="HumanSettings.cs" t="Include" />
             <e p="NavAgent.cs" t="Include" />
             <e p="SOs" t="Include">
               <e p="HumanSO.cs" t="Include" />

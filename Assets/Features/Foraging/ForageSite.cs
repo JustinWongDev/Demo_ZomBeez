@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Features.Humans;
 using UnityEngine;
 
 public class ForageSite : MonoBehaviour

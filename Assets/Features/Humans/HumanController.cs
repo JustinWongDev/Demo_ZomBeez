@@ -1,36 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Camera;
+using Random = UnityEngine.Random;
 
-namespace Features.Humans
-{
+
     public class HumanController : NavAgent
     {
         [Header("Items")]
         public List<ItemSO> items = new List<ItemSO>();
         
         //Stats
-        private float currentHealth;
-        private float maxHealth;
-        private float currentArmour;
-        private float maxArmour;
-        private float maxDamage;
-        [HideInInspector]
-        public int resource;
-        private bool isDead = false;
+        [SerializeField]
+        private HumanSettings settings;
+        public HumanSettings Settings {get {return settings;}}
 
+        private float _currentHealth;
+        private float _currentArmour;
+        private float _currentDamage;
+        private float _currentResource;
+        public float CurrentResource => _currentResource;
+
+        private bool isDead = false;
+        public float awareRadius = 30.0f;
+        private bool isAware = false;
+
+        
         //DFA
         private int newState = 0;
         private int currentState = -1;
-        private int currentBehaviour = 0;
-        public int CurrentBehaviour
-        {
-            get { return currentBehaviour;}
-            set { currentBehaviour = value; }
-        }
+        private int CurrentBehaviour { get; set; } = 0;
 
         private int[,] myDFA = new int [3, 5];
-        private int[,] dfaCiv = new int[,]
+        private readonly int[,] dfaCiv = new int[,]
         {
             {1, 0, 0, 2, 2},            //seek
             {0, -1, -1, -1, -1 },       //ability
@@ -38,7 +40,7 @@ namespace Features.Humans
             {0, -1, -1, -1, -1 }        //steal
         };
         
-        private int[,] dfaKeeper = new int[,]
+        private readonly int[,] dfaKeeper = new int[,]
         {
             {0, -1, -1, -1, -1},            //seek
             {1, 3, 1, 1, 2 },               //ability
@@ -46,7 +48,7 @@ namespace Features.Humans
             {1, 3, 3, 1, 2 }                //steal
         };
         
-        private int[,] dfaSadist = new int[,]
+        private readonly int[,] dfaSadist = new int[,]
         {
             {1, 0, 0, 1, 2},            //seek
             {1, 0, 0, 1, 2 },       //ability
@@ -84,6 +86,7 @@ namespace Features.Humans
 
         private void Update()
         {
+            newState = DfaLogic();
             Behaviour();
             
             //Hold and drop 
@@ -106,14 +109,13 @@ namespace Features.Humans
             animator = go.GetComponent<Animator>();
             
             //Set stats
-            maxHealth = so.max_Health * Random.Range(0.8f, 1.2f);
-            currentHealth = maxHealth;
-            maxArmour = so.max_Armour * Random.Range(0.8f, 1.2f);
-            currentArmour = maxArmour;
-            maxSpeed = so.max_Speed * Random.Range(0.8f, 1.2f);
-            resource = (int)(so.max_Resource * Random.Range(0.5f, 1.2f));
-            maxDamage = so.max_Damage * Random.Range(0.8f, 1.2f);
+            _currentHealth = Settings.MaxHealth * Random.Range(0.8f, 1.2f);
+            _currentArmour = Settings.MaxArmour * Random.Range(0.8f, 1.2f);
+            _currentDamage = Settings.MaxDamage * Random.Range(0.8f, 1.2f);
+            _currentResource = Settings.MaxResource * Random.Range(0.8f, 1.2f);
             
+            maxSpeed = so.max_Speed * Random.Range(0.8f, 1.2f);
+
             //AI
             switch (so.currentType)
             {
@@ -194,6 +196,31 @@ namespace Features.Humans
         }
         #endregion
 
+        private int DfaLogic()
+        {
+            if (_currentHealth <= (Settings.MaxHealth / 3))
+            {
+                return 3;
+            }
+            else if (_currentHealth <= (Settings.MaxHealth * 0.75f))
+            {
+                return 2;
+            }
+            else if (Awareness())
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        private bool Awareness()
+        {
+            return false;
+        }
+        
         private void Behaviour()
         {
             //New state logic
@@ -464,9 +491,9 @@ namespace Features.Humans
         
         public void LoseResource(int val)
         {
-            resource -= val;
+            _currentResource -= val;
 
-            if (resource <= 0)
+            if (_currentResource <= 0)
             {
                 isDead = true;
                 animator.SetBool(IsDead, true);
@@ -477,21 +504,21 @@ namespace Features.Humans
         public void TakeDamage(float dmg)
         {
         //Armour calc
-            float val = currentArmour - dmg;
+            float val = _currentArmour - dmg;
             if (val >= 0)
             {
-                currentArmour -= dmg;
+                _currentArmour -= dmg;
                 return;
             }
             else if (val < 0)
             {
-                currentArmour = 0;
+                _currentArmour = 0;
                 
         //Health calc
-                currentHealth += val;
+                _currentHealth += val;
                 
         //Death logic
-                if (currentHealth <= 0)
+                if (_currentHealth <= 0)
                 {
                     isDead = true;
                     animator.SetBool(IsDead, true);
@@ -506,8 +533,17 @@ namespace Features.Humans
             {
                 isGrounded = true;
                 animator.SetTrigger(IsGrounded);
-                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
             }
         }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!isAware)
+            {
+                isAware = other.GetComponent<Worker>();
+            }
+
+
+        }
     }
-}
+

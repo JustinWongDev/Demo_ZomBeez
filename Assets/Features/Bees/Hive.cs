@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Features.Humans;
 
 public class Hive : MonoBehaviour
 {
@@ -77,7 +76,7 @@ public class Hive : MonoBehaviour
             //Sort humans in decreasing resource amount
             detectedHumans.Sort(delegate (HumanController a, HumanController b)
             {
-                return (b.resource).CompareTo(a.resource);
+                return (b.CurrentResource).CompareTo(a.CurrentResource);
             });
 
             detectedHumans = detectedHumans.Distinct().ToList();
@@ -89,7 +88,7 @@ public class Hive : MonoBehaviour
     {
         if (detectedHumans.Count > 0)
         {
-            if (detectedHumans[0].resource > 3)
+            if (detectedHumans[0].CurrentResource > 3)
             {
                 //Direct all idle workers
                 foreach (Worker worker in workers)

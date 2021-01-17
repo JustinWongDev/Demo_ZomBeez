@@ -1,5 +1,4 @@
 ﻿using System;
-using Features.Humans;
 using UnityEngine;
 
 public class Worker : Enemy
@@ -82,8 +81,8 @@ public class Worker : Enemy
     private float distanceRatio = 0.05f;
     private int beamDamage = 100;
 
-    GameManager gameManager;
-    Rigidbody rb;
+    GameManager gameManager => FindObjectOfType<GameManager>();
+    Rigidbody rb => GetComponent<Rigidbody>();
 
     private void Start()
     {
@@ -99,9 +98,9 @@ public class Worker : Enemy
     private void Setup()
     {
         //gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        gameManager = FindObjectOfType<GameManager>();
+        //gameManager = FindObjectOfType<GameManager>();
 
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         idlePosition = hive.transform.position;
 
         //Drone idly roam around mothership
@@ -207,7 +206,7 @@ public class Worker : Enemy
     private void Forage()
     {
         //Check if resource available or target alive
-        if (target.GetComponent<HumanController>().resource <= 0 || target == null)
+        if (target.GetComponent<HumanController>().CurrentResource <= 0 || target == null)
         {
             humanEmpty = true;
         }
@@ -237,7 +236,7 @@ public class Worker : Enemy
     {
         //Must be within foraging distance and human must have resource available
         if (Vector3.Distance(transform.position, target.transform.position) <= forageRadius &&
-           target.GetComponent<HumanController>().resource > 0)
+           target.GetComponent<HumanController>().CurrentResource > 0)
         {
             //Must spend time within radius before collecting resource
             if (Time.time > collectionTimer)
@@ -318,7 +317,7 @@ public class Worker : Enemy
                 hive.activeHumans[i].IsGround)
             {
                 //Find best human 
-                if (hive.activeHumans[i].GetComponent<HumanController>().resource > newHumanResource)
+                if (hive.activeHumans[i].GetComponent<HumanController>().CurrentResource > newHumanResource)
                 {
                     newHuman = hive.activeHumans[i];
                 }
