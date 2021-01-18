@@ -20,6 +20,15 @@
           </e>
           <e p="GameManager.cs" t="Include" />
           <e p="Humans" t="Include">
+            <e p="AI" t="Include">
+              <e p="HumanAbility.cs" t="Include" />
+              <e p="HumanAIState.cs" t="Include" />
+              <e p="HumanBrain.cs" t="Include" />
+              <e p="HumanDrop.cs" t="Include" />
+              <e p="HumanFlee.cs" t="Include" />
+              <e p="HumanSeek.cs" t="Include" />
+              <e p="HumanSteal.cs" t="Include" />
+            </e>
             <e p="Droppable.cs" t="Include" />
             <e p="HumanAnimController.cs" t="Include" />
             <e p="HumanController.cs" t="Include" />

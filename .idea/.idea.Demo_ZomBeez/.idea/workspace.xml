@@ -14,7 +14,9 @@
     <setting file="file://$PROJECT_DIR$/Assets/Features/Foraging/ItemSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Foraging/ForageSite.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Humans/Droppable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Features/Humans/AI/HumanSeek.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Humans/HumanAnimController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Features/Humans/AI/HumanDrop.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -24,13 +26,20 @@
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Hive.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/FollowHuman.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanInventory.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Foraging/ForageSite.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/Droppable.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanAnimController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanAIState.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/Droppable.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanAbility.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanFlee.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanSettings.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanDrop.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanBrain.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanSeek.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanSteal.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -87,6 +96,8 @@
       <workItem from="1610917607065" duration="3120000" />
       <workItem from="1610921127818" duration="2389000" />
       <workItem from="1610923857421" duration="2855000" />
+      <workItem from="1610936691003" duration="2099000" />
+      <workItem from="1610938884371" duration="12947000" />
     </task>
     <servers />
   </component>

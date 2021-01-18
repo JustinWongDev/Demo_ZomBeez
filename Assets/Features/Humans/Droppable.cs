@@ -12,7 +12,6 @@ public class Droppable : MonoBehaviour
     private HumanController _controller;
     private HumanAnimController _animController;
     private Camera mainCam => Camera.main;
-    
 
     private void Update()
     {
@@ -112,7 +111,7 @@ public class Droppable : MonoBehaviour
      {
          if (_animController.IsAnimOnBlendTree())
          {
-             _controller.currentPathing = Pathfinding.Astar;
+             _controller.SetPathFinding(Pathfinding.Astar);
              Destroy(this);
          }
      }
