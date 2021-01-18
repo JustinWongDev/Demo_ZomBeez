@@ -9,6 +9,7 @@
       <e p="Assets" t="Include">
         <e p="Features" t="Include">
           <e p="Bees" t="Include">
+            <e p="BeeSettings.cs" t="Include" />
             <e p="Enemy.cs" t="Include" />
             <e p="Hive.cs" t="Include" />
             <e p="Worker.cs" t="Include" />

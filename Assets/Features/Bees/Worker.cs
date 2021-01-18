@@ -3,44 +3,6 @@ using UnityEngine;
 
 public class Worker : Enemy
 {
-    //Stats
-    public float damage = 20;
-
-
-    private float attackOrFlee;
-    [HideInInspector]
-    public float scoutFit = 0;
-    public float attackFit = 0;
-    private const float MAX_SPEED = 80;
-    private const int MAX_COLLECTION_TIME = 6;
-    private const int MAX_CAPACITY = 5;
-    private const int MAX_DAMAGE = 20;
-    private const float MAX_HEALTH = 100;
-    private const float MAX_DETECTION = 20;
-
-    [Header("Movement")]
-    public float speed = 50.0f;
-    public float rotationSpeed = 5.0f;
-    private float adjRotSpeed;
-    private Quaternion targetRotation;
-    public GameObject target;
-    public float targetRadius = 200f;
-
-    [Header("Boiding")]
-    public float separationDistance = 25.0f;
-    public float cohesionDistance = 50.0f;
-    public float separationStrength = 250.0f;
-    public float cohesionStrength = 25.0f;
-    private Vector3 cohesionPos = new Vector3(0f, 0f, 0f);
-    private int boidIndex = 0;
-
-    [Header("Foraging")]
-    public float collectionTime = 6.0f;
-    private float collectionTimer = 0.0f;
-    public int maxCapacity = 5;
-    public int collectedResource = 0;
-    public float forageRadius = 20.0f;
-
     [Header("General")]
     public BeeBehaviours beeBehaviour;
     public enum BeeBehaviours
@@ -54,18 +16,29 @@ public class Worker : Enemy
     public Hive hive;
     private Vector3 idlePosition;
     private float idleTimer = 0;
-    //public float currentFuel;
-    //public float totalFuel;
+    
+    //Stats
+    private int damage;
+    private float attackOrFlee;
+    [HideInInspector]
+    public float scoutFit = 0;
+    public float attackFit = 0;
 
-    [Header("Detection")]
-    public float detectRadius = 20.0f;
-    public float scoutRadiusX = 40.0f;
-    public float scoutRadiusY = 5.0f;
-    public float scoutRadiusZ = 70.0f;
+    [Header("Scouting")]
     public float detectTimer = 0.25f;
-    public float scoutTime = 5.0f;
+    
+    [Header("Movement")]
+    private float adjRotSpeed;
+    private Quaternion targetRotation;
+    public GameObject target;
+
+    [Header("Boiding")]
+    private Vector3 cohesionPos = new Vector3(0f, 0f, 0f);
+    private int boidIndex = 0;
 
     [Header("Foraging")]
+    private float collectionTimer = 0.0f;
+    public int collectedResource = 0;
     public bool humanEmpty = false;
     private int newHumanResource = 0;
     private HumanController newHuman = null;
@@ -108,36 +81,33 @@ public class Worker : Enemy
         target = hive.gameObject;
 
         //Randomise Stats
-        collectionTime = MAX_COLLECTION_TIME * UnityEngine.Random.Range(0.5f, 1.0f);
-        maxCapacity = (int)(MAX_CAPACITY * UnityEngine.Random.Range(0.5f, 1.0f));
-        damage = MAX_DAMAGE * UnityEngine.Random.Range(0.5f, 1.0f);
-        speed = MAX_SPEED * UnityEngine.Random.Range(0.5f, 1.0f);
-        health = MAX_HEALTH * UnityEngine.Random.Range(0.5f, 1.0f);
-        detectRadius = MAX_DETECTION * UnityEngine.Random.Range(0.5f, 1.0f);
+        damage = BeeSettings.Damage;
+        health = BeeSettings.Health;
 
         //Calculate scout and attack heuristics
         HeuristicAttack();
         HeuristicScout();
 }
 
-    private void HeuristicScout()
-    {
-        float speedScore = speed / MAX_SPEED;
-        float detectScore = detectRadius / MAX_DETECTION;
-
-        scoutFit = speedScore * 0.8f + detectScore * 0.2f;
-    }    
+    //OUTDATED WITH BEESETTINGS
+     private void HeuristicScout()
+     {
+         float speedScore = BeeSettings.Speed / BeeSettings.Speed;
+         float detectScore = BeeSettings.Detection / BeeSettings.Detection;
     
-    private void HeuristicAttack()
-    {
-        float healthScore = health / MAX_HEALTH;
-        float damageScore = damage / MAX_DAMAGE;
-
-        float carryScore = maxCapacity / MAX_CAPACITY;
-        float collectScore = collectionTime / MAX_COLLECTION_TIME;
-
-        attackFit = (healthScore * 0.2f) + (damage * 0.5f) - (carryScore * 0.2f) - (collectScore * 0.1f);
-    }
+         scoutFit = speedScore * 0.8f + detectScore * 0.2f;
+     }    
+    
+     private void HeuristicAttack()
+     {
+         float healthScore = health / BeeSettings.Health;
+         float damageScore = damage / BeeSettings.Damage;
+    
+         float carryScore = BeeSettings.Capacity / BeeSettings.Capacity;
+         float collectScore = BeeSettings.CollectionTime / BeeSettings.CollectionTime;
+    
+         attackFit = (healthScore * 0.2f) + (damage * 0.5f) - (carryScore * 0.2f) - (collectScore * 0.1f);
+     }
 
     public void Initialise(Hive hive, GameObject initTarget)
     {
@@ -153,13 +123,13 @@ public class Worker : Enemy
     private void MoveTowardsTarget(Vector3 targetPos)
     {
         //Rotate and move towards target if out of range
-        if (Vector3.Distance(targetPos, transform.position) > targetRadius)
+        if (Vector3.Distance(targetPos, transform.position) > BeeSettings.TargetRadius)
         {
             //Lerp Towards target
             targetRotation = Quaternion.LookRotation(targetPos - transform.position);
-            adjRotSpeed = Mathf.Min(rotationSpeed * Time.deltaTime, 1);
+            adjRotSpeed = Mathf.Min(BeeSettings.RotSpeed * Time.deltaTime, 1);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, adjRotSpeed);
-            rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime);
+            rb.AddRelativeForce(Vector3.forward * BeeSettings.Speed * 20 * Time.deltaTime);
         }
     }
 
@@ -212,11 +182,11 @@ public class Worker : Enemy
         }
 
         //If full capacity or resource unavailable, return to hive, otherwise...
-        if (collectedResource >= maxCapacity | humanEmpty)
+        if (collectedResource >= BeeSettings.Capacity | humanEmpty)
         {
             MoveTowardsTarget(hive.transform.position);
 
-            if (Vector3.Distance(transform.position, hive.transform.position) <= targetRadius)
+            if (Vector3.Distance(transform.position, hive.transform.position) <= BeeSettings.TargetRadius)
             {
                 hive.collectedResource += collectedResource;
                 collectedResource = 0;
@@ -235,7 +205,7 @@ public class Worker : Enemy
     void CollectResource()
     {
         //Must be within foraging distance and human must have resource available
-        if (Vector3.Distance(transform.position, target.transform.position) <= forageRadius &&
+        if (Vector3.Distance(transform.position, target.transform.position) <= BeeSettings.ForageRadius &&
            target.GetComponent<HumanController>().CurrentResource > 0)
         {
             //Must spend time within radius before collecting resource
@@ -244,7 +214,7 @@ public class Worker : Enemy
                 target.GetComponent<HumanController>().LoseResource(1);
                 collectedResource += 1;
 
-                collectionTimer = Time.time + collectionTime;
+                collectionTimer = Time.time + BeeSettings.CollectionTime;
             }
         }
     }
@@ -258,17 +228,17 @@ public class Worker : Enemy
         if (!newHuman)
         {
             //If within range of selected scouting area, find new scouting area
-            if (Vector3.Distance(transform.position, idlePosition) < detectRadius && Time.time > idleTimer)
+            if (Vector3.Distance(transform.position, idlePosition) < BeeSettings.Detection && Time.time > idleTimer)
             {
                 //Gen new, random scouting area
                 Vector3 newPos;
-                newPos.x = hive.transform.position.x + UnityEngine.Random.Range(-scoutRadiusX, scoutRadiusX); //left and right
-                newPos.y = hive.transform.position.y + UnityEngine.Random.Range(-scoutRadiusY, scoutRadiusY); //above and below
-                newPos.z = hive.transform.position.z + UnityEngine.Random.Range(0.0f, scoutRadiusZ); //cannot scout behind hive
+                newPos.x = hive.transform.position.x + UnityEngine.Random.Range(-BeeSettings.ScoutRadiusX, BeeSettings.ScoutRadiusX); //left and right
+                newPos.y = hive.transform.position.y + UnityEngine.Random.Range(-BeeSettings.ScoutRadiusY, BeeSettings.ScoutRadiusY); //above and below
+                newPos.z = hive.transform.position.z + UnityEngine.Random.Range(0.0f, BeeSettings.ScoutRadiusZ); //cannot scout behind hive
 
                 idlePosition = newPos;
 
-                idleTimer = Time.time + scoutTime;
+                idleTimer = Time.time + BeeSettings.ScoutTime;
             }
             else
             {
@@ -292,7 +262,7 @@ public class Worker : Enemy
             MoveTowardsTarget(target.transform.position);
 
             //Relay information to hive, then reset bee
-            if (Vector3.Distance(transform.position, hive.transform.position) < targetRadius)
+            if (Vector3.Distance(transform.position, hive.transform.position) < BeeSettings.TargetRadius)
             {
                 //ADD BEE TO DRONE LIST
                 //REMOVE BEE FROM SCOUT LIST
@@ -313,7 +283,7 @@ public class Worker : Enemy
         for (int i = 0; i < hive.activeHumans.Count; i++)
         {
             //Check if human in detect range
-            if (Vector3.Distance(transform.position, hive.activeHumans[i].transform.position) <= detectRadius &&
+            if (Vector3.Distance(transform.position, hive.activeHumans[i].transform.position) <= BeeSettings.Detection &&
                 hive.activeHumans[i].GetComponent<Droppable>().IsGround)
             {
                 //Find best human 
@@ -344,9 +314,9 @@ public class Worker : Enemy
     private void OrbitTarget(Vector3 targetPos)
     {
         targetRotation = Quaternion.LookRotation(targetPos - transform.position);
-        adjRotSpeed = Mathf.Min(rotationSpeed * Time.deltaTime, 1);
+        adjRotSpeed = Mathf.Min(BeeSettings.RotSpeed * Time.deltaTime, 1);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, adjRotSpeed);
-        rb.AddRelativeForce(Vector3.forward * speed * 20 * Time.deltaTime);
+        rb.AddRelativeForce(Vector3.forward * BeeSettings.Speed * 20 * Time.deltaTime);
     }
     #endregion
 }

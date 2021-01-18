@@ -3317,7 +3317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initCount: 20
-  maxScoutCount: 5
+  maxScoutCount: 10
   maxAttackerCount: 5
   forageTime: 10
   collectedResource: 0
@@ -5077,6 +5077,7 @@ GameObject:
   - component: {fileID: 1008048276}
   - component: {fileID: 1008048277}
   - component: {fileID: 1008048278}
+  - component: {fileID: 1008048279}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -5131,6 +5132,35 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f12dad4cd2877c439fe70909550dd15, type: 2}
   - {fileID: 11400000, guid: bdc44078255744e40b2212a94bbc7ad7, type: 2}
   - {fileID: 11400000, guid: 5ebfc988d36c48b4f9a66dbeba389cd6, type: 2}
+--- !u!114 &1008048279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008048275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d861d93501516ca469c1df41d7105ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _capacity: 5
+  _damage: 20
+  _health: 100
+  _speed: 80
+  _rotSpeed: 50
+  _targetRadius: 5
+  _sepDist: 25
+  _cohesDist: 50
+  _sepStr: 250
+  _cohesStr: 25
+  _collTime: 6
+  _forageRad: 20
+  _detection: 20
+  _scoutRadiusX: 40
+  _scoutRadiusY: 20
+  _scoutRadiusZ: 70
+  _scoutTime: 5
 --- !u!1 &1019607634
 GameObject:
   m_ObjectHideFlags: 0
