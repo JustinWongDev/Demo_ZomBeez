@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Droppable : MonoBehaviour
 {
@@ -13,7 +10,7 @@ public class Droppable : MonoBehaviour
     public bool IsGround => isGrounded;
     
     private HumanController _controller;
-    private Animator _animator;
+    private HumanAnimController _animController;
     private Camera mainCam => Camera.main;
     
 
@@ -26,10 +23,10 @@ public class Droppable : MonoBehaviour
         CheckToStartMoving();
     }
 
-    public void Initialise(HumanController controller, Animator anim)
+    public void Initialise()
     {
-        _controller = controller;
-        _animator = anim;
+        _controller = GetComponent<HumanController>();
+        _animController = GetComponent<HumanAnimController>();
     }
     
     private int findClosestWaypoint()
@@ -107,15 +104,16 @@ public class Droppable : MonoBehaviour
         else
         {
             isDropped = true;
-            _animator.SetTrigger("isDropped");
+            _animController.Trig_Dropped();
         }
     }
     
      void CheckToStartMoving()
      {
-         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("2D Blend Tree"))
+         if (_animController.IsAnimOnBlendTree())
          {
              _controller.currentPathing = Pathfinding.Astar;
+             Destroy(this);
          }
      }
     
@@ -124,7 +122,7 @@ public class Droppable : MonoBehaviour
         if (collision.transform.gameObject.CompareTag("Floor"))
         {
             isGrounded = true;
-            _animator.SetTrigger("isGrounded");
+            _animController.Trig_Grounded();
         }
     }
 }

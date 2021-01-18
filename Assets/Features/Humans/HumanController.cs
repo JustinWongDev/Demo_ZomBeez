@@ -67,7 +67,7 @@ public class HumanController : NavAgent
 
         [Header("Animations")]
         public GameObject modelHolder;
-        private Animator _animator;
+        private HumanAnimController _animController;
 
         private static readonly int IsDead = Animator.StringToHash("_isDead");
         private static readonly int Property = Animator.StringToHash("Velocity Z");
@@ -88,11 +88,12 @@ public class HumanController : NavAgent
         {
             //Instantiate model
             GameObject go = Instantiate(so.model, modelHolder.transform);
-            //Link _animator
-            _animator = go.GetComponent<Animator>();
-            GetComponent<Droppable>().Initialise(this, _animator);
+            GetComponent<Droppable>().Initialise();
+            _animController = GetComponent<HumanAnimController>();
+            _animController.Initialise();
             //Link _inventory
             _inventory = GetComponent<HumanInventory>();
+            
             
             //Set stats
             _currentHealth = Settings.MaxHealth * Random.Range(0.8f, 1.2f);
@@ -381,7 +382,7 @@ public class HumanController : NavAgent
             }
 
             //Update anim variables
-            _animator.SetFloat(Property, currentSpeed);
+            _animController.Float_VelocityZ(currentSpeed);
         
         }
         #endregion
@@ -393,7 +394,7 @@ public class HumanController : NavAgent
             if (_currentResource <= 0)
             {
                 _isDead = true;
-                _animator.SetBool(IsDead, true);
+                _animController.Bool_IsDead(true);
                 Destroy(this.gameObject, 5.0f);
             }
         }
@@ -418,7 +419,7 @@ public class HumanController : NavAgent
                 if (_currentHealth <= 0)
                 {
                     _isDead = true;
-                    _animator.SetBool(IsDead, true);
+                    _animController.Bool_IsDead(true);
                     Destroy(this.gameObject, 5.0f);
                 }
             }

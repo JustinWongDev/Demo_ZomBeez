@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8823551778967807064}
   - component: {fileID: 1718128901503343630}
   - component: {fileID: 6481979539539619236}
+  - component: {fileID: 8010327315240906802}
   m_Layer: 0
   m_Name: HumanPrefab
   m_TagString: Untagged
@@ -98,7 +99,7 @@ MonoBehaviour:
   greedyPaintList: 
   currentPathIndex: 0
   currentNodeIndex: 0
-  settings:
+  _settings:
     _maxHealth: 100
     _maxArmour: 0
     _maxDamage: 10
@@ -108,8 +109,6 @@ MonoBehaviour:
   minDistance: 0.01
   acceleration: 0.5
   deceleration: 2.5
-  dropHeight: 20
-  animator: {fileID: 0}
   modelHolder: {fileID: 8823551780943341613}
 --- !u!114 &1718128901503343630
 MonoBehaviour:
@@ -134,6 +133,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36bcbc372d32bd9478f1923099e88a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropHeight: 20
+--- !u!114 &8010327315240906802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823551778967807142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67536de38425efb4093080fda9072cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8823551780943341613
