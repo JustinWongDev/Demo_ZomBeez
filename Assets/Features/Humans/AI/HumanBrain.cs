@@ -7,7 +7,6 @@ public class HumanBrain : MonoBehaviour
     private int newState = 0;
     private int currentState = -1;
     private int currentBehaviour { get; set; } = 0;
-    public int CurrentBehaviour => currentBehaviour;
 
     private int[,] myDFA = new int [3, 5];
     private readonly int[,] dfaCiv = new int[,]
@@ -38,6 +37,9 @@ public class HumanBrain : MonoBehaviour
     private HumanSO so;
     private HumanAIState currentAIState;
     private bool isDropped => !GetComponent<Droppable>();
+    
+    public int CurrentBehaviour => currentBehaviour;
+    public HumanAIState CurrentAIState => currentAIState;
 
     private void Start()
     {

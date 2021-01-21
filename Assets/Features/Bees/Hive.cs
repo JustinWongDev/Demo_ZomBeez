@@ -19,7 +19,7 @@ public class Hive : MonoBehaviour
     public int maxScoutCount = 5;
     public int maxAttackerCount = 2;
 
-    [Header("Resource")]
+    [Header("Brains")]
     public float forageTime = 10.0f;
     private float forageTimer;
     public int collectedResource = 0;
@@ -34,8 +34,8 @@ public class Hive : MonoBehaviour
     public GameObject modelParent;
     public Material empty;
     public Material full;
-
-        [Header("Bees")]
+    
+    [Header("Bees")]
     public List<Worker> workers = new List<Worker>();
     public List<Worker> scouts = new List<Worker>();
     public List<Worker> attackers = new List<Worker>();
@@ -67,7 +67,7 @@ public class Hive : MonoBehaviour
         activeHumans.Add(newHuman);
     }
 
-    #region Resource Foraging Management
+    #region Brains Foraging Management
     void PeriodicHumanSort()
     {
         //Determine best-resource human
@@ -76,7 +76,7 @@ public class Hive : MonoBehaviour
             //Sort humans in decreasing resource amount
             detectedHumans.Sort(delegate (HumanController a, HumanController b)
             {
-                return (b.CurrentResource).CompareTo(a.CurrentResource);
+                return (b.CurrentBrains).CompareTo(a.CurrentBrains);
             });
 
             detectedHumans = detectedHumans.Distinct().ToList();
@@ -88,7 +88,7 @@ public class Hive : MonoBehaviour
     {
         if (detectedHumans.Count > 0)
         {
-            if (detectedHumans[0].CurrentResource > 3)
+            if (detectedHumans[0].CurrentBrains > 3)
             {
                 //Direct all idle workers
                 foreach (Worker worker in workers)
@@ -143,7 +143,7 @@ public class Hive : MonoBehaviour
         }
     }
 
-    void LoseJelly()
+    public void LoseJelly()
     {
         if(jellyAmount > 0)
         {
@@ -187,10 +187,11 @@ public class Hive : MonoBehaviour
         if (other.gameObject.GetComponent<HumanController>() && jellyAmount > 0)
         {
             LoseJelly();
-            GameManager.live.jellyObtained++;
-            GameObject o;
-            (o = other.gameObject).GetComponent<HumanController>().TakeDamage(1000.0f);
-            Destroy(o, 2.0f);
+            other.GetComponent<HumanController>()._hasJelly = true;
+            // GameManager.live.jellyObtained++;
+            // GameObject o;
+            // (o = other.gameObject).GetComponent<HumanController>().TakeDamage(1000.0f);
+            // Destroy(o, 2.0f);
         }
     }
 }

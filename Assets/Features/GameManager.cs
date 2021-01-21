@@ -12,12 +12,6 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    [Header("UI")] 
-    public TextMeshProUGUI t_Jelly;
-    
-    [Header("General")] 
-    public int jellyObtained = 0;
-    
     public delegate void OnGameStart();
     public OnGameStart gameStartDel;
 
@@ -28,15 +22,5 @@ public class GameManager : MonoBehaviour
         gameStart = true;
 
         gameStartDel?.Invoke();
-    }
-
-    private void Update()
-    {
-        UpdateText();
-    }
-
-    void UpdateText()
-    {
-        t_Jelly.text = "Jelly: " + jellyObtained;
     }
 }

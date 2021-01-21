@@ -15,12 +15,12 @@ public class HumanController : NavAgent
     private HumanInventory _inventory;
     private Pathfinding _currentPathing = Pathfinding.None;
     private Transform target;
-    private float currentSpeed = 0;
-    private float _currentResource;
+    private float _currentSpeed = 0;
+    private float _currentBrains;
     private bool _isDead = false;
     private bool _isAware = false;
 
-    public float CurrentResource => _currentResource;
+    public float CurrentBrains => _currentBrains;
     public HumanInventory Inventory => _inventory;
     public Pathfinding CurrentPathing => _currentPathing;
     public HumanSettings Settings {get {return _settings;}}
@@ -29,6 +29,9 @@ public class HumanController : NavAgent
         get { return target; }
         set { target = value; }
     }
+    
+    public bool HasJelly => _hasJelly;
+    public bool _hasJelly = false;
 
     private void Update()
     {
@@ -92,6 +95,11 @@ public class HumanController : NavAgent
         return FindObjectOfType<Hive>().transform;
     }
 
+    public Transform DepotTrans()
+    {
+        return FindObjectOfType<Depot>().transform;
+    }
+
     public Transform ClosestActiveForageSite()
     {
         //Store all forage sites
@@ -137,18 +145,18 @@ public class HumanController : NavAgent
             var targetPos = graphNodes.graphNodes[currentPath[currentPathIndex]].transform.position;
 
             //Set speed
-            if (currentSpeed < Settings.Speed)
+            if (_currentSpeed < Settings.Speed)
             {
-                currentSpeed += Settings.Speed * Time.deltaTime * Settings.Acceleration;
+                _currentSpeed += Settings.Speed * Time.deltaTime * Settings.Acceleration;
             }
 
             //Move towards next node
             Transform transform1;
-            (transform1 = transform).position = Vector3.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
+            (transform1 = transform).position = Vector3.MoveTowards(transform.position, targetPos, _currentSpeed * Time.deltaTime);
 
             //Face direction
             var targetDir = targetPos - transform1.position;
-            var step = currentSpeed * Time.deltaTime;
+            var step = _currentSpeed * Time.deltaTime;
             var newDir = Vector3.RotateTowards(transform1.forward, targetDir, step, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDir);
 
@@ -167,20 +175,20 @@ public class HumanController : NavAgent
     
     
         //Set speed
-        if (currentSpeed > 0 && CurrentPathing == Pathfinding.None)
+        if (_currentSpeed > 0 && CurrentPathing == Pathfinding.None)
         {
-            currentSpeed -= Settings.Speed * Time.deltaTime * Settings.Deceleration;
+            _currentSpeed -= Settings.Speed * Time.deltaTime * Settings.Deceleration;
         }
 
         //Update anim variables
-        _animController.Float_VelocityZ(currentSpeed);
+        _animController.Float_VelocityZ(_currentSpeed);
     }
 
-    public void LoseResource(int val)
+    public void LoseBrains(int val)
     {
-        _currentResource -= val;
+        _currentBrains -= val;
 
-        if (_currentResource <= 0)
+        if (_currentBrains <= 0)
         {
             _isDead = true;
             _animController.Bool_IsDead(true);
@@ -216,9 +224,17 @@ public class HumanController : NavAgent
 
     private void OnTriggerEnter(Collider other)
     {
+        //Aware of bees?
         if (!_isAware)
         {
             _isAware = other.GetComponent<Worker>();
+        }
+        
+        //Jelly?
+        if (other.gameObject.GetComponent<Hive>())
+        {
+            other.gameObject.GetComponent<Hive>().LoseJelly();
+            _hasJelly = true;
         }
     }
 

@@ -31,8 +31,8 @@ public class HumanSettings
 
     [SerializeField] 
     [Range (5, 100)]
-    private int _resource = 20;
-    public int Resource {get { return _resource;}}
+    private int _brains = 20;
+    public int Brains {get { return _brains;}}
 
     [Header("Movement")]
     [SerializeField] 

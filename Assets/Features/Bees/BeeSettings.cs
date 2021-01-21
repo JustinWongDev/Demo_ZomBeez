@@ -42,10 +42,14 @@ public class BeeSettings : MonoBehaviour
 
     [SerializeField] private float _forageRad = 20.0f;
     public static float ForageRadius => Instance._forageRad;
+
+    [Header("Detection")] //////////////////////////
+    [SerializeField]
+    private float _detectionTime = 3.0f;
+    public static float DetectTime => Instance._detectionTime;
     
-    [Header("Detection")] ////////////////////////////
-    [SerializeField]private float _detection = 20.0f;
-    public static float Detection => Instance._detection;
+    [SerializeField]private float _detectionRad = 20.0f;
+    public static float DetectionRad => Instance._detectionRad;
     
     [SerializeField]private float _scoutRadiusX = 40.0f;
     public static float ScoutRadiusX => Instance._scoutRadiusX;

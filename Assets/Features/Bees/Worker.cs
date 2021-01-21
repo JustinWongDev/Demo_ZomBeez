@@ -36,12 +36,13 @@ public class Worker : Enemy
     private Vector3 cohesionPos = new Vector3(0f, 0f, 0f);
     private int boidIndex = 0;
 
-    [Header("Foraging")]
-    private float collectionTimer = 0.0f;
+    [Header("Foraging")] 
     public int collectedResource = 0;
+    private float collectionTimer = 0;
     public bool humanEmpty = false;
     private int newHumanResource = 0;
     private HumanController newHuman = null;
+    public HumanController NewHuman => newHuman;
 
     //Prey Variables
     private float outOfRangeRatio = 0.05f;
@@ -70,10 +71,6 @@ public class Worker : Enemy
     #region Start up
     private void Setup()
     {
-        //gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        //gameManager = FindObjectOfType<GameManager>();
-
-        //rb = GetComponent<Rigidbody>();
         idlePosition = hive.transform.position;
 
         //Drone idly roam around mothership
@@ -83,7 +80,8 @@ public class Worker : Enemy
         //Randomise Stats
         damage = BeeSettings.Damage;
         health = BeeSettings.Health;
-
+        collectionTimer = BeeSettings.CollectionTime;
+        
         //Calculate scout and attack heuristics
         HeuristicAttack();
         HeuristicScout();
@@ -93,7 +91,7 @@ public class Worker : Enemy
      private void HeuristicScout()
      {
          float speedScore = BeeSettings.Speed / BeeSettings.Speed;
-         float detectScore = BeeSettings.Detection / BeeSettings.Detection;
+         float detectScore = BeeSettings.DetectionRad / BeeSettings.DetectionRad;
     
          scoutFit = speedScore * 0.8f + detectScore * 0.2f;
      }    
@@ -176,7 +174,7 @@ public class Worker : Enemy
     private void Forage()
     {
         //Check if resource available or target alive
-        if (target.GetComponent<HumanController>().CurrentResource <= 0 || target == null)
+        if (target.GetComponent<HumanController>().CurrentBrains <= 0 || target == null)
         {
             humanEmpty = true;
         }
@@ -206,12 +204,12 @@ public class Worker : Enemy
     {
         //Must be within foraging distance and human must have resource available
         if (Vector3.Distance(transform.position, target.transform.position) <= BeeSettings.ForageRadius &&
-           target.GetComponent<HumanController>().CurrentResource > 0)
+           target.GetComponent<HumanController>().CurrentBrains > 0)
         {
             //Must spend time within radius before collecting resource
             if (Time.time > collectionTimer)
             {
-                target.GetComponent<HumanController>().LoseResource(1);
+                target.GetComponent<HumanController>().LoseBrains(1);
                 collectedResource += 1;
 
                 collectionTimer = Time.time + BeeSettings.CollectionTime;
@@ -228,7 +226,7 @@ public class Worker : Enemy
         if (!newHuman)
         {
             //If within range of selected scouting area, find new scouting area
-            if (Vector3.Distance(transform.position, idlePosition) < BeeSettings.Detection && Time.time > idleTimer)
+            if (Vector3.Distance(transform.position, idlePosition) < BeeSettings.DetectionRad && Time.time > idleTimer)
             {
                 //Gen new, random scouting area
                 Vector3 newPos;
@@ -250,7 +248,7 @@ public class Worker : Enemy
             if (Time.time > detectTimer)
             {
                 newHuman = DetectNewHuman();
-                detectTimer = Time.time + detectTimer;
+                detectTimer = Time.time + BeeSettings.DetectTime;
             }
         }
         //Human found, head back to hive
@@ -279,29 +277,47 @@ public class Worker : Enemy
 
     private HumanController DetectNewHuman()
     {
-        //Go through all active humans
-        for (int i = 0; i < hive.activeHumans.Count; i++)
+        //Go through all active humans, within detection radius, dropped, and not already detected 
+        foreach (HumanController human in hive.activeHumans)
         {
-            //Check if human in detect range
-            if (Vector3.Distance(transform.position, hive.activeHumans[i].transform.position) <= BeeSettings.Detection &&
-                hive.activeHumans[i].GetComponent<Droppable>().IsGround)
+            if (Vector3.Distance(transform.position, human.transform.position) <= BeeSettings.DetectionRad &&
+                !human.GetComponent<Droppable>() &&
+                !hive.detectedHumans.Contains(human))
             {
-                //Find best human 
-                if (hive.activeHumans[i].GetComponent<HumanController>().CurrentResource > newHumanResource)
-                {
-                    newHuman = hive.activeHumans[i];
-                }
+                Debug.Log(human.name + " found!");
+                newHuman = human;
+                return newHuman;
             }
         }
 
-        if (hive.detectedHumans.Contains(newHuman))
-        {
-            return null;
-        }
-        else
-        {
-            return newHuman;
-        }
+        //if criteria not met...
+        return null;
+
+        // //Go through all active humans
+        // for (int i = 0; i < hive.activeHumans.Count; i++)
+        // {
+        //     //Check if human in detect range
+        //     if (Vector3.Distance(transform.position, hive.activeHumans[i].transform.position) <= BeeSettings.DetectionRad &&
+        //         !hive.activeHumans[i].GetComponent<Droppable>())
+        //     {
+        //         //Find best human 
+        //         if (hive.activeHumans[i].GetComponent<HumanController>().CurrentBrains > newHumanResource)
+        //         {
+        //             newHuman = hive.activeHumans[i];
+        //         }
+        //     }
+        // }
+        //
+        // if (hive.detectedHumans.Contains(newHuman))
+        // {
+        //     return null;
+        // }
+        // else
+        // {
+        //     return newHuman;
+        // }
+
+
     }
 #endregion
 

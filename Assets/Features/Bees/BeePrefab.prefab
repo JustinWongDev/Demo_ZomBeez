@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 1087905691122744679}
   - component: {fileID: 6355484422610935795}
   - component: {fileID: -3890095809398609282}
+  - component: {fileID: 7280439654528099397}
   m_Layer: 0
   m_Name: BeePrefab
   m_TagString: Untagged
@@ -298,30 +299,28 @@ MonoBehaviour:
   deathEffect: {fileID: 0}
   deathSound: {fileID: 0}
   health: 100
-  damage: 20
-  scoutFit: 0
-  attackFit: 0
-  speed: 50
-  rotationSpeed: 50
-  target: {fileID: 0}
-  targetRadius: 5
-  separationDistance: 25
-  cohesionDistance: 50
-  separationStrength: 250
-  cohesionStrength: 25
-  collectionTime: 6
-  maxCapacity: 5
-  collectedResource: 0
-  forageRadius: 20
   beeBehaviour: 0
   hive: {fileID: 0}
-  detectRadius: 50
-  scoutRadiusX: 40
-  scoutRadiusY: 5
-  scoutRadiusZ: 70
-  detectTimer: 2
-  scoutTime: 2
+  scoutFit: 0
+  attackFit: 0
+  detectTimer: 0.25
+  target: {fileID: 0}
+  collectedResource: 0
   humanEmpty: 0
+--- !u!114 &7280439654528099397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2152678096591918965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a478e5c700a6246b81fb9570963556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat_normal: {fileID: 2100000, guid: 4468f9732f3ee4846a648136998bf07e, type: 2}
+  mat_Detect: {fileID: 2100000, guid: aaaaf61799a958148a6ecc8752f52a0c, type: 2}
 --- !u!1 &2152678096859781237
 GameObject:
   m_ObjectHideFlags: 0

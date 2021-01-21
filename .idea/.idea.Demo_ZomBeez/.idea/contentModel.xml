@@ -10,6 +10,7 @@
         <e p="Features" t="Include">
           <e p="Bees" t="Include">
             <e p="BeeSettings.cs" t="Include" />
+            <e p="BeeVisualiser.cs" t="Include" />
             <e p="Enemy.cs" t="Include" />
             <e p="Hive.cs" t="Include" />
             <e p="Worker.cs" t="Include" />
@@ -20,6 +21,9 @@
             <e p="ItemSO.cs" t="Include" />
           </e>
           <e p="GameManager.cs" t="Include" />
+          <e p="General" t="Include">
+            <e p="FaceCamera.cs" t="Include" />
+          </e>
           <e p="Humans" t="Include">
             <e p="AI" t="Include">
               <e p="HumanAbility.cs" t="Include" />
@@ -30,12 +34,14 @@
               <e p="HumanSeek.cs" t="Include" />
               <e p="HumanSteal.cs" t="Include" />
             </e>
+            <e p="Depot.cs" t="Include" />
             <e p="Droppable.cs" t="Include" />
             <e p="HumanAnimController.cs" t="Include" />
             <e p="HumanController.cs" t="Include" />
             <e p="HumanInventory.cs" t="Include" />
             <e p="HumanManager.cs" t="Include" />
             <e p="HumanSettings.cs" t="Include" />
+            <e p="HumanVisualisers.cs" t="Include" />
             <e p="NavAgent.cs" t="Include" />
             <e p="SOs" t="Include">
               <e p="HumanSO.cs" t="Include" />
