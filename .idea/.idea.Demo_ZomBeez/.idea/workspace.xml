@@ -12,6 +12,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Features/General/FaceCamera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Foraging/ItemSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Foraging/ForageSite.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Humans/Droppable.cs" root0="FORCE_HIGHLIGHTING" />
@@ -50,6 +51,7 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanVisualisers.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/BeeVisualiser.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -110,6 +112,7 @@
       <workItem from="1610938884371" duration="12947000" />
       <workItem from="1610953120966" duration="3154000" />
       <workItem from="1611257244065" duration="9046000" />
+      <workItem from="1611976472875" duration="2626000" />
     </task>
     <servers />
   </component>

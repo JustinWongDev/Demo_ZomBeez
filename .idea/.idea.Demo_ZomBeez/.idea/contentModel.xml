@@ -15,6 +15,9 @@
             <e p="Hive.cs" t="Include" />
             <e p="Worker.cs" t="Include" />
           </e>
+          <e p="Camera" t="Include">
+            <e p="CinemachineController.cs" t="Include" />
+          </e>
           <e p="FollowHuman.cs" t="Include" />
           <e p="Foraging" t="Include">
             <e p="ForageSite.cs" t="Include" />
