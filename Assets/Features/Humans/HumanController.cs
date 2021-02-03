@@ -73,6 +73,12 @@ public class HumanController : NavAgent
 
     public int FindClosestWaypoint(Transform target)
     {
+        if (!target)
+        {
+            Debug.Log("No target transform");
+            return -1;
+        }
+
         //Find which waypoint is closest to target
         float distance = Mathf.Infinity;
         int closestWaypoint = -1;
@@ -140,7 +146,7 @@ public class HumanController : NavAgent
     void MovePlayer()
     {
         //Move player
-        if (currentPath.Count > 0 && !_isDead)
+        if (currentPath.Count > 0 && !_isDead && !GetComponent<Droppable>())
         {
             var targetPos = graphNodes.graphNodes[currentPath[currentPathIndex]].transform.position;
 

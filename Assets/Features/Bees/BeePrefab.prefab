@@ -321,6 +321,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mat_normal: {fileID: 2100000, guid: 4468f9732f3ee4846a648136998bf07e, type: 2}
   mat_Detect: {fileID: 2100000, guid: aaaaf61799a958148a6ecc8752f52a0c, type: 2}
+  mat_Forage: {fileID: 2100000, guid: 738b7a656b802cd479ad581eca433d1a, type: 2}
+  mat_Attack: {fileID: 2100000, guid: 063fa13a8c5df8a4a8106ab28b0ec7ac, type: 2}
 --- !u!1 &2152678096859781237
 GameObject:
   m_ObjectHideFlags: 0
