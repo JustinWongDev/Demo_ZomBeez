@@ -5,8 +5,9 @@ using TMPro;
 public class Depot : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _jellyText = null;
-
-    private int _jellyAmount = 0; 
+    [SerializeField] private DepotAnimController animController = null;
+    
+    private int _jellyAmount = 0;
 
     private void Update()
     {
@@ -24,6 +25,7 @@ public class Depot : MonoBehaviour
         {
             other.GetComponent<HumanController>()._hasJelly = false;
             _jellyAmount++;
+            animController.PlayDepositAnim();
         }
     }
 }

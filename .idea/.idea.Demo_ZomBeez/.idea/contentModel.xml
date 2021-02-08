@@ -7,6 +7,21 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="AssetStoreOriginals" t="Include">
+          <e p="_SNAPS_PrototypingAssets" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="Editor" t="Include">
+                <e p="PackageChecker" t="Include">
+                  <e p="PackageChecker.cs" t="Include" />
+                  <e p="PackageImportList.txt" t="Include" />
+                  <e p="settings" t="Include">
+                    <e p="PackageImportList_ShaderGraph.txt" t="Include" />
+                  </e>
+                </e>
+              </e>
+            </e>
+          </e>
+        </e>
         <e p="Features" t="Include">
           <e p="Bees" t="Include">
             <e p="BeeSettings.cs" t="Include" />
@@ -17,6 +32,9 @@
           </e>
           <e p="Camera" t="Include">
             <e p="CinemachineController.cs" t="Include" />
+          </e>
+          <e p="Depot" t="Include">
+            <e p="DepotAnimController.cs" t="Include" />
           </e>
           <e p="Foraging" t="Include">
             <e p="ForageSite.cs" t="Include" />
