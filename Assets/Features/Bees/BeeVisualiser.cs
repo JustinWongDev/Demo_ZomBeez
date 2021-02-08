@@ -2,10 +2,10 @@
 
 public class BeeVisualiser : MonoBehaviour
 {
-    [SerializeField] private Material mat_normal;
-    [SerializeField] private Material mat_Detect;
-    [SerializeField] private Material mat_Forage;
-    [SerializeField] private Material mat_Attack;
+    [SerializeField] private Material mat_normal = null;
+    [SerializeField] private Material mat_Detect = null;
+    [SerializeField] private Material mat_Forage = null;
+    [SerializeField] private Material mat_Attack = null;
 
     private TrailRenderer trail => GetComponent<TrailRenderer>();
     private Worker bee => GetComponent<Worker>();

@@ -6,9 +6,9 @@ public class HumanController : NavAgent
 {
     [SerializeField]
     [Header("Settings")]
-    private HumanSettings _settings;
+    private HumanSettings _settings = null;
     [SerializeField]
-    private GameObject _modelHolder;
+    private GameObject _modelHolder = null;
     
     private HumanBrain _brain;
     private HumanAnimController _animController;
@@ -16,11 +16,11 @@ public class HumanController : NavAgent
     private Pathfinding _currentPathing = Pathfinding.None;
     private Transform target;
     private float _currentSpeed = 0;
-    private float _currentBrains;
+    //private float _currentBrains;
     private bool _isDead = false;
     private bool _isAware = false;
 
-    public float CurrentBrains => _currentBrains;
+    //public float CurrentBrains => _currentBrains;
     public HumanInventory Inventory => _inventory;
     public Pathfinding CurrentPathing => _currentPathing;
     public HumanSettings Settings {get {return _settings;}}
@@ -192,9 +192,9 @@ public class HumanController : NavAgent
 
     public void LoseBrains(int val)
     {
-        _currentBrains -= val;
+        _settings.ChangeBrains(-val);
 
-        if (_currentBrains <= 0)
+        if (_settings.Brains <= 0)
         {
             _isDead = true;
             _animController.Bool_IsDead(true);
@@ -208,15 +208,15 @@ public class HumanController : NavAgent
         float val = Settings.Armour - dmg;
         if (val >= 0)
         {
-            Settings.ChangeArmour(val);
+            Settings.SetArmour(val);
             return;
         }
         else if (val < 0)
         {
-            Settings.ChangeArmour(0);
+            Settings.SetArmour(0);
             
     //Health calc
-        Settings.ChangeHealth(Settings.Health + val);
+        Settings.SetHealth(Settings.Health + val);
             
     //Death logic
             if (Settings.Health <= 0)

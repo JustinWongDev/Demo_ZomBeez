@@ -5,13 +5,13 @@ using UnityEngine.UI;
 public class HumanVisualisers : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI _aiState;
+    private TextMeshProUGUI _aiState = null;
     [SerializeField]
-    private Image _hp;
+    private Image _hp = null;
     [SerializeField]
-    private TextMeshProUGUI _brains;
-    [SerializeField] private Image _jelly;
-    [SerializeField] private Color[] _colours;
+    private TextMeshProUGUI _brains = null;
+    [SerializeField] private Image _jelly = null;
+    [SerializeField] private Color[] _colours = null;
 
     private HumanBrain _brain => GetComponent<HumanBrain>();
     private HumanController _human => GetComponent<HumanController>();

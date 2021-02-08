@@ -76,30 +76,27 @@ public class Hive : MonoBehaviour
             //Sort humans in decreasing resource amount
             detectedHumans.Sort(delegate (HumanController a, HumanController b)
             {
-                return (b.CurrentBrains).CompareTo(a.CurrentBrains);
+                return (b.Settings.Brains).CompareTo(a.Settings.Brains);
             });
 
             detectedHumans = detectedHumans.Distinct().ToList();
-            forageTimer = Time.time + forageTime;
+            //forageTimer = Time.time + forageTime;
             InstructIdles();
         }
     }
     void InstructIdles()
     {
-        if (detectedHumans.Count > 0)
+        //if(detectedHumans[0].CurrentBrains < 3) return;
+        if(detectedHumans[0].Settings.Brains < 3) return;
+        
+        //Direct all idle workers
+        foreach (Worker worker in workers)
         {
-            if (detectedHumans[0].CurrentBrains > 3)
+            if (worker.beeBehaviour == Worker.BeeBehaviours.Idle)
             {
-                //Direct all idle workers
-                foreach (Worker worker in workers)
-                {
-                    if (worker.beeBehaviour == Worker.BeeBehaviours.Idle)
-                    {
-                        worker.beeBehaviour = Worker.BeeBehaviours.Forage;
-                        worker.target = detectedHumans[0].gameObject;
-                        worker.humanEmpty = false;
-                    }
-                }
+                worker.beeBehaviour = Worker.BeeBehaviours.Forage;
+                worker.target = detectedHumans[0].gameObject;
+                worker.humanEmpty = false;
             }
         }
     }

@@ -10,7 +10,7 @@ public class HumanSettings
     [Range (80, 100)]
     private float _health = 100.0f;
     public float Health { get { return _health; }}
-    public void ChangeHealth(float val)
+    public void SetHealth(float val)
     {
         _health = val;
     }
@@ -19,7 +19,7 @@ public class HumanSettings
     [Range (0, 200)]
     private float _armour = 0.0f;
     public float Armour { get { return _armour; }}
-    public void ChangeArmour(float val)
+    public void SetArmour(float val)
     {
         _armour = val;
     }
@@ -33,6 +33,10 @@ public class HumanSettings
     [Range (5, 100)]
     private int _brains = 20;
     public int Brains {get { return _brains;}}
+    public void ChangeBrains(int val)
+    {
+        _brains += val;
+    }
 
     [Header("Movement")]
     [SerializeField] 

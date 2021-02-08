@@ -40,18 +40,18 @@
       <option value="$PROJECT_DIR$/Assets/Features/Bees/BeeSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/GameManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/Hive.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanSteal.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanAIState.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanBrain.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/General/FaceCamera.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanSettings.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/Hive.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/BeeVisualiser.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/Depot.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanVisualisers.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/BeeVisualiser.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -114,6 +114,7 @@
       <workItem from="1611257244065" duration="9046000" />
       <workItem from="1611976472875" duration="2626000" />
       <workItem from="1612339618172" duration="2169000" />
+      <workItem from="1612756442501" duration="2152000" />
     </task>
     <servers />
   </component>

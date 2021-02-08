@@ -4,7 +4,7 @@ using TMPro;
 
 public class Depot : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _jellyText;
+    [SerializeField] private TextMeshProUGUI _jellyText = null;
 
     private int _jellyAmount = 0; 
 

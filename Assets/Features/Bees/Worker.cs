@@ -34,7 +34,7 @@ public class Worker : Enemy
 
     [Header("Boiding")]
     private Vector3 cohesionPos = new Vector3(0f, 0f, 0f);
-    private int boidIndex = 0;
+    //private int boidIndex = 0;
 
     [Header("Foraging")] 
     public int collectedResource = 0;
@@ -45,15 +45,15 @@ public class Worker : Enemy
     public HumanController NewHuman => newHuman;
 
     //Prey Variables
-    private float outOfRangeRatio = 0.05f;
-    private float fleeRadius = 300.0f;
+    //private float outOfRangeRatio = 0.05f;
+    //private float fleeRadius = 300.0f;
 
     //Predator Variables
     private Vector3 tarVel;
     private Vector3 tarPrevPos;
     private Vector3 attackPos;
-    private float distanceRatio = 0.05f;
-    private int beamDamage = 100;
+    //private float distanceRatio = 0.05f;
+    //private int beamDamage = 100;
 
     GameManager gameManager => FindObjectOfType<GameManager>();
     Rigidbody rb => GetComponent<Rigidbody>();
@@ -174,7 +174,7 @@ public class Worker : Enemy
     private void Forage()
     {
         //Check if resource available or target alive
-        if (target.GetComponent<HumanController>().CurrentBrains <= 0 || target == null)
+        if (target.GetComponent<HumanController>().Settings.Brains <= 0 || target == null)
         {
             humanEmpty = true;
         }
@@ -204,7 +204,7 @@ public class Worker : Enemy
     {
         //Must be within foraging distance and human must have resource available
         if (Vector3.Distance(transform.position, target.transform.position) <= BeeSettings.ForageRadius &&
-           target.GetComponent<HumanController>().CurrentBrains > 0)
+           target.GetComponent<HumanController>().Settings.Brains > 0)
         {
             //Must spend time within radius before collecting resource
             if (Time.time > collectionTimer)

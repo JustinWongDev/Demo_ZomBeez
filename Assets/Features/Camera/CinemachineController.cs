@@ -7,7 +7,7 @@ using UnityEngine;
 public class CinemachineController : MonoBehaviour
 {
     [SerializeField] private CinemachineBrain camBrain;
-    [SerializeField] private CinemachineVirtualCamera[] cams; //0 menu; 1 default game
+    [SerializeField] private CinemachineVirtualCamera[] cams = null; //0 menu; 1 default game
 
     public void SwitchToCam(int index)
     {
