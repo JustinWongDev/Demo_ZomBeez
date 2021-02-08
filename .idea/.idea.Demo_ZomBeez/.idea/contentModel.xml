@@ -53,6 +53,10 @@
             <e p="LinkedNode.cs" t="Include" />
             <e p="WaypointGraph.cs" t="Include" />
           </e>
+          <e p="Tutorial" t="Include">
+            <e p="TutorialController.cs" t="Include" />
+            <e p="TutorialTextController.cs" t="Include" />
+          </e>
         </e>
         <e p="Scripts" t="Include">
           <e p="SimpleCameraController.cs" t="Include" />

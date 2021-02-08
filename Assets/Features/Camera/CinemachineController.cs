@@ -8,21 +8,31 @@ public class CinemachineController : MonoBehaviour
 {
     [SerializeField] private CinemachineBrain camBrain;
     [SerializeField] private CinemachineVirtualCamera[] cams = null; //0 menu; 1 default game
+    [SerializeField] private CinemachineVirtualCamera[] camsTutorial = null; //0 hive; 1 depot; 2 caches; book
 
     public void SwitchToCam(int index)
     {
         for (int i = 0; i < cams.Length; i++)
         {
             if (i == index)
-            {
-                //cams[i].enabled = true;
                 cams[i].Priority = 10;
-            }
+            
             else
-            {
-                //cams[i].enabled = false;
                 cams[i].Priority = 0;
-            }
+            
+        }
+    }
+
+    public void SwitchTutorialCams(int index)
+    {
+        for (int i = 0; i < camsTutorial.Length; i++)
+        {
+            if (i == index)
+                camsTutorial[i].Priority = 10;
+            
+            else
+                camsTutorial[i].Priority = 0;
+            
         }
     }
 }
