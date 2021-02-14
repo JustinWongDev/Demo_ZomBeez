@@ -136,7 +136,7 @@ public class HumanBrain : MonoBehaviour
                         SetState(new HumanFlee(this));
                         break;
                     case 3:
-                        SetState(new HumanSteal(this));
+                        SetState(new HumanObjective(this));
                         break;
                     default:
                         print("Error: human behaviour");

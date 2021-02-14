@@ -151,7 +151,7 @@ public class Hive : MonoBehaviour
     private void SetScouts()
     {
         //Initialise scouts
-        if (scouts.Count < maxScoutCount && GameManager.live.gameStart)
+        if (scouts.Count < maxScoutCount && GameManager.live.hasGameStarted())
         { 
             //Sort bees in order of scoutFit
             List<Worker> potentialScouts = new List<Worker>();

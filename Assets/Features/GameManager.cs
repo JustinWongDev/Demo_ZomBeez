@@ -12,15 +12,20 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public delegate void OnGameStart();
-    public OnGameStart gameStartDel;
+    public event Action OnGameStart;
+    
 
-    public bool gameStart = false;
+    private bool gameStart = false;
 
     public void StartGame()
     {
         gameStart = true;
 
-        gameStartDel?.Invoke();
+        OnGameStart?.Invoke();
+    }
+
+    public bool hasGameStarted()
+    {
+        return gameStart;
     }
 }

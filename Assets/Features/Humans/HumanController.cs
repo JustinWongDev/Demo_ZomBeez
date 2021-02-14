@@ -96,12 +96,17 @@ public class HumanController : NavAgent
         return closestWaypoint;
     }
 
-    public Transform HiveTrans()
+    public void SetTarget(Transform newTarget)
+    {
+        Target = newTarget;
+    }
+
+    public Transform HiveLocation()
     {
         return FindObjectOfType<Hive>().transform;
     }
 
-    public Transform DepotTrans()
+    public Transform DepotLocation()
     {
         return FindObjectOfType<Depot>().transform;
     }

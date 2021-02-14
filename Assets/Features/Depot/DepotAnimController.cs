@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class DepotAnimController : MonoBehaviour
 {
-    [SerializeField] private Animation animation;
-    [SerializeField] private Animator animator;
+    [SerializeField] private Animator animator = null;
 
     public void PlayDepositAnim()
     {

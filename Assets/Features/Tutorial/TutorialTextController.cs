@@ -3,11 +3,11 @@ using TMPro;
 
 public class TutorialTextController : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _t_Title;
-    [SerializeField] private TextMeshProUGUI _t_Desc;
+    [SerializeField] private TextMeshProUGUI _t_Title = null;
+    [SerializeField] private TextMeshProUGUI _t_Desc = null;
 
-    [SerializeField] private string[] _listTitle;
-    [SerializeField] private string[] _listDesc;
+    [SerializeField] private string[] _listTitle = null;
+    [SerializeField] private string[] _listDesc = null;
 
     private void OnEnable()
     {

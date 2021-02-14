@@ -56,7 +56,7 @@ public class ForageSite : MonoBehaviour
 
     private void Timer()
     {
-        if (currentItem || !GameManager.live.gameStart)
+        if (currentItem || !GameManager.live.hasGameStarted())
             return;
 
         if (Time.time > spawnTimer)
