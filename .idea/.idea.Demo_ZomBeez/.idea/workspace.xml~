@@ -48,20 +48,20 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanSteal.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Foraging/ForageSite.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanAIState.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanSeek.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanObjective.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/Depot.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Hive.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanVisualisers.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/NavAgent.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanMove.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanBrain.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanDefensive.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanSettings.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanAIState.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanOffensive.cs" />
     </changedPaths>
   </component>
@@ -132,7 +132,7 @@
       <workItem from="1613290334516" duration="1412000" />
       <workItem from="1613356441766" duration="7038000" />
       <workItem from="1613363727459" duration="316000" />
-      <workItem from="1613365011048" duration="5234000" />
+      <workItem from="1613365011048" duration="4849000" />
     </task>
     <servers />
   </component>

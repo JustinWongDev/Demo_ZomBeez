@@ -284,7 +284,6 @@ public class Worker : Enemy
                 !human.GetComponent<Droppable>() &&
                 !hive.detectedHumans.Contains(human))
             {
-                Debug.Log(human.name + " found!");
                 newHuman = human;
                 return newHuman;
             }

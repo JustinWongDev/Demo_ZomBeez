@@ -5,7 +5,7 @@ public enum Pathfinding { None, Astar };
 public class HumanMove : NavAgent
 {
     private Pathfinding _currentPathing = Pathfinding.None;
-    private Transform _target;
+    private Transform _target = null;
     private HumanController _controller = null;
     private HumanAnimController _animController = null;
     
@@ -13,6 +13,10 @@ public class HumanMove : NavAgent
 
     private void Start()
     {
+        SetGraphNodes();
+
+        _target = HiveLocation();
+        
         _controller = GetComponent<HumanController>();
         _animController = GetComponent<HumanAnimController>();
     }
@@ -115,37 +119,33 @@ public class HumanMove : NavAgent
     {
         if (currentPath.Count > 0)
         {
-            bool value = currentNodeIndex == currentPath[currentPath.Count - 1];
-            return value;
+            //bool value = currentNodeIndex == currentPath[currentPath.Count - 1];
+            return currentNodeIndex == currentPath[currentPath.Count - 1];
         }
         else
         {
             return false;
         }
     }
-    
+
     void Move()
     {
-        //Move player
-        if (currentPath.Count > 0 && !_controller.Settings.GetIsDead() && !GetComponent<Droppable>())
+        if (AbleToMove())
         {
             var targetPos = graphNodes.graphNodes[currentPath[currentPathIndex]].transform.position;
 
-            //Set speed
+            //Accelerate
             if (_controller.Settings.GetCurrentSpeed() < _controller.Settings.MaxSpeed)
-            {
                 _controller.Settings.AddCurrentSpeed(_controller.Settings.MaxSpeed * Time.deltaTime * _controller.Settings.Acceleration);
-            }
+            //Update anim variables
+            _animController.Float_VelocityZ(_controller.Settings.GetCurrentSpeed());
 
             //Move towards next node
-            Transform transform1;
-            (transform1 = transform).position = Vector3.MoveTowards(transform.position, targetPos, _controller.Settings.GetCurrentSpeed() * Time.deltaTime);
+            Transform currentPos = this.transform;
+            currentPos.position = Vector3.MoveTowards(currentPos.position, targetPos, _controller.Settings.GetCurrentSpeed() * Time.deltaTime);
 
             //Face direction
-            var targetDir = targetPos - transform1.position;
-            var step = _controller.Settings.GetCurrentSpeed() * Time.deltaTime;
-            var newDir = Vector3.RotateTowards(transform1.forward, targetDir, step, 0.0f);
-            transform.rotation = Quaternion.LookRotation(newDir);
+            FaceDirection(targetPos, currentPos);
 
             //Inc path index
             if (Vector3.Distance(transform.position, graphNodes.graphNodes[currentPath[currentPathIndex]].transform.position) <= _controller.Settings.MinDistance)
@@ -161,14 +161,24 @@ public class HumanMove : NavAgent
         }
     
     
-        //Set speed
+        //Decelerate
         if (_controller.Settings.GetCurrentSpeed() > 0 && CurrentPathing == Pathfinding.None)
-        {
             _controller.Settings.AddCurrentSpeed(-_controller.Settings.MaxSpeed * Time.deltaTime * _controller.Settings.Deceleration);
-        }
-
         //Update anim variables
         _animController.Float_VelocityZ(_controller.Settings.GetCurrentSpeed());
+    }
+    private bool AbleToMove()
+    {
+        if (currentPath.Count > 0 && !_controller.Settings.GetIsDead() && !GetComponent<Droppable>())
+            return true;
+        return false;
+    }
+    private void FaceDirection(Vector3 targetPos, Transform currentPos)
+    {
+        var targetDir = targetPos - currentPos.position;
+        var step = _controller.Settings.GetCurrentSpeed() * Time.deltaTime;
+        var newDir = Vector3.RotateTowards(currentPos.forward, targetDir, step, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDir);
     }
 }
 

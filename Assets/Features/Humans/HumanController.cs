@@ -19,17 +19,27 @@ public class HumanController : MonoBehaviour
 
     public void Initialise(HumanSO so)
     {
-        //Instantiate model
-        GameObject go = Instantiate(so.model, _modelHolder.transform);
-        
         //References
         _animController = GetComponent<HumanAnimController>();
         _inventory = GetComponent<HumanInventory>();
         _brain = GetComponent<HumanBrain>();
         
+        //Instantiate model
+        GameObject go = Instantiate(so.model, _modelHolder.transform);
+
         GetComponent<Droppable>().Initialise();
         _animController.Initialise();
         _brain.Initialise(so);
+    }
+
+    public void Attack()
+    {
+        
+    }
+
+    public void UseAbility()
+    {
+        
     }
 
     public void LoseBrains(int val)

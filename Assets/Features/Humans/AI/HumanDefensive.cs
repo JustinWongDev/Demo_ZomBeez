@@ -15,5 +15,10 @@ public class HumanDefensive : HumanAIState
     {
         //if too many bees around human (heuristic) -> find furthest corner to flee
         //if not too many bees around human (heuristic) -> look for items 
+        
+        if (_move.AtDestination())
+        {
+            _move.SetTarget(_move.ClosestActiveForageSite());
+        }
     }
 }

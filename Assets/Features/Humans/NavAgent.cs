@@ -17,13 +17,10 @@ public class NavAgent : MonoBehaviour
 
     public Dictionary<int, int> cameFrom = new Dictionary<int, int>();
 
-    private void Start()
+    protected void SetGraphNodes()
     {
         //Find waypoint graph
         graphNodes = GameObject.FindObjectOfType<WaypointGraph>();
-
-        //Add initial node index 
-        //currentPath.Add(currentNodeIndex);
     }
 
     /// <summary>

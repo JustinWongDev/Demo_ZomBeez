@@ -13,7 +13,7 @@ public class HumanObjective : HumanAIState
 
     public override void Tick()
     {
-        if (!_controller.Settings.GetHasJelly())
+        if (!_human.Settings.GetHasJelly())
         {
             _move.SetTarget(_move.HiveLocation());
         }

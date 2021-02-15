@@ -60,6 +60,16 @@ public class HumanSettings
     public void AddCurrentSpeed(float value)
     { _currentSpeed += value; }
     
+    [SerializeField] 
+    [Range (1, 5)]
+    private float _attackTime = 1.0f;
+    public float AttackTime { get { return _attackTime; }}
+    
+    [SerializeField] 
+    [Range (5, 15)]
+    private float _abilityTime = 5.0f;
+    public float AbilityTime { get { return _abilityTime; }}
+    
     [Header("Status")]
     [SerializeField]
     private bool _isDead = false;

@@ -4,53 +4,50 @@ using UnityEngine;
 public class HumanBrain : MonoBehaviour
 {
     //DFA
-    private int newState = 0;
-    private int currentState = -1;
-    private int currentBehaviour { get; set; } = 0;
+    private int _potentialState = 0;
+    private int _currentState = -1;
+    private int _currentBehaviour { get; set; } = 0;
 
     private int[,] myDFA = new int [3, 5];
-    private readonly int[,] dfaCiv = new int[,]
+    private readonly int[,] _dfaCiv = new int[,]
     {
         {1, 0, 0, 2, 2 },        //objective
         {0, -1,-1,-1,-1 },       //offense
         {1, 2, 2, 2, 2 },        //defense
     };
 
-    private readonly int[,] dfaKeeper = new int[,]
+    private readonly int[,] _dfaKeeper = new int[,]
     {
-        {0, -1, -1, -1, -1},     
+        {1, 0, 0, 1, 1 },     
         {1, 3, 1, 1, 2 },        
         {1, 3, 3, 1, 2 },        
     };
     
-    private readonly int[,] dfaSadist = new int[,]
+    private readonly int[,] _dfaSadist = new int[,]
     {
         {1, 0, 0, 1, 2},        
         {1, 0, 0, 1, 2 },       
-        {1, 0, 0, 1, 2 },       
+        {0, -1, -1, -1, -1 },       
     };
     
     private HumanController _controller;
     private HumanSO so;
-    private HumanAIState currentAIState;
+    private HumanAIState _currentAIState;
     private bool isDropped => !GetComponent<Droppable>();
     
-    public int CurrentBehaviour => currentBehaviour;
-    public HumanAIState CurrentAIState => currentAIState;
-
-    private void Start()
-    {
-        _controller = GetComponent<HumanController>();
-        Behaviour();
-    }
+    public int CurrentBehaviour => _currentBehaviour;
+    public HumanAIState CurrentAIState => _currentAIState;
 
     private void Update()
     {
-        newState = DfaLogic();
-        if (newState == 3)
+        _potentialState = DfaLogic();
+        if (_potentialState == 3)
+        {
             return;
+        }
+        
         Behaviour();
-        currentAIState.Tick();
+        _currentAIState?.Tick();
     }
 
     public void Initialise(HumanSO val)
@@ -60,30 +57,34 @@ public class HumanBrain : MonoBehaviour
         switch (val.currentType)
         {
             case HumanType.civilian:
-                newState = 0;
-                currentState = 0;
-                currentBehaviour = 0;
+                _potentialState = 0;
+                _currentState = 0;
+                _currentBehaviour = 0;
 
-                myDFA = dfaCiv;
+                myDFA = _dfaCiv;
                 break;
             case HumanType.keeper:
-                newState = 0;
-                currentState = 0;
-                currentBehaviour = 0;
+                _potentialState = 0;
+                _currentState = 0;
+                _currentBehaviour = 0;
 
-                myDFA = dfaKeeper;
+                myDFA = _dfaKeeper;
                 break;
             case HumanType.sadist:
-                newState = 1;
-                currentState = 1;
-                currentBehaviour = 1;
+                _potentialState = 1;
+                _currentState = 1;
+                _currentBehaviour = 1;
 
-                myDFA = dfaSadist;
+                myDFA = _dfaSadist;
                 break;
             default:
                 print("Error in initialising DFA");
                 break;
         }
+        
+        _controller = GetComponent<HumanController>();
+        
+        Behaviour();
     }
     
     private int DfaLogic()
@@ -102,44 +103,45 @@ public class HumanBrain : MonoBehaviour
     private void Behaviour()
     {
         //Check for new state
-        if (newState != currentState)
+        if (_potentialState == _currentState)
+            return;
+        
+        if (myDFA[_currentBehaviour, 0] == 1)
         {
-            if (myDFA[currentBehaviour, 0] == 1)
+            _currentBehaviour = myDFA[_currentBehaviour, _potentialState + 1];
+            
+            //Switch behaviour
+            switch (_currentBehaviour)
             {
-                currentBehaviour = myDFA[currentBehaviour, newState + 1];
-                
-                //Switch behaviour
-                switch (currentBehaviour)
-                {
-                    case 0:
-                        SetState(new HumanObjective(this));
-                        break;
-                    case 1:
-                        SetState(new HumanOffensive(this));
-                        break;
-                    case 2:
-                        SetState(new HumanDefensive(this));
-                        break;
-                    case 3:
-                        SetState(new HumanDrop(this));
-                        break;
-                    default:
-                        print("Error: human behaviour");
-                        break;
-                }
+                case 0:
+                    SetState(new HumanObjective(this));
+                    break;
+                case 1:
+                    SetState(new HumanOffensive(this));
+                    break;
+                case 2:
+                    SetState(new HumanDefensive(this));
+                    break;
+                case 3:
+                    SetState(new HumanDrop(this));
+                    break;
+                default:
+                    print("Error: human behaviour");
+                    break;
             }
-
-            currentState = newState;
         }
+        
+        _currentState = _potentialState;
+        print(_currentState.ToString());
     }
 
     private void SetState(HumanAIState state)
     {
-        currentAIState?.LeaveState();
+        _currentAIState?.LeaveState();
         
-        if(currentAIState != null)
-            Debug.Log(currentAIState.ToString());
+        // if(_currentAIState != null)
+        //     Debug.Log(_currentAIState.ToString());
         
-        currentAIState = state;
+        _currentAIState = state;
     }
 }

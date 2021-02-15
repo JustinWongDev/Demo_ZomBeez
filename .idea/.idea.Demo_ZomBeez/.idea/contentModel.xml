@@ -53,7 +53,6 @@
               <e p="HumanDrop.cs" t="Include" />
               <e p="HumanObjective.cs" t="Include" />
               <e p="HumanOffensive.cs" t="Include" />
-              <e p="HumanSeek.cs" t="Include" />
             </e>
             <e p="Depot.cs" t="Include" />
             <e p="Droppable.cs" t="Include" />
