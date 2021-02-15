@@ -301,7 +301,7 @@ public class Worker : Enemy
         //         !hive.activeHumans[i].GetComponent<Droppable>())
         //     {
         //         //Find best human 
-        //         if (hive.activeHumans[i].GetComponent<HumanController>().CurrentBrains > newHumanResource)
+        //         if (hive.activeHumans[i].GetComponent<HumanMove>().CurrentBrains > newHumanResource)
         //         {
         //             newHuman = hive.activeHumans[i];
         //         }

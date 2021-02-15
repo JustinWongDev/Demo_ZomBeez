@@ -23,12 +23,11 @@ public class HumanController : MonoBehaviour
         GameObject go = Instantiate(so.model, _modelHolder.transform);
         
         //References
+        GetComponent<Droppable>().Initialise();
         _animController = GetComponent<HumanAnimController>();
+        _animController.Initialise();
         _inventory = GetComponent<HumanInventory>();
         _brain = GetComponent<HumanBrain>();
-        
-        GetComponent<Droppable>().Initialise();
-        _animController.Initialise();
         _brain.Initialise(so);
     }
 

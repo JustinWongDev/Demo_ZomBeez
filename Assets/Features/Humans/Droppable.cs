@@ -9,7 +9,7 @@ public class Droppable : MonoBehaviour
     private bool isGrounded = false;
     public bool IsGround => isGrounded;
     
-    private HumanController _controller;
+    private HumanMove move;
     private HumanAnimController _animController;
     private Camera mainCam => Camera.main;
 
@@ -24,7 +24,7 @@ public class Droppable : MonoBehaviour
 
     public void Initialise()
     {
-        _controller = GetComponent<HumanController>();
+        move = GetComponent<HumanMove>();
         _animController = GetComponent<HumanAnimController>();
     }
     
@@ -47,11 +47,11 @@ public class Droppable : MonoBehaviour
         int closestWaypoint = 0;
         
         //Find closest node to mouse position
-        for (int i = 0; i < _controller.graphNodes.graphNodes.Length; i++)
+        for (int i = 0; i < move.graphNodes.graphNodes.Length; i++)
         {
-            if (Vector3.Distance(mousePos, _controller.graphNodes.graphNodes[i].transform.position) <= distance)
+            if (Vector3.Distance(mousePos, move.graphNodes.graphNodes[i].transform.position) <= distance)
             {
-                distance = Vector3.Distance(mousePos, _controller.graphNodes.graphNodes[i].transform.position);
+                distance = Vector3.Distance(mousePos, move.graphNodes.graphNodes[i].transform.position);
                 closestWaypoint = i;
             }
         }
@@ -66,9 +66,9 @@ public class Droppable : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 isDropped = true;
-                _controller.currentPath.Clear();
-                _controller.currentNodeIndex = findClosestWaypoint();
-                _controller.currentPath.Add(_controller.currentNodeIndex);
+                move.currentPath.Clear();
+                move.currentNodeIndex = findClosestWaypoint();
+                move.currentPath.Add(move.currentNodeIndex);
             }
 
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
@@ -111,7 +111,7 @@ public class Droppable : MonoBehaviour
      {
          if (_animController.IsAnimOnBlendTree())
          {
-             _controller.SetPathFinding(Pathfinding.Astar);
+             move.SetPathFinding(Pathfinding.Astar);
              Destroy(this);
          }
      }

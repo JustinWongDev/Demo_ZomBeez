@@ -11,26 +11,23 @@ public class HumanBrain : MonoBehaviour
     private int[,] myDFA = new int [3, 5];
     private readonly int[,] dfaCiv = new int[,]
     {
-        {1, 0, 0, 2, 2 },            //seek
-        {0, -1,-1,-1,-1 },       //ability
-        {1, 2, 2, 2, 2 },           //flee
-        {0, -1,-1,-1,-1 }        //steal
+        {1, 0, 0, 2, 2 },        //objective
+        {0, -1,-1,-1,-1 },       //offense
+        {1, 2, 2, 2, 2 },        //defense
     };
-    
+
     private readonly int[,] dfaKeeper = new int[,]
     {
-        {0, -1, -1, -1, -1},            //seek
-        {1, 3, 1, 1, 2 },               //ability
-        {1, 3, 3, 1, 2 },               //flee
-        {1, 3, 3, 1, 2 }                //steal
+        {0, -1, -1, -1, -1},     
+        {1, 3, 1, 1, 2 },        
+        {1, 3, 3, 1, 2 },        
     };
     
     private readonly int[,] dfaSadist = new int[,]
     {
-        {1, 0, 0, 1, 2},            //seek
-        {1, 0, 0, 1, 2 },       //ability
-        {1, 0, 0, 1, 2 },           //flee
-        {0, -1, -1, -1, -1 }        //steal
+        {1, 0, 0, 1, 2},        
+        {1, 0, 0, 1, 2 },       
+        {1, 0, 0, 1, 2 },       
     };
     
     private HumanController _controller;
@@ -50,7 +47,7 @@ public class HumanBrain : MonoBehaviour
     private void Update()
     {
         newState = DfaLogic();
-        if (newState == 4)
+        if (newState == 3)
             return;
         Behaviour();
         currentAIState.Tick();
@@ -70,16 +67,16 @@ public class HumanBrain : MonoBehaviour
                 myDFA = dfaCiv;
                 break;
             case HumanType.keeper:
-                newState = 3;
-                currentState = 3;
-                currentBehaviour = 3;
+                newState = 0;
+                currentState = 0;
+                currentBehaviour = 0;
 
                 myDFA = dfaKeeper;
                 break;
             case HumanType.sadist:
-                newState = 0;
-                currentState = 0;
-                currentBehaviour = 0;
+                newState = 1;
+                currentState = 1;
+                currentBehaviour = 1;
 
                 myDFA = dfaSadist;
                 break;
@@ -92,26 +89,14 @@ public class HumanBrain : MonoBehaviour
     private int DfaLogic()
     {
         if (!isDropped)
-        {
-            return 4;
-        }
-        
-        if (_controller.HealthCheck(0.30f))
-        {
             return 3;
-        }
-        else if (_controller.HealthCheck(0.75f))
-        {
+        
+        if (_controller.Settings.HealthPercentCheck(0.30f))
             return 2;
-        }
-        else if (_controller.IsAware())
-        {
+        else if (_controller.Settings.HealthPercentCheck(0.75f))
             return 1;
-        }
         else
-        {
             return 0;
-        }
     }
 
     private void Behaviour()
@@ -127,16 +112,16 @@ public class HumanBrain : MonoBehaviour
                 switch (currentBehaviour)
                 {
                     case 0:
-                        SetState(new HumanSeek(this));
+                        SetState(new HumanObjective(this));
                         break;
                     case 1:
-                        SetState(new HumanAbility(this));
+                        SetState(new HumanOffensive(this));
                         break;
                     case 2:
-                        SetState(new HumanFlee(this));
+                        SetState(new HumanDefensive(this));
                         break;
                     case 3:
-                        SetState(new HumanObjective(this));
+                        SetState(new HumanDrop(this));
                         break;
                     default:
                         print("Error: human behaviour");

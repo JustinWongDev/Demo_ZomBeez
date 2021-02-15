@@ -184,10 +184,10 @@ public class Hive : MonoBehaviour
         if (other.gameObject.GetComponent<HumanController>() && jellyAmount > 0)
         {
             LoseJelly();
-            other.GetComponent<HumanController>()._hasJelly = true;
+            other.GetComponent<HumanController>().Settings.SetHasJelly(true);
             // GameManager.live.jellyObtained++;
             // GameObject o;
-            // (o = other.gameObject).GetComponent<HumanController>().TakeDamage(1000.0f);
+            // (o = other.gameObject).GetComponent<HumanMove>().TakeDamage(1000.0f);
             // Destroy(o, 2.0f);
         }
     }

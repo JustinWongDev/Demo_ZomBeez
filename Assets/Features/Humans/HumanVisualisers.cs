@@ -35,6 +35,6 @@ public class HumanVisualisers : MonoBehaviour
         _brains.text = _human.Settings.Brains.ToString();
         
         //Jelly
-        _jelly.color = _human.HasJelly ? _colours[1] : _colours[0];
+        _jelly.color = _human.Settings.GetHasJelly() ? _colours[1] : _colours[0];
     }
 }

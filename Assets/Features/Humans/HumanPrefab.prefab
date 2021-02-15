@@ -578,6 +578,7 @@ GameObject:
   - component: {fileID: 6665576988276187116}
   - component: {fileID: 2463186199323747084}
   - component: {fileID: 800283723273180293}
+  - component: {fileID: 8618228467725204955}
   - component: {fileID: 8823551778967807064}
   - component: {fileID: 8010327315240906802}
   - component: {fileID: 6481979539539619236}
@@ -660,6 +661,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41cf12ba82ab1f04aa89fd35b8dda975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8618228467725204955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823551778967807142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d5cfc6284704147a586ad917bc86f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings:
+    _health: 100
+    _armour: 0
+    _damage: 10
+    _brains: 20
+    _minDistance: 0.01
+    _acceleration: 5
+    _deceleration: 25
+    _maxSpeed: 20
+    _currentSpeed: 20
+    _isDead: 0
+    _hasJelly: 0
+    _isAware: 0
+  _modelHolder: {fileID: 8823551780943341613}
 --- !u!114 &8823551778967807064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,17 +706,6 @@ MonoBehaviour:
   greedyPaintList: 
   currentPathIndex: 0
   currentNodeIndex: 0
-  _settings:
-    _health: 100
-    _armour: 0
-    _damage: 10
-    _brains: 20
-    _minDistance: 0.01
-    _acceleration: 5
-    _deceleration: 25
-    _speed: 10
-  _modelHolder: {fileID: 8823551780943341613}
-  _hasJelly: 0
 --- !u!114 &8010327315240906802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -740,7 +756,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6ecab007ea34cb4d821eeff1f5beba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canv: {fileID: 5875226800374702653}
   _aiState: {fileID: 4066354892104499128}
   _hp: {fileID: 4465217236903763939}
   _brains: {fileID: 5500747206408208331}

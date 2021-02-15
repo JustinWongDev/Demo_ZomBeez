@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class HumanAbility : HumanAIState
+public class HumanOffensive : HumanAIState
 {
-    public HumanAbility(HumanBrain humanBrain) : base(humanBrain)
+    public HumanOffensive(HumanBrain humanBrain) : base(humanBrain)
     {
     }
 
@@ -13,6 +13,6 @@ public class HumanAbility : HumanAIState
 
     public override void Tick()
     {
-        Debug.Log("ABILITy");
+        
     }
 }

@@ -5,7 +5,8 @@ public abstract class HumanAIState
     protected HumanBrain _humanBrain;
     protected Transform _transform;
 
-    protected HumanController _humanController;
+    protected HumanController _controller;
+    protected HumanMove _move;
     protected HumanAnimController _animController;
 
     public abstract void Tick();
@@ -15,7 +16,8 @@ public abstract class HumanAIState
     {
         this._humanBrain = humanBrain;
         this._transform = humanBrain.transform;
-        this._humanController = humanBrain.GetComponent<HumanController>();
+        this._controller = humanBrain.GetComponent<HumanController>();
         this._animController = humanBrain.GetComponent<HumanAnimController>();
+        this._move = humanBrain.GetComponent<HumanMove>();
     }
 }

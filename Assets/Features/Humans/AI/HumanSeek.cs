@@ -15,9 +15,9 @@ public class HumanSeek : HumanAIState
     {        
         Debug.Log("SEEK");
         
-        if (_humanController.AtDestination())
+        if (_move.AtDestination())
         {
-            _humanController.Target = _humanController.ClosestActiveForageSite();
+            _move.SetTarget(_move.ClosestActiveForageSite());
         }
     }
 }

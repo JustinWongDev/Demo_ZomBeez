@@ -6,6 +6,7 @@ using UnityEngine;
 public class NavAgent : MonoBehaviour
 {
     [Header("Nav Variables")]
+    [HideInInspector]
     public WaypointGraph graphNodes;
     public List<int> openList = new List<int>();
     public List<int> closedList = new List<int>();
@@ -19,7 +20,7 @@ public class NavAgent : MonoBehaviour
     private void Start()
     {
         //Find waypoint graph
-        graphNodes = GameObject.FindObjectOfType<WaypointGraph>().GetComponent<WaypointGraph>();
+        graphNodes = GameObject.FindObjectOfType<WaypointGraph>();
 
         //Add initial node index 
         //currentPath.Add(currentNodeIndex);
