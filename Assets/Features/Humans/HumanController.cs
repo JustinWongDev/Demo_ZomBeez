@@ -1,14 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class HumanController : MonoBehaviour
 {
-    [SerializeField]
-    [Header("Settings")]
-    private HumanSettings _settings = null;
-    [SerializeField]
-    private GameObject _modelHolder = null;
+    [SerializeField] private HumanSettings _settings = null;
+    [SerializeField] private GameObject _modelHolder = null;
+    [SerializeField] private GameObject _cam = null;
     
     private HumanBrain _brain;
     private HumanAnimController _animController;
@@ -78,6 +77,11 @@ public class HumanController : MonoBehaviour
                 Destroy(this.gameObject, 5.0f);
             }
         }
+    }
+
+    public GameObject ReturnCamPos()
+    {
+        return _cam;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -31,7 +31,9 @@
             <e p="Worker.cs" t="Include" />
           </e>
           <e p="Camera" t="Include">
+            <e p="CameraManager.cs" t="Include" />
             <e p="CinemachineController.cs" t="Include" />
+            <e p="HumanCam.cs" t="Include" />
           </e>
           <e p="Depot" t="Include">
             <e p="DepotAnimController.cs" t="Include" />
@@ -75,6 +77,9 @@
           <e p="Tutorial" t="Include">
             <e p="TutorialController.cs" t="Include" />
             <e p="TutorialTextController.cs" t="Include" />
+          </e>
+          <e p="UI Anims" t="Include">
+            <e p="CamSettingAnimController.cs" t="Include" />
           </e>
         </e>
         <e p="Scripts" t="Include">

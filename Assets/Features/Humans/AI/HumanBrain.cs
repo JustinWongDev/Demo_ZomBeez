@@ -3,31 +3,35 @@ using UnityEngine;
 
 public class HumanBrain : MonoBehaviour
 {
-    //DFA
+    [SerializeField]
+    private float firstHealthThreshold = 0.80f;
+    [SerializeField]
+    private float secondHealthThreshold = 0.50f;
+    
     private int _potentialState = 0;
     private int _currentState = -1;
     private int _currentBehaviour { get; set; } = 0;
 
-    private int[,] myDFA = new int [3, 5];
+    private int[,] myDFA = new int [3, 4];
     private readonly int[,] _dfaCiv = new int[,]
     {
-        {1, 0, 0, 2, 2 },        //objective
-        {0, -1,-1,-1,-1 },       //offense
-        {1, 2, 2, 2, 2 },        //defense
+        {1, 0, 0, 2},        //objective
+        {0, -1,-1,-1},       //offense
+        {1, 2, 2, 2},        //defense
     };
 
     private readonly int[,] _dfaKeeper = new int[,]
     {
-        {1, 0, 0, 1, 1 },     
-        {1, 3, 1, 1, 2 },        
-        {1, 3, 3, 1, 2 },        
+        {1, 0, 0, 1},     
+        {1, 3, 1, 1},        
+        {1, 3, 3, 1},        
     };
     
     private readonly int[,] _dfaSadist = new int[,]
     {
-        {1, 0, 0, 1, 2},        
-        {1, 0, 0, 1, 2 },       
-        {0, -1, -1, -1, -1 },       
+        {1, 0, 0, 1},        
+        {1, 0, 0, 1},       
+        {0, -1, -1, -1},       
     };
     
     private HumanController _controller;
@@ -92,9 +96,9 @@ public class HumanBrain : MonoBehaviour
         if (!isDropped)
             return 3;
         
-        if (_controller.Settings.HealthPercentCheck(0.30f))
+        if (_controller.Settings.HealthPercentCheck(secondHealthThreshold))
             return 2;
-        else if (_controller.Settings.HealthPercentCheck(0.75f))
+        else if (_controller.Settings.HealthPercentCheck(firstHealthThreshold))
             return 1;
         else
             return 0;

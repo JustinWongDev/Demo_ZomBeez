@@ -17,6 +17,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Features/Bees/BeeVisualiser.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Humans/AI/HumanDrop.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Tutorial/TutorialController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Features/Camera/CameraManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Bees/BeeSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/General/FaceCamera.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -39,7 +40,6 @@
       <option value="$PROJECT_DIR$/Assets/Features/Bees/BeeSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/General/FaceCamera.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/BeeVisualiser.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Tutorial/TutorialController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Tutorial/TutorialTextController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Depot/DepotAnimController.cs" />
@@ -57,12 +57,16 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/NavAgent.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanMove.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanBrain.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanDefensive.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanSettings.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanAIState.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanOffensive.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanBrain.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Camera/CameraManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Camera/HumanCam.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/UI Anims/CamSettingAnimController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -133,6 +137,10 @@
       <workItem from="1613356441766" duration="7038000" />
       <workItem from="1613363727459" duration="316000" />
       <workItem from="1613365011048" duration="5234000" />
+      <workItem from="1613375799568" duration="1146000" />
+      <workItem from="1613439757949" duration="2000" />
+      <workItem from="1613487036866" duration="4576000" />
+      <workItem from="1613494313656" duration="1180000" />
     </task>
     <servers />
   </component>
