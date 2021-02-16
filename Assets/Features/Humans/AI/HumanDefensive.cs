@@ -10,15 +10,14 @@ public class HumanDefensive : HumanAIState
     {
         
     }
-
     public override void Tick()
     {
         //if too many bees around human (heuristic) -> find furthest corner to flee
         //if not too many bees around human (heuristic) -> look for items 
-        
+
         if (_move.AtDestination())
         {
-            _move.SetTarget(_move.ClosestActiveForageSite());
+            _move.SetTarget(_move.ClosestActiveCache());
         }
     }
 }

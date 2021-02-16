@@ -91,7 +91,7 @@ public class HumanMove : NavAgent
         return FindObjectOfType<Depot>().transform;
     }
 
-    public Transform ClosestActiveForageSite()
+    public Transform ClosestActiveCache()
     {
         //Store all forage sites
         ForageSite [] allSites = FindObjectsOfType<ForageSite>();

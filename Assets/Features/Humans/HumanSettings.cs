@@ -70,6 +70,11 @@ public class HumanSettings
     private float _abilityTime = 5.0f;
     public float AbilityTime { get { return _abilityTime; }}
     
+    [SerializeField] 
+    [Range (0.5f, 3.0f)]
+    private float _collectTime = 3.0f;
+    public float CollectTime { get { return _collectTime; }}
+    
     [Header("Status")]
     [SerializeField]
     private bool _isDead = false;

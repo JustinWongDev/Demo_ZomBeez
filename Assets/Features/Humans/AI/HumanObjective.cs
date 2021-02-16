@@ -11,15 +11,27 @@ public class HumanObjective : HumanAIState
         
     }
 
+    private float _collectTimer = 0.0f;
+    
     public override void Tick()
     {
         if (!_human.Settings.GetHasJelly())
         {
-            _move.SetTarget(_move.HiveLocation());
+            if(!_move.AtDestination())
+                _move.SetTarget(_move.HiveLocation());
+            else
+            {
+                _collectTimer += Time.deltaTime;
+                if (_collectTimer >= _human.Settings.CollectTime)
+                {
+                    _human.Settings.SetHasJelly(true);
+                }
+            }
         }
         else
         {
-            _move.SetTarget(_move.DepotLocation());
+            if(!_move.AtDestination())
+                _move.SetTarget(_move.DepotLocation());
         }
     }
 }
