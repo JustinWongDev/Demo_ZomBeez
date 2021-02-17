@@ -13,7 +13,8 @@ public class Worker : Enemy
         Attack,
         Flee
     }
-    public Hive hive;
+    private HiveController hiveController = null;
+    private HiveResources hiveResource = null;
     private Vector3 idlePosition;
     private float idleTimer = 0;
     
@@ -71,11 +72,11 @@ public class Worker : Enemy
     #region Start up
     private void Setup()
     {
-        idlePosition = hive.transform.position;
+        idlePosition = hiveController.transform.position;
 
         //Drone idly roam around mothership
         beeBehaviour = BeeBehaviours.Idle;
-        target = hive.gameObject;
+        target = hiveController.gameObject;
 
         //Randomise Stats
         damage = BeeSettings.Damage;
@@ -107,9 +108,10 @@ public class Worker : Enemy
          attackFit = (healthScore * 0.2f) + (damage * 0.5f) - (carryScore * 0.2f) - (collectScore * 0.1f);
      }
 
-    public void Initialise(Hive hive, GameObject initTarget)
+    public void Initialise(HiveController hiveController, HiveResources resources, GameObject initTarget)
     {
-        this.hive = hive;
+        this.hiveController = hiveController;
+        this.hiveResource = resources;
         this.target = initTarget;
     }
 #endregion
@@ -179,14 +181,14 @@ public class Worker : Enemy
             humanEmpty = true;
         }
 
-        //If full capacity or resource unavailable, return to hive, otherwise...
+        //If full capacity or resource unavailable, return to hiveController, otherwise...
         if (collectedResource >= BeeSettings.Capacity | humanEmpty)
         {
-            MoveTowardsTarget(hive.transform.position);
+            MoveTowardsTarget(hiveController.transform.position);
 
-            if (Vector3.Distance(transform.position, hive.transform.position) <= BeeSettings.TargetRadius)
+            if (Vector3.Distance(transform.position, hiveController.transform.position) <= BeeSettings.TargetRadius)
             {
-                hive.collectedResource += collectedResource;
+                hiveResource.GainBrains(collectedResource);
                 collectedResource = 0;
                 beeBehaviour = BeeBehaviours.Idle;
             }
@@ -230,9 +232,9 @@ public class Worker : Enemy
             {
                 //Gen new, random scouting area
                 Vector3 newPos;
-                newPos.x = hive.transform.position.x + UnityEngine.Random.Range(-BeeSettings.ScoutRadiusX, BeeSettings.ScoutRadiusX); //left and right
-                newPos.y = hive.transform.position.y + UnityEngine.Random.Range(-BeeSettings.ScoutRadiusY, BeeSettings.ScoutRadiusY); //above and below
-                newPos.z = hive.transform.position.z + UnityEngine.Random.Range(0.0f, BeeSettings.ScoutRadiusZ); //cannot scout behind hive
+                newPos.x = hiveController.transform.position.x + UnityEngine.Random.Range(-BeeSettings.ScoutRadiusX, BeeSettings.ScoutRadiusX); //left and right
+                newPos.y = hiveController.transform.position.y + UnityEngine.Random.Range(-BeeSettings.ScoutRadiusY, BeeSettings.ScoutRadiusY); //above and below
+                newPos.z = hiveController.transform.position.z + UnityEngine.Random.Range(0.0f, BeeSettings.ScoutRadiusZ); //cannot scout behind hiveController
 
                 idlePosition = newPos;
 
@@ -251,21 +253,21 @@ public class Worker : Enemy
                 detectTimer = Time.time + BeeSettings.DetectTime;
             }
         }
-        //Human found, head back to hive
+        //Human found, head back to hiveController
         else
         {
-            target = hive.gameObject;
-            //Debug.DrawLine(transform.position, hive.gameObject.transform.position, Color.green);
+            target = hiveController.gameObject;
+            //Debug.DrawLine(transform.position, hiveController.gameObject.transform.position, Color.green);
 
             MoveTowardsTarget(target.transform.position);
 
-            //Relay information to hive, then reset bee
-            if (Vector3.Distance(transform.position, hive.transform.position) < BeeSettings.TargetRadius)
+            //Relay information to hiveController, then reset bee
+            if (Vector3.Distance(transform.position, hiveController.transform.position) < BeeSettings.TargetRadius)
             {
                 //ADD BEE TO DRONE LIST
                 //REMOVE BEE FROM SCOUT LIST
 
-                hive.AddDetectedHuman(newHuman);
+                hiveController.AddDetectedHuman(newHuman);
 
                 newHumanResource = 0;
                 newHuman = null;
@@ -278,11 +280,11 @@ public class Worker : Enemy
     private HumanController DetectNewHuman()
     {
         //Go through all active humans, within detection radius, dropped, and not already detected 
-        foreach (HumanController human in hive.ActiveHumans)
+        foreach (HumanController human in hiveController.ActiveHumans)
         {
             if (Vector3.Distance(transform.position, human.transform.position) <= BeeSettings.DetectionRad &&
                 !human.GetComponent<Droppable>() &&
-                !hive.DetectedHumans.Contains(human))
+                !hiveController.DetectedHumans.Contains(human))
             {
                 newHuman = human;
                 return newHuman;
@@ -293,21 +295,21 @@ public class Worker : Enemy
         return null;
 
         // //Go through all active humans
-        // for (int i = 0; i < hive.activeHumans.Count; i++)
+        // for (int i = 0; i < hiveController.activeHumans.Count; i++)
         // {
         //     //Check if human in detect range
-        //     if (Vector3.Distance(transform.position, hive.activeHumans[i].transform.position) <= BeeSettings.DetectionRad &&
-        //         !hive.activeHumans[i].GetComponent<Droppable>())
+        //     if (Vector3.Distance(transform.position, hiveController.activeHumans[i].transform.position) <= BeeSettings.DetectionRad &&
+        //         !hiveController.activeHumans[i].GetComponent<Droppable>())
         //     {
         //         //Find best human 
-        //         if (hive.activeHumans[i].GetComponent<HumanMove>().CurrentBrains > newHumanResource)
+        //         if (hiveController.activeHumans[i].GetComponent<HumanMove>().CurrentBrains > newHumanResource)
         //         {
-        //             newHuman = hive.activeHumans[i];
+        //             newHuman = hiveController.activeHumans[i];
         //         }
         //     }
         // }
         //
-        // if (hive.detectedHumans.Contains(newHuman))
+        // if (hiveController.detectedHumans.Contains(newHuman))
         // {
         //     return null;
         // }
@@ -323,7 +325,7 @@ public class Worker : Enemy
     #region Idle
     private void Idle()
     {
-        OrbitTarget(hive.transform.position);
+        OrbitTarget(hiveController.transform.position);
     }
 
     private void OrbitTarget(Vector3 targetPos)

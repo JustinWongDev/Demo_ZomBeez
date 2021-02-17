@@ -5,21 +5,16 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.Rendering;
 
-public class Hive : MonoBehaviour
+public class HiveController : MonoBehaviour
 {
     #region Static Singleton
-    public static Hive live;
+    public static HiveController live;
     private void Awake()
     {
         live = this;
     }
     #endregion
 
-    [Header("Models")]
-    [SerializeField] private GameObject modelParent = null;
-    [SerializeField] private  Material empty = null;
-    [SerializeField] private  Material full = null;
-    
     [Header("Bees")]
     [SerializeField] private int initCount = 5;
     [SerializeField] private int maxScoutCount = 5;
@@ -28,22 +23,13 @@ public class Hive : MonoBehaviour
     private List<Worker> scouts = new List<Worker>();
     private List<Worker> attackers = new List<Worker>();
 
-    [Header("Brains")]
-    public float forageTime = 10.0f;
-    private float forageTimer;
-    public int collectedResource = 0;
-    public int initJelly = 3;
-    private int jellyAmount = 0;
-    public float jellyTime = 10.0f;
-    public int resourceToJellyRatio = 10;
-    private float jellyTimer = 0;
-
     private List<HumanController> activeHumans = new List<HumanController>();
     private List<HumanController> detectedHumans = new List<HumanController>();
+    private HiveResources resources;
 
     private void Start()
     {
-        jellyAmount = initJelly;
+        resources = GetComponent<HiveResources>();
         
         SpawnBees();
     }
@@ -53,10 +39,6 @@ public class Hive : MonoBehaviour
         SetScouts();
 
         PeriodicHumanSort();
-        
-        ProduceJelly();
-
-        DisplayJelly();
     }
 
     public void AddActiveHuman(HumanController newHuman)
@@ -121,52 +103,6 @@ public class Hive : MonoBehaviour
         }
     }
     #endregion
-    
-    void DisplayJelly()
-    {
-        Transform[] segments = modelParent.GetComponentsInChildren<Transform>();
-        
-        if (jellyAmount > 0)
-        {
-            foreach (Transform t in segments)
-            {
-                if(t.gameObject.GetComponent<MeshRenderer>())
-                    t.gameObject.GetComponent<MeshRenderer>().material = full;
-            }
-        }
-        else
-        {
-            foreach (Transform t in segments)
-            {                
-                if(t.gameObject.GetComponent<MeshRenderer>())
-                    t.gameObject.GetComponent<MeshRenderer>().material = empty;
-            }
-        }
-    }
-
-    void ProduceJelly()
-    {
-        if (collectedResource >= resourceToJellyRatio)
-        {
-            if (jellyTimer >= jellyTime)
-            {
-                jellyAmount++;
-                jellyTimer = 0;
-            }
-            else
-            {
-                jellyTimer += Time.deltaTime;
-            }
-        }
-    }
-
-    public void LoseJelly()
-    {
-        if(jellyAmount > 0)
-        {
-            jellyAmount--;
-        }
-    }
 
     private void SetScouts()
     {
@@ -200,30 +136,8 @@ public class Hive : MonoBehaviour
             bee.transform.rotation = this.transform.rotation;
             bee.SetActive(true);
         
-            bee.GetComponent<Worker>().Initialise(this, gameObject);
+            bee.GetComponent<Worker>().Initialise(this, resources, gameObject);
             workers.Add(bee.GetComponent<Worker>());   
-        }
-    }
-    //INSTANTIATION
-        // for (int i = 0; i < initCount; i++)
-        // {
-        //     //USE OBJECT POOLING
-        //     GameObject go = Instantiate(beePrefab);
-        //     go.transform.position = transform.position;
-        //     go.GetComponent<Worker>().Initialise(this, gameObject);
-        //     workers.Add(go.GetComponent<Worker>());
-        // }
-
-        private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.GetComponent<HumanController>() && jellyAmount > 0)
-        {
-            LoseJelly();
-            other.GetComponent<HumanController>().Settings.SetHasJelly(true);
-            // GameManager.live.jellyObtained++;
-            // GameObject o;
-            // (o = other.gameObject).GetComponent<HumanMove>().TakeDamage(1000.0f);
-            // Destroy(o, 2.0f);
         }
     }
 }

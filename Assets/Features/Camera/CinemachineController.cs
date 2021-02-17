@@ -5,8 +5,8 @@ public class CinemachineController : MonoBehaviour
 {
     [SerializeField] private CinemachineBrain camBrain;
     [SerializeField] private CinemachineVirtualCamera[] camsBasic = null;    //0 menu; 1 default game
-    [SerializeField] private CinemachineVirtualCamera[] camsTutorial = null; //0 hive; 1 depot; 2 caches; book
-    [SerializeField] private CinemachineVirtualCamera camHuman = null;       //0 hive; 1 depot; 2 caches; book
+    [SerializeField] private CinemachineVirtualCamera[] camsTutorial = null; //0 hiveController; 1 depot; 2 caches; book
+    [SerializeField] private CinemachineVirtualCamera camHuman = null;       //0 hiveController; 1 depot; 2 caches; book
 
     public void SetCamToHuman()
     {

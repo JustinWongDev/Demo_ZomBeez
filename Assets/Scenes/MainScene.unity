@@ -8057,6 +8057,7 @@ GameObject:
   - component: {fileID: 596796773}
   - component: {fileID: 596796775}
   - component: {fileID: 596796772}
+  - component: {fileID: 596796776}
   - component: {fileID: 596796774}
   m_Layer: 0
   m_Name: Hive
@@ -8077,17 +8078,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b46738613726e45abcd10ae0300df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelParent: {fileID: 1626085865}
-  empty: {fileID: 2100000, guid: aef70827d00b2ae4bbf7a65b3e9ecf19, type: 2}
-  full: {fileID: 2100000, guid: 4468f9732f3ee4846a648136998bf07e, type: 2}
   initCount: 20
   maxScoutCount: 10
   maxAttackerCount: 5
-  forageTime: 10
-  collectedResource: 0
-  initJelly: 3
-  jellyTime: 10
-  resourceToJellyRatio: 10
 --- !u!4 &596796773
 Transform:
   m_ObjectHideFlags: 0
@@ -8132,6 +8125,25 @@ MonoBehaviour:
     type: 3}
   amountToPool: 30
   pooledObjs: []
+--- !u!114 &596796776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596796771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9810cab1d5213b34a8f4f764df0cf0f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelParent: {fileID: 0}
+  empty: {fileID: 0}
+  full: {fileID: 0}
+  forageTime: 10
+  jellyTime: 10
+  resourceToJellyRatio: 10
+  initJelly: 3
 --- !u!1 &602465058
 GameObject:
   m_ObjectHideFlags: 0
@@ -8194,7 +8206,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 602465058}
-  m_LocalRotation: {x: -0.06566848, y: 0.93388915, z: -0.2629605, w: -0.23321784}
+  m_LocalRotation: {x: -0.065668486, y: 0.93388915, z: -0.2629605, w: -0.23321788}
   m_LocalPosition: {x: 70.1, y: 91.2, z: 131.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

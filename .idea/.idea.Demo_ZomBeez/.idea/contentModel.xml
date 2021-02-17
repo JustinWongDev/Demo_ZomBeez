@@ -27,7 +27,8 @@
             <e p="BeeSettings.cs" t="Include" />
             <e p="BeeVisualiser.cs" t="Include" />
             <e p="Enemy.cs" t="Include" />
-            <e p="Hive.cs" t="Include" />
+            <e p="HiveController.cs" t="Include" />
+            <e p="HiveResources.cs" t="Include" />
             <e p="Worker.cs" t="Include" />
           </e>
           <e p="Camera" t="Include">

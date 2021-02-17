@@ -93,9 +93,9 @@ public class HumanController : MonoBehaviour
         }
         
         //Jelly?
-        if (other.gameObject.GetComponent<Hive>())
+        if (other.gameObject.GetComponent<HiveResources>())
         {
-            other.gameObject.GetComponent<Hive>().LoseJelly();
+            other.gameObject.GetComponent<HiveResources>().LoseJelly();
             Settings.SetHasJelly(true);
         }
     }

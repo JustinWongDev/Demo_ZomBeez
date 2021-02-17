@@ -83,7 +83,7 @@ public class HumanMove : NavAgent
     
     public Transform HiveLocation()
     {
-        return FindObjectOfType<Hive>().transform;
+        return FindObjectOfType<HiveController>().transform;
     }
 
     public Transform DepotLocation()
