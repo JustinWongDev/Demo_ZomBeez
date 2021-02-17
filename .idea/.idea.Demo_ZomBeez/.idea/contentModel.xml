@@ -46,6 +46,7 @@
           <e p="General" t="Include">
             <e p="DisableInGame.cs" t="Include" />
             <e p="FaceCamera.cs" t="Include" />
+            <e p="ObjPool.cs" t="Include" />
           </e>
           <e p="Humans" t="Include">
             <e p="AI" t="Include">

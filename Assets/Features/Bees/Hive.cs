@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Rendering;
 
 public class Hive : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class Hive : MonoBehaviour
     public int initCount = 5;
     public int maxScoutCount = 5;
     public int maxAttackerCount = 2;
+    public List<Worker> workers = new List<Worker>();
+    public List<Worker> scouts = new List<Worker>();
+    public List<Worker> attackers = new List<Worker>();
 
     [Header("Brains")]
     public float forageTime = 10.0f;
@@ -34,11 +38,6 @@ public class Hive : MonoBehaviour
     public GameObject modelParent;
     public Material empty;
     public Material full;
-    
-    [Header("Bees")]
-    public List<Worker> workers = new List<Worker>();
-    public List<Worker> scouts = new List<Worker>();
-    public List<Worker> attackers = new List<Worker>();
 
     [Header("Humans")]
     public List<HumanController> activeHumans = new List<HumanController>();
@@ -171,15 +170,29 @@ public class Hive : MonoBehaviour
     {
         for (int i = 0; i < initCount; i++)
         {
-            //USE OBJECT POOLING
-            GameObject go = Instantiate(beePrefab);
-            go.transform.position = transform.position;
-            go.GetComponent<Worker>().Initialise(this, gameObject);
-            workers.Add(go.GetComponent<Worker>());
+            GameObject bee = ObjPool.SharedInstance.GetPooledObj();
+            if (bee == null)
+                return;
+
+            bee.transform.position = this.transform.position;
+            bee.transform.rotation = this.transform.rotation;
+            bee.SetActive(true);
+        
+            bee.GetComponent<Worker>().Initialise(this, gameObject);
+            workers.Add(bee.GetComponent<Worker>());   
         }
     }
+    //INSTANTIATION
+        // for (int i = 0; i < initCount; i++)
+        // {
+        //     //USE OBJECT POOLING
+        //     GameObject go = Instantiate(beePrefab);
+        //     go.transform.position = transform.position;
+        //     go.GetComponent<Worker>().Initialise(this, gameObject);
+        //     workers.Add(go.GetComponent<Worker>());
+        // }
 
-    private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<HumanController>() && jellyAmount > 0)
         {
