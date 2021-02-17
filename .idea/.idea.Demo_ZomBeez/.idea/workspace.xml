@@ -12,7 +12,9 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Features/Bees/HiveResources.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Features/Camera/HumanCamButtonController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Foraging/ItemSO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Features/Camera/HumanCamButton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Humans/HumanVisualisers.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Humans/HumanAnimController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Bees/BeeVisualiser.cs" root0="FORCE_HIGHLIGHTING" />
@@ -56,21 +58,23 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanMove.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanAIState.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanOffensive.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanBrain.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/CameraManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/HumanCam.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/UI Anims/CamSettingAnimController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanDefensive.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanObjective.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/General/ObjPool.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Hive.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveResources.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Camera/HumanCamButtonController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Camera/HumanCamButton.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanBrain.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -154,6 +158,7 @@
       <workItem from="1613531297473" duration="5927000" />
       <workItem from="1613543075546" duration="1019000" />
       <workItem from="1613544816775" duration="1798000" />
+      <workItem from="1613547200186" duration="1534000" />
     </task>
     <servers />
   </component>

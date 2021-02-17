@@ -129,14 +129,10 @@ public class HumanBrain : MonoBehaviour
                 case 3:
                     SetState(new HumanDrop(this));
                     break;
-                default:
-                    print("Error: human behaviour");
-                    break;
             }
         }
         
         _currentState = _potentialState;
-        print(_currentState.ToString());
     }
 
     private void SetState(HumanAIState state)
