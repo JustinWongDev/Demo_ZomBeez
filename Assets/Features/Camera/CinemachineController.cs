@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using UnityEngine;
 
 public class CinemachineController : MonoBehaviour
@@ -6,17 +7,19 @@ public class CinemachineController : MonoBehaviour
     [SerializeField] private CinemachineBrain camBrain;
     [SerializeField] private CinemachineVirtualCamera[] camsBasic = null;    //0 menu; 1 default game
     [SerializeField] private CinemachineVirtualCamera[] camsTutorial = null; //0 hiveController; 1 depot; 2 caches; book
-    [SerializeField] private CinemachineVirtualCamera camHuman = null;       //0 hiveController; 1 depot; 2 caches; book
+    [SerializeField] private CinemachineClearShot facilityCamController = null;
 
-    public void SetCamToHuman()
+    private HumanController human = null;
+
+    public void SetTargetHuman()
     {
-        //Chase/Lead camera view
-        //camHuman.Priority = 10;
-        //camHuman.m_LookAt = FindObjectOfType<HumanController>().transform;
+        this.human = FindObjectOfType<HumanController>();
+        facilityCamController.m_LookAt = human.transform;
+    }
 
-        //Security camera view
-        // camHuman.Priority = 10;
-        // camHuman.m_LookAt = FindObjectOfType<HumanController>().transform;
+    public void SetToFacilityCams()
+    {
+        facilityCamController.Priority = 20;
     }
 
     public void SwitchToCam(int index)

@@ -69,8 +69,8 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveResources.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -153,6 +153,7 @@
       <workItem from="1613526483493" duration="764000" />
       <workItem from="1613531297473" duration="5927000" />
       <workItem from="1613543075546" duration="1019000" />
+      <workItem from="1613544816775" duration="1798000" />
     </task>
     <servers />
   </component>
