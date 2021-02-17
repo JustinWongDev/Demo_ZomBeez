@@ -54,21 +54,28 @@ public class HiveController : MonoBehaviour
     public List<HumanController> DetectedHumans => detectedHumans;
     public List<HumanController> ActiveHumans => activeHumans;
 
-    #region Brains Foraging Management
     void PeriodicHumanSort()
     {
-        //Determine best-resource human
-        if (detectedHumans.Count > 0) // && Time.time > forageTimer
+        //Sort humans in decreasing resource amount
+        detectedHumans.Sort(delegate (HumanController a, HumanController b)
         {
-            //Sort humans in decreasing resource amount
-            detectedHumans.Sort(delegate (HumanController a, HumanController b)
-            {
-                return (b.Settings.Brains).CompareTo(a.Settings.Brains);
-            });
+            return (b.Settings.Brains).CompareTo(a.Settings.Brains);
+        });
 
-            detectedHumans = detectedHumans.Distinct().ToList();
-            //forageTimer = Time.time + forageTime;
-            InstructIdles();
+        detectedHumans = detectedHumans.Distinct().ToList();
+        //forageTimer = Time.time + forageTime;
+        
+        //Determine best-resource human
+        if (detectedHumans.Count <= 0) // && Time.time > forageTimer
+            return;
+
+        if (detectedHumans.Count < 3)
+        {
+            InstructIdles(detectedHumans.Count);
+        }
+        else
+        {
+            InstructIdles(3);
         }
     }
 
@@ -86,23 +93,51 @@ public class HiveController : MonoBehaviour
         detectedHumans.Sort((h1,h2)=>h1.Settings.Brains.CompareTo(h2.Settings.Brains));
     }
 
-    void InstructIdles()
+    void InstructIdles(int numHumanTargets)
     {
         SortHarvestTargets();
         
-        if(detectedHumans[0].Settings.Brains < 3) return;
-        
-        foreach (Worker bee in workers)
-        {
-            if (bee.beeBehaviour == Worker.BeeBehaviours.Idle)
-            {
-                bee.beeBehaviour = Worker.BeeBehaviours.Forage;
-                bee.target = detectedHumans[0]?.gameObject;
-                bee.humanEmpty = false;
-            }
-        }
+        // List<Worker> list1 = new List<Worker>();
+        // List<Worker> list2 = new List<Worker>();
+        // List<Worker> list3 = new List<Worker>();
+        // List<List<Worker>> listList = new List<List<Worker>>() {[0] = new List<Worker>(), [1] = new List<Worker>(), [2] = new List<Worker>()};
+        //
+        // List<GameObject> listTargets = new List<GameObject>();
+        // for (int i = 0; i < numHumanTargets; i++)
+        // {
+        //     listTargets[i] = detectedHumans[i].gameObject;
+        // }
+        //
+        // int segmentInt = Mathf.FloorToInt(workers.Count / numHumanTargets);
+        // int numToTransfer = 0;
+        //
+        // for (int i = 0; i < numHumanTargets; i++)
+        // {
+        //     numToTransfer += segmentInt;
+        //     
+        //     for (int j = 0; j < numToTransfer; j++)
+        //     {
+        //         if (numToTransfer <= workers.Count)
+        //         {
+        //             workers[numToTransfer].target = listTargets[numHumanTargets];
+        //             //listList[numHumanTargets][j] = workers[numToTransfer];
+        //             listList[numHumanTargets].Add(workers[numToTransfer]);
+        //         }
+        //     }
+        // }
+        //
+        // foreach (List<Worker> bee in listList)
+        // {
+        //     foreach (Worker b in bee)
+        //     {
+        //         if (b.beeBehaviour == Worker.BeeBehaviours.Idle)
+        //         {
+        //             b.beeBehaviour = Worker.BeeBehaviours.Forage;
+        //             b.humanEmpty = false;
+        //         }
+        //     }
+        // }
     }
-    #endregion
 
     private void SetScouts()
     {

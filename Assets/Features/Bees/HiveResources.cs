@@ -10,6 +10,7 @@ public class HiveResources : MonoBehaviour
     [SerializeField] private  Material empty = null;
     [SerializeField] private  Material full = null;
     
+    [Header("Variables")]
     [SerializeField] private float forageTime = 10.0f;
     [SerializeField] private float jellyTime = 10.0f;
     [SerializeField] private int resourceToJellyRatio = 10;

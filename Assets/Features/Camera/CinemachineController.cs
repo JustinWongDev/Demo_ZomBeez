@@ -10,8 +10,9 @@ public class CinemachineController : MonoBehaviour
 
     public void SetCamToHuman()
     {
-        camHuman.Priority = 10;
-        camHuman.m_LookAt = FindObjectOfType<HumanController>().transform;
+        //Chase/Lead camera view
+        //camHuman.Priority = 10;
+        //camHuman.m_LookAt = FindObjectOfType<HumanController>().transform;
 
         //Security camera view
         // camHuman.Priority = 10;
