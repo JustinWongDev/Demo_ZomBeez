@@ -265,7 +265,7 @@ public class Worker : Enemy
                 //ADD BEE TO DRONE LIST
                 //REMOVE BEE FROM SCOUT LIST
 
-                hive.detectedHumans.Add(newHuman);
+                hive.AddDetectedHuman(newHuman);
 
                 newHumanResource = 0;
                 newHuman = null;
@@ -278,11 +278,11 @@ public class Worker : Enemy
     private HumanController DetectNewHuman()
     {
         //Go through all active humans, within detection radius, dropped, and not already detected 
-        foreach (HumanController human in hive.activeHumans)
+        foreach (HumanController human in hive.ActiveHumans)
         {
             if (Vector3.Distance(transform.position, human.transform.position) <= BeeSettings.DetectionRad &&
                 !human.GetComponent<Droppable>() &&
-                !hive.detectedHumans.Contains(human))
+                !hive.DetectedHumans.Contains(human))
             {
                 newHuman = human;
                 return newHuman;

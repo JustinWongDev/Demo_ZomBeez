@@ -2328,7 +2328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &163348234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3950,7 +3950,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25.9
+  m_fontSize: 36.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5032,7 +5032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &374421115
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8055,9 +8055,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 596796773}
+  - component: {fileID: 596796775}
   - component: {fileID: 596796772}
   - component: {fileID: 596796774}
-  - component: {fileID: 596796775}
   m_Layer: 0
   m_Name: Hive
   m_TagString: Untagged
@@ -8077,24 +8077,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b46738613726e45abcd10ae0300df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelParent: {fileID: 1626085865}
+  empty: {fileID: 2100000, guid: aef70827d00b2ae4bbf7a65b3e9ecf19, type: 2}
+  full: {fileID: 2100000, guid: 4468f9732f3ee4846a648136998bf07e, type: 2}
   initCount: 20
   maxScoutCount: 10
   maxAttackerCount: 5
-  workers: []
-  scouts: []
-  attackers: []
   forageTime: 10
   collectedResource: 0
   initJelly: 3
   jellyTime: 10
   resourceToJellyRatio: 10
-  beePrefab: {fileID: 2152678096591918965, guid: d5f6b260a29b2e94086c11c0e35d76fd,
-    type: 3}
-  modelParent: {fileID: 1626085865}
-  empty: {fileID: 2100000, guid: aef70827d00b2ae4bbf7a65b3e9ecf19, type: 2}
-  full: {fileID: 2100000, guid: 4468f9732f3ee4846a648136998bf07e, type: 2}
-  activeHumans: []
-  detectedHumans: []
 --- !u!4 &596796773
 Transform:
   m_ObjectHideFlags: 0
@@ -8135,10 +8128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5d4091e3c264f94ba3f9461bee89a68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledObjs: []
   objectToPool: {fileID: 2152678096591918965, guid: d5f6b260a29b2e94086c11c0e35d76fd,
     type: 3}
   amountToPool: 30
+  pooledObjs: []
 --- !u!1 &602465058
 GameObject:
   m_ObjectHideFlags: 0
@@ -15318,7 +15311,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1256561555
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20161,7 +20154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1603728549
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20426,7 +20419,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.4
+  m_fontSize: 39.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -17,6 +17,6 @@ public class HumanManager : MonoBehaviour
         HumanController prefab = Instantiate(humanPrefab);
         prefab.name = scriptables[index].name;
         prefab.Initialise(scriptables[index]);
-        Hive.live.activeHumans.Add(prefab);
+        Hive.live.AddActiveHuman(prefab);
     }
 }

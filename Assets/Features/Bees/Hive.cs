@@ -15,13 +15,18 @@ public class Hive : MonoBehaviour
     }
     #endregion
 
+    [Header("Models")]
+    [SerializeField] private GameObject modelParent = null;
+    [SerializeField] private  Material empty = null;
+    [SerializeField] private  Material full = null;
+    
     [Header("Bees")]
-    public int initCount = 5;
-    public int maxScoutCount = 5;
-    public int maxAttackerCount = 2;
-    public List<Worker> workers = new List<Worker>();
-    public List<Worker> scouts = new List<Worker>();
-    public List<Worker> attackers = new List<Worker>();
+    [SerializeField] private int initCount = 5;
+    [SerializeField] private int maxScoutCount = 5;
+    [SerializeField] private int maxAttackerCount = 2;
+    private List<Worker> workers = new List<Worker>();
+    private List<Worker> scouts = new List<Worker>();
+    private List<Worker> attackers = new List<Worker>();
 
     [Header("Brains")]
     public float forageTime = 10.0f;
@@ -33,15 +38,8 @@ public class Hive : MonoBehaviour
     public int resourceToJellyRatio = 10;
     private float jellyTimer = 0;
 
-    [Header("Models")]
-    public GameObject beePrefab;
-    public GameObject modelParent;
-    public Material empty;
-    public Material full;
-
-    [Header("Humans")]
-    public List<HumanController> activeHumans = new List<HumanController>();
-    public List<HumanController> detectedHumans = new List<HumanController>();
+    private List<HumanController> activeHumans = new List<HumanController>();
+    private List<HumanController> detectedHumans = new List<HumanController>();
 
     private void Start()
     {
@@ -66,6 +64,14 @@ public class Hive : MonoBehaviour
         activeHumans.Add(newHuman);
     }
 
+    public void AddDetectedHuman(HumanController newHuman)
+    {
+        detectedHumans.Add(newHuman);
+    }
+
+    public List<HumanController> DetectedHumans => detectedHumans;
+    public List<HumanController> ActiveHumans => activeHumans;
+
     #region Brains Foraging Management
     void PeriodicHumanSort()
     {
@@ -83,19 +89,34 @@ public class Hive : MonoBehaviour
             InstructIdles();
         }
     }
+
+    void SortHarvestTargets()
+    {
+        if (detectedHumans.Count == 0)
+            return;
+        
+        foreach (HumanController human in detectedHumans)
+        {
+            if (!human.enabled)
+                detectedHumans.Remove(human);
+        }
+
+        detectedHumans.Sort((h1,h2)=>h1.Settings.Brains.CompareTo(h2.Settings.Brains));
+    }
+
     void InstructIdles()
     {
-        //if(detectedHumans[0].CurrentBrains < 3) return;
+        SortHarvestTargets();
+        
         if(detectedHumans[0].Settings.Brains < 3) return;
         
-        //Direct all idle workers
-        foreach (Worker worker in workers)
+        foreach (Worker bee in workers)
         {
-            if (worker.beeBehaviour == Worker.BeeBehaviours.Idle)
+            if (bee.beeBehaviour == Worker.BeeBehaviours.Idle)
             {
-                worker.beeBehaviour = Worker.BeeBehaviours.Forage;
-                worker.target = detectedHumans[0].gameObject;
-                worker.humanEmpty = false;
+                bee.beeBehaviour = Worker.BeeBehaviours.Forage;
+                bee.target = detectedHumans[0]?.gameObject;
+                bee.humanEmpty = false;
             }
         }
     }
@@ -171,9 +192,10 @@ public class Hive : MonoBehaviour
         for (int i = 0; i < initCount; i++)
         {
             GameObject bee = ObjPool.SharedInstance.GetPooledObj();
-            if (bee == null)
-                return;
+            // if (bee == null)
+            //     return;
 
+            
             bee.transform.position = this.transform.position;
             bee.transform.rotation = this.transform.rotation;
             bee.SetActive(true);

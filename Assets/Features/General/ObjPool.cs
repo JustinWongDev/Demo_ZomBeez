@@ -13,9 +13,11 @@ public class ObjPool : MonoBehaviour
     void Awake()
     {
         SharedInstance = this;
+        
+        SpawnPoolObjs();
     }
 
-    void Start()
+    private void SpawnPoolObjs()
     {
         pooledObjs = new List<GameObject>();
         GameObject temp;
@@ -29,7 +31,7 @@ public class ObjPool : MonoBehaviour
 
     public GameObject GetPooledObj()
     {
-        for (int i = 0; i < amountToPool; i++)
+        for (int i = 0; i < pooledObjs.Count; i++)
         {
             if (!pooledObjs[i].activeInHierarchy)
                 return pooledObjs[i];
