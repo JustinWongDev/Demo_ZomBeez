@@ -34,6 +34,7 @@
           <e p="Camera" t="Include">
             <e p="CameraManager.cs" t="Include" />
             <e p="CinemachineController.cs" t="Include" />
+            <e p="FacCamCanvasController.cs" t="Include" />
             <e p="HumanCam.cs" t="Include" />
             <e p="HumanCamButton.cs" t="Include" />
             <e p="HumanCamButtonController.cs" t="Include" />
@@ -48,6 +49,7 @@
           <e p="GameManager.cs" t="Include" />
           <e p="General" t="Include">
             <e p="DisableInGame.cs" t="Include" />
+            <e p="EnableInGame.cs" t="Include" />
             <e p="FaceCamera.cs" t="Include" />
             <e p="ObjPool.cs" t="Include" />
           </e>
