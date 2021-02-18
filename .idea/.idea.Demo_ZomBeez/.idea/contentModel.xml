@@ -35,7 +35,6 @@
             <e p="CameraManager.cs" t="Include" />
             <e p="CinemachineController.cs" t="Include" />
             <e p="FacCamCanvasController.cs" t="Include" />
-            <e p="HumanCam.cs" t="Include" />
             <e p="HumanCamButton.cs" t="Include" />
             <e p="HumanCamButtonController.cs" t="Include" />
           </e>

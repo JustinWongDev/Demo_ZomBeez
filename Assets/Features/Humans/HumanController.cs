@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
@@ -7,11 +8,12 @@ public class HumanController : MonoBehaviour
 {
     [SerializeField] private HumanSettings _settings = null;
     [SerializeField] private GameObject _modelHolder = null;
-    [SerializeField] private GameObject _cam = null;
     
     private HumanBrain _brain;
     private HumanAnimController _animController;
     private HumanInventory _inventory;
+
+    public event Action OnHumanDeath; 
 
     public HumanInventory Inventory => _inventory;
     public HumanSettings Settings {get {return _settings;}}
@@ -47,56 +49,45 @@ public class HumanController : MonoBehaviour
 
         if (_settings.Brains <= 0)
         {
-            Settings.SetIsDead(true);
-            _animController.Bool_IsDead(true);
-            Destroy(this.gameObject, 5.0f);
+            Death();
         }
     }
 
-    public void TakeDamage(float dmg)
+    public void ReceiveDamage(float initialDamage)
     {
-    //Armour calc
-        float val = Settings.Armour - dmg;
-        if (val >= 0)
+        float remainingDamage = Settings.Armour - initialDamage;
+        if (remainingDamage >= 0)
         {
-            Settings.SetArmour(val);
+            Settings.SetArmour(remainingDamage);
             return;
         }
-        else if (val < 0)
+        else if (remainingDamage < 0)
         {
             Settings.SetArmour(0);
-            
-    //Health calc
-        Settings.SetHealth(Settings.Health + val);
-            
-    //Death logic
+            Settings.SetHealth(Settings.Health + remainingDamage);
+        
             if (Settings.Health <= 0)
             {
-                Settings.SetIsDead(true);
-                _animController.Bool_IsDead(true);
-                Destroy(this.gameObject, 5.0f);
+                Death();
             }
         }
     }
 
-    public GameObject ReturnCamPos()
-    {
-        return _cam;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        //Aware of bees?
-        if (Settings.GetIsAware() == false)
-        {
-            Settings.SetIsAware(other.GetComponent<Worker>());
-        }
-        
-        //Jelly?
         if (other.gameObject.GetComponent<HiveResources>())
         {
             other.gameObject.GetComponent<HiveResources>().LoseJelly();
             Settings.SetHasJelly(true);
         }
+    }
+
+    private void Death()
+    {
+        Settings.SetIsDead(true);
+        _animController.Bool_IsDead(true);
+        OnHumanDeath?.Invoke();
+        HiveController.live.RemoveHuman(this);
+        Destroy(this.gameObject, 5.0f);
     }
 }

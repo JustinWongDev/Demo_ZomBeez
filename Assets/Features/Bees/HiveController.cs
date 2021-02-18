@@ -41,6 +41,12 @@ public class HiveController : MonoBehaviour
         PeriodicHumanSort();
     }
 
+    public void RemoveHuman(HumanController deadHuman)
+    {
+        activeHumans.Remove(deadHuman);
+        detectedHumans.Remove(deadHuman);
+    }
+
     public void AddActiveHuman(HumanController newHuman)
     {
         activeHumans.Add(newHuman);

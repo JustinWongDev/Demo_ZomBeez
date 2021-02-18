@@ -89,16 +89,7 @@ public class HumanSettings
     {  return _hasJelly; }
     public void SetHasJelly(bool value)
     { _hasJelly = value; }
-    
-    [SerializeField]
-    private bool _isAware = false;
-    public bool GetIsAware() 
-    {  return _isAware; }
-    public void SetIsAware(bool value)
-    { _isAware = value; }
 
-    
-    
     public bool HealthPercentCheck(float percentage)
     {
         return (Health / 100) <= percentage;

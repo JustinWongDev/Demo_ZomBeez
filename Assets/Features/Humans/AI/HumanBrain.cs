@@ -15,22 +15,22 @@ public class HumanBrain : MonoBehaviour
     private int[,] myDFA = new int [3, 4];
     private readonly int[,] _dfaCiv = new int[,]
     {
-        {1, 0, 0, 2},        //objective
+        {1, 0, 2, 2},        //objective
         {0, -1,-1,-1},       //offense
-        {1, 2, 2, 2},        //defense
+        {1, 0, 2, 2},        //defense
     };
 
     private readonly int[,] _dfaKeeper = new int[,]
     {
-        {1, 0, 0, 1},     
-        {1, 3, 1, 1},        
-        {1, 3, 3, 1},        
+        {1, 0, 1, 2},     
+        {1, 0, 1, 2},        
+        {1, 0, 1, 2},        
     };
     
     private readonly int[,] _dfaSadist = new int[,]
     {
-        {1, 0, 0, 1},        
-        {1, 0, 0, 1},       
+        {1, 0, 1, 1},        
+        {1, 1, 1, 1},       
         {0, -1, -1, -1},       
     };
     
@@ -138,10 +138,7 @@ public class HumanBrain : MonoBehaviour
     private void SetState(HumanAIState state)
     {
         _currentAIState?.LeaveState();
-        
-        // if(_currentAIState != null)
-        //     Debug.Log(_currentAIState.ToString());
-        
+
         _currentAIState = state;
     }
 }

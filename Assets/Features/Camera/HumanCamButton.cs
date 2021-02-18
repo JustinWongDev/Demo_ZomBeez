@@ -8,6 +8,7 @@ public class HumanCamButton : MonoBehaviour
     public void Initialise(HumanController human)
     {
         this.human = human;
+        human.OnHumanDeath += RemoveButton;
         GetComponentInChildren<TextMeshProUGUI>().text = human.name;
     }
 
@@ -19,5 +20,11 @@ public class HumanCamButton : MonoBehaviour
     public void SetTargetToDefault()
     {
         CinemachineController.Instance.SetTargetToMiddle();
+    }
+
+    private void RemoveButton()
+    {
+        human.OnHumanDeath -= RemoveButton;
+        Destroy(this.gameObject);
     }
 }
