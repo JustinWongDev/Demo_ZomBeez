@@ -8,13 +8,13 @@ public class HumanController : MonoBehaviour
 {
     [SerializeField] private HumanSettings _settings = null;
     [SerializeField] private GameObject _modelHolder = null;
+    [SerializeField] private GameObject[] _abilityPrefabs = null;
     
     private HumanBrain _brain;
     private HumanAnimController _animController;
     private HumanInventory _inventory;
 
-    public event Action OnHumanDeath; 
-
+    public event Action OnHumanDeath;
     public HumanInventory Inventory => _inventory;
     public HumanSettings Settings {get {return _settings;}}
 
@@ -31,11 +31,6 @@ public class HumanController : MonoBehaviour
         GetComponent<Droppable>().Initialise();
         _animController.Initialise();
         _brain.Initialise(so);
-    }
-
-    public void Attack()
-    {
-        
     }
 
     public void UseAbility()

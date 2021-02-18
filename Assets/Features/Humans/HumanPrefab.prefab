@@ -614,6 +614,7 @@ GameObject:
   - component: {fileID: 6481979539539619236}
   - component: {fileID: 1718128901503343630}
   - component: {fileID: 3864593158007964525}
+  - component: {fileID: 2595423606793699118}
   m_Layer: 0
   m_Name: HumanPrefab
   m_TagString: Untagged
@@ -719,11 +720,10 @@ MonoBehaviour:
     _currentSpeed: 20
     _attackTime: 1
     _abilityTime: 5
+    _collectTime: 3
     _isDead: 0
     _hasJelly: 0
-    _isAware: 0
   _modelHolder: {fileID: 8823551780943341613}
-  _cam: {fileID: 9125830087000951576}
 --- !u!114 &8823551778967807064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -800,6 +800,18 @@ MonoBehaviour:
   _colours:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.9882878, g: 1, b: 0, a: 1}
+--- !u!114 &2595423606793699118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823551778967807142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c7b3ca1a5548041a1bec40d09921fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8823551780943341613
 GameObject:
   m_ObjectHideFlags: 0

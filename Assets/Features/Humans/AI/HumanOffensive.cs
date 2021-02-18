@@ -4,6 +4,7 @@ public class HumanOffensive : HumanAIState
 {
     private float attackTimer = 0.0f;
     private float abilityTimer  = 0.0f;
+    private Worker attackTarget = null;
     
     public HumanOffensive(HumanBrain humanBrain) : base(humanBrain)
     {
@@ -14,6 +15,11 @@ public class HumanOffensive : HumanAIState
         
     }
 
+    public void SetTarget(Worker targ)
+    {
+        attackTarget = targ;
+    }
+    
     public override void Tick()
     {
         Timers();
@@ -27,8 +33,13 @@ public class HumanOffensive : HumanAIState
 
         if (attackTimer >= _human.Settings.AttackTime) //&& no ability/attack anims playing
         {
-            _human.Attack();
-            abilityTimer = 0.0f;
+            if(Vector3.Distance(_humanBrain.transform.position, attackTarget.transform.position) > _human.Settings.Reach)
+                _move.SetTarget(attackTarget.transform);
+            else
+            {
+                attackTarget.takeDamage(_human.Settings.Damage);
+                attackTimer = 0.0f;
+            }
         }
     }
 
@@ -37,6 +48,7 @@ public class HumanOffensive : HumanAIState
         if (abilityTimer <= _human.Settings.AbilityTime)
         {
             abilityTimer += Time.deltaTime;
+            return;
         }
         
         if (attackTimer <= _human.Settings.AttackTime)
