@@ -70,7 +70,6 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveResources.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/HumanCamButtonController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/HumanCamButton.cs" />
@@ -78,6 +77,7 @@
       <option value="$PROJECT_DIR$/Assets/Features/General/EnableInGame.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/FacCamCanvasController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -163,6 +163,7 @@
       <workItem from="1613544816775" duration="1798000" />
       <workItem from="1613547200186" duration="1534000" />
       <workItem from="1613604652262" duration="2395000" />
+      <workItem from="1613607750992" duration="1593000" />
     </task>
     <servers />
   </component>

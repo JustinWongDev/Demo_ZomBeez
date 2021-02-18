@@ -93,25 +93,62 @@ public class HiveController : MonoBehaviour
         detectedHumans.Sort((h1,h2)=>h1.Settings.Brains.CompareTo(h2.Settings.Brains));
     }
 
-    void InstructIdles(int numHumanTargets)
+    void InstructIdles(int humanTargetIndex)
     {
         SortHarvestTargets();
         
+        List<GameObject> listTargets = new List<GameObject>();
+        for (int i = 0; i < humanTargetIndex; i++)
+        {
+            listTargets.Add(detectedHumans[i].gameObject);
+        }
+        
+        int segmentInt = Mathf.FloorToInt(workers.Count / humanTargetIndex);
+        int numToInstruct = 0;
+
+        for (int i = 0; i < humanTargetIndex; i++)
+        {
+            numToInstruct += segmentInt;
+
+            for (int j = 0; j < numToInstruct; j++)
+            {
+                if (workers[j].beeBehaviour == Worker.BeeBehaviours.Idle)
+                {
+                    workers[j].target = listTargets[i];
+                    workers[j].beeBehaviour = Worker.BeeBehaviours.Forage;
+                    workers[j].humanEmpty = false;
+                }
+            }
+
+            // foreach (List<Worker> bee in listList)
+            // {
+            //     foreach (Worker b in bee)
+            //     {
+            //         if (b.beeBehaviour == Worker.BeeBehaviours.Idle)
+            //         {
+            //             b.beeBehaviour = Worker.BeeBehaviours.Forage;
+            //             b.humanEmpty = false;
+            //         }
+            //     }
+            // }
+
+        }
+
         // List<Worker> list1 = new List<Worker>();
         // List<Worker> list2 = new List<Worker>();
         // List<Worker> list3 = new List<Worker>();
         // List<List<Worker>> listList = new List<List<Worker>>() {[0] = new List<Worker>(), [1] = new List<Worker>(), [2] = new List<Worker>()};
         //
         // List<GameObject> listTargets = new List<GameObject>();
-        // for (int i = 0; i < numHumanTargets; i++)
+        // for (int i = 0; i < humanTargetIndex; i++)
         // {
         //     listTargets[i] = detectedHumans[i].gameObject;
         // }
         //
-        // int segmentInt = Mathf.FloorToInt(workers.Count / numHumanTargets);
+        // int segmentInt = Mathf.FloorToInt(workers.Count / humanTargetIndex);
         // int numToTransfer = 0;
         //
-        // for (int i = 0; i < numHumanTargets; i++)
+        // for (int i = 0; i < humanTargetIndex; i++)
         // {
         //     numToTransfer += segmentInt;
         //     
@@ -119,9 +156,9 @@ public class HiveController : MonoBehaviour
         //     {
         //         if (numToTransfer <= workers.Count)
         //         {
-        //             workers[numToTransfer].target = listTargets[numHumanTargets];
-        //             //listList[numHumanTargets][j] = workers[numToTransfer];
-        //             listList[numHumanTargets].Add(workers[numToTransfer]);
+        //             workers[numToTransfer].target = listTargets[humanTargetIndex];
+        //             //listList[humanTargetIndex][j] = workers[numToTransfer];
+        //             listList[humanTargetIndex].Add(workers[numToTransfer]);
         //         }
         //     }
         // }
