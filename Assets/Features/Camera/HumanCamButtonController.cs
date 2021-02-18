@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HumanCamButtonController : MonoBehaviour
 {
-    [SerializeField] private HumanCamButton prefab;
+    [SerializeField] private HumanCamButton prefab = null;
 
     void Start()
     {

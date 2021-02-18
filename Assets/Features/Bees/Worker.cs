@@ -31,7 +31,7 @@ public class Worker : Enemy
     [Header("Movement")]
     private float adjRotSpeed;
     private Quaternion targetRotation;
-    public GameObject target;
+    private GameObject target;
 
     [Header("Boiding")]
     private Vector3 cohesionPos = new Vector3(0f, 0f, 0f);
@@ -67,6 +67,16 @@ public class Worker : Enemy
     private void Update()
     {
         FSMController();
+    }
+
+    public void SetTarget(GameObject target)
+    {
+        this.target = target;
+    }
+
+    public void RemoveTarget()
+    {
+        target = null;
     }
 
     #region Start up
@@ -176,13 +186,14 @@ public class Worker : Enemy
     private void Forage()
     {
         //Check if resource available or target alive
-        if (target.GetComponent<HumanController>().Settings.Brains <= 0 || target == null)
+        if (target == null)
         {
-            humanEmpty = true;
+            beeBehaviour = BeeBehaviours.Idle;
+            return;
         }
 
         //If full capacity or resource unavailable, return to hiveController, otherwise...
-        if (collectedResource >= BeeSettings.Capacity | humanEmpty)
+        if (collectedResource >= BeeSettings.Capacity)
         {
             MoveTowardsTarget(hiveController.transform.position);
 
@@ -293,32 +304,6 @@ public class Worker : Enemy
 
         //if criteria not met...
         return null;
-
-        // //Go through all active humans
-        // for (int i = 0; i < hiveController.activeHumans.Count; i++)
-        // {
-        //     //Check if human in detect range
-        //     if (Vector3.Distance(transform.position, hiveController.activeHumans[i].transform.position) <= BeeSettings.DetectionRad &&
-        //         !hiveController.activeHumans[i].GetComponent<Droppable>())
-        //     {
-        //         //Find best human 
-        //         if (hiveController.activeHumans[i].GetComponent<HumanMove>().CurrentBrains > newHumanResource)
-        //         {
-        //             newHuman = hiveController.activeHumans[i];
-        //         }
-        //     }
-        // }
-        //
-        // if (hiveController.detectedHumans.Contains(newHuman))
-        // {
-        //     return null;
-        // }
-        // else
-        // {
-        //     return newHuman;
-        // }
-
-
     }
 #endregion
 

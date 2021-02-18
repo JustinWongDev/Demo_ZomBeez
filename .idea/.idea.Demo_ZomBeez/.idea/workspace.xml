@@ -65,10 +65,8 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanObjective.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/General/ObjPool.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Hive.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveResources.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Camera/HumanCamButtonController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/General/EnableInGame.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/FacCamCanvasController.cs" />
@@ -76,8 +74,10 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanBrain.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/HumanCamButton.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Camera/HumanCamButtonController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -166,6 +166,7 @@
       <workItem from="1613607750992" duration="1593000" />
       <workItem from="1613614152061" duration="379000" />
       <workItem from="1613614711327" duration="2533000" />
+      <workItem from="1613621703477" duration="1106000" />
     </task>
     <servers />
   </component>
