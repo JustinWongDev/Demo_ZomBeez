@@ -30,4 +30,16 @@ public class LinkedNode : MonoBehaviour
             Debug.DrawLine(transform.position, linkedNode.transform.position, Color.green);
         }
     }
+    
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position, 1);
+
+        for (int i = 0; i < linkedNodeObjects.Length; i++)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawSphere(linkedNodeObjects[i].transform.position, 1);
+        }
+    }
 }

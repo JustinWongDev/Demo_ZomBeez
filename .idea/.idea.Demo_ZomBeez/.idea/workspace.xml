@@ -79,6 +79,7 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanAIState.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanOffensive.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Nodes/LinkedNode.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -169,6 +170,8 @@
       <workItem from="1613614711327" duration="2533000" />
       <workItem from="1613621703477" duration="1106000" />
       <workItem from="1613624569075" duration="2419000" />
+      <workItem from="1613910061659" duration="749000" />
+      <workItem from="1613910908721" duration="193000" />
     </task>
     <servers />
   </component>
