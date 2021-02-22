@@ -34,7 +34,7 @@ public class HumanOffensive : HumanAIState
         if (attackTimer >= _human.Settings.AttackTime) //&& no ability/attack anims playing
         {
             if(Vector3.Distance(_humanBrain.transform.position, attackTarget.transform.position) > _human.Settings.Reach)
-                _move.SetTarget(attackTarget.transform);
+                _move.SetDestination(attackTarget.transform);
             else
             {
                 attackTarget.takeDamage(_human.Settings.Damage);

@@ -17,7 +17,7 @@ public class HumanDefensive : HumanAIState
 
         if (_move.AtDestination())
         {
-            _move.SetTarget(_move.ClosestActiveCache());
+            _move.SetDestination(_move.ClosestActiveCache());
         }
     }
 }

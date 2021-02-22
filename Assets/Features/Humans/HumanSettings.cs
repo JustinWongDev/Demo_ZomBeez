@@ -97,6 +97,6 @@ public class HumanSettings
 
     public bool HealthPercentCheck(float percentage)
     {
-        return (Health / 100) <= percentage;
+        return (Health / 100.0f) <= percentage;
     }
 }

@@ -83,13 +83,4 @@ public class HiveResources : MonoBehaviour
     {
         collectedBrains += val;
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.GetComponent<HumanController>() && jellyAmount > 0)
-        {
-            LoseJelly();
-            other.GetComponent<HumanController>().Settings.SetHasJelly(true);
-        }
-    }
 }

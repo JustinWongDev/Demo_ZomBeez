@@ -36,4 +36,14 @@ public class HumanAnimController : MonoBehaviour
     {
         _animator.SetTrigger("isGrounded");
     }
+
+    public void Trig_Collect()
+    {
+        _animator.SetTrigger("isCollecting");
+    }
+    
+    public void Trig_Deposit()
+    {
+        _animator.SetTrigger("isDepositing");
+    }
 }

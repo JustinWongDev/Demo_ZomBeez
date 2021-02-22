@@ -8,6 +8,8 @@ public class HumanMove : NavAgent
     private Transform _target = null;
     private HumanController _controller = null;
     private HumanAnimController _animController = null;
+
+    private bool canMove = true;
     
     public Pathfinding CurrentPathing => _currentPathing;
 
@@ -28,13 +30,9 @@ public class HumanMove : NavAgent
         Move();
     }
     
-    public void SetTarget(Transform newTarget)
+    public void SetDestination(Transform newTarget)
     {
         _target = newTarget;
-    }
-    public Transform GetTarget()
-    {
-        return _target;
     }
 
     public void SetPathFinding(Pathfinding val) => _currentPathing = val;
@@ -128,6 +126,11 @@ public class HumanMove : NavAgent
         }
     }
 
+    public bool NearDestination(float distance)
+    {
+        return Vector3.Distance(transform.position, _target.transform.position) < distance;
+    }
+
     void Move()
     {
         if (AbleToMove())
@@ -169,7 +172,7 @@ public class HumanMove : NavAgent
     }
     private bool AbleToMove()
     {
-        if (currentPath.Count > 0 && !_controller.Settings.GetIsDead() && !GetComponent<Droppable>())
+        if (currentPath.Count > 0 && !_controller.Settings.GetIsDead() && !GetComponent<Droppable>() && canMove)
             return true;
         return false;
     }
@@ -179,6 +182,11 @@ public class HumanMove : NavAgent
         var step = _controller.Settings.GetCurrentSpeed() * Time.deltaTime;
         var newDir = Vector3.RotateTowards(currentPos.forward, targetDir, step, 0.0f);
         transform.rotation = Quaternion.LookRotation(newDir);
+    }
+
+    public void SetCanMove(bool val)
+    {
+        canMove = val;
     }
 }
 

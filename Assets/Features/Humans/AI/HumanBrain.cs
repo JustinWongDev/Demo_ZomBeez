@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class HumanBrain : MonoBehaviour
@@ -34,9 +35,9 @@ public class HumanBrain : MonoBehaviour
         {0, -1, -1, -1},       
     };
     
-    private HumanController _controller;
-    private HumanSO so;
-    private HumanAIState _currentAIState;
+    private HumanController _controller = null;
+    private HumanSO so = null;
+    private HumanAIState _currentAIState = null;
     private bool isDropped => !GetComponent<Droppable>();
     
     public int CurrentBehaviour => _currentBehaviour;
@@ -50,8 +51,9 @@ public class HumanBrain : MonoBehaviour
             return;
         }
         
-        Behaviour();
-        _currentAIState?.Tick();
+        BehaviourSwitching();
+        _currentAIState = new HumanObjective(this);
+        _currentAIState.Tick();
     }
 
     public void Initialise(HumanSO val)
@@ -88,7 +90,7 @@ public class HumanBrain : MonoBehaviour
         
         _controller = GetComponent<HumanController>();
         
-        Behaviour();
+        BehaviourSwitching();
     }
     
     private int DfaLogic()
@@ -104,7 +106,7 @@ public class HumanBrain : MonoBehaviour
             return 0;
     }
 
-    private void Behaviour()
+    private void BehaviourSwitching()
     {
         //Check for new state
         if (_potentialState == _currentState)
