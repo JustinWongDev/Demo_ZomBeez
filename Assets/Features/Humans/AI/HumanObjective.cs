@@ -13,19 +13,21 @@ public class HumanObjective : HumanAIState
 
     public override void Tick()
     {
-       
         if (_human.Settings.GetHasJelly())
         {
             _move.SetDestination(_move.DepotLocation());
+            _move.Moveable(false);
 
             if (_move.NearDestination(20.0f))
             {
+                Debug.Log("2");
                 _animController.Trig_Deposit();
-                _move.SetCanMove(false);
+                _move.Moveable(false);
 
                 if (_animController.IsAnimOnBlendTree())
                 {
-                    _move.SetCanMove(true);
+                    Debug.Log("3");
+                    _move.Moveable(true);
                     _human.Settings.SetHasJelly(false);
                 }
             }
@@ -39,12 +41,12 @@ public class HumanObjective : HumanAIState
             if (_move.NearDestination(20.0f))
             {
                 _animController.Trig_Collect();
-                _move.SetCanMove(false);
-
+                _move.Moveable(false);
+                
                 if (_animController.IsAnimOnBlendTree())
                 {
+                    _move.Moveable(true);
                     _human.Settings.SetHasJelly(true);
-                    _move.SetCanMove(true);
                 }
             }
         }

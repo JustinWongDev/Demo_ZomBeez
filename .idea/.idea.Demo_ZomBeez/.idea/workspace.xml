@@ -60,7 +60,6 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Foraging/ForageSite.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanSeek.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/Depot.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanVisualisers.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/NavAgent.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Camera/HumanCam.cs" />
@@ -85,9 +84,10 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanAIState.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanBrain.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanObjective.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanAnimController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/Depot.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanMove.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanObjective.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -185,6 +185,7 @@
       <workItem from="1613911410997" duration="840000" />
       <workItem from="1613914072233" duration="435000" />
       <workItem from="1613963588577" duration="7415000" />
+      <workItem from="1613977733383" duration="3234000" />
     </task>
     <servers />
   </component>

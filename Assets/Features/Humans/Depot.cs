@@ -21,7 +21,7 @@ public class Depot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<HumanController>().Settings.GetHasJelly())
+        if (other.GetComponent<HumanController>())
         {
             other.GetComponent<HumanController>().Settings.SetHasJelly(false);
             _jellyAmount++;

@@ -5,19 +5,17 @@ public enum Pathfinding { None, Astar };
 public class HumanMove : NavAgent
 {
     private Pathfinding _currentPathing = Pathfinding.None;
-    private Transform _target = null;
+    private Transform _destination = null;
     private HumanController _controller = null;
     private HumanAnimController _animController = null;
 
-    private bool canMove = true;
-    
     public Pathfinding CurrentPathing => _currentPathing;
 
     private void Start()
     {
         SetGraphNodes();
 
-        _target = HiveLocation();
+        _destination = HiveLocation();
         
         _controller = GetComponent<HumanController>();
         _animController = GetComponent<HumanAnimController>();
@@ -32,7 +30,7 @@ public class HumanMove : NavAgent
     
     public void SetDestination(Transform newTarget)
     {
-        _target = newTarget;
+        _destination = newTarget;
     }
 
     public void SetPathFinding(Pathfinding val) => _currentPathing = val;
@@ -47,7 +45,7 @@ public class HumanMove : NavAgent
             case Pathfinding.Astar:
                 if(AtDestination())
                 {
-                    currentPath = AStarSearch(currentPath[currentPathIndex], FindClosestWaypoint(_target));
+                    currentPath = AStarSearch(currentPath[currentPathIndex], FindClosestWaypoint(_destination));
                     currentPathIndex = 0;
                 }
                 break;
@@ -128,7 +126,7 @@ public class HumanMove : NavAgent
 
     public bool NearDestination(float distance)
     {
-        return Vector3.Distance(transform.position, _target.transform.position) < distance;
+        return Vector3.Distance(transform.position, _destination.transform.position) < distance;
     }
 
     void Move()
@@ -172,7 +170,7 @@ public class HumanMove : NavAgent
     }
     private bool AbleToMove()
     {
-        if (currentPath.Count > 0 && !_controller.Settings.GetIsDead() && !GetComponent<Droppable>() && canMove)
+        if (currentPath.Count > 0 && !_controller.Settings.GetIsDead() && !GetComponent<Droppable>())
             return true;
         return false;
     }
@@ -184,9 +182,9 @@ public class HumanMove : NavAgent
         transform.rotation = Quaternion.LookRotation(newDir);
     }
 
-    public void SetCanMove(bool val)
+    public void Moveable(bool val)
     {
-        canMove = val;
+        SetPathFinding(val ? Pathfinding.None : Pathfinding.Astar);
     }
 }
 
