@@ -3,22 +3,23 @@ using UnityEngine;
 
 public class BeeBrain : MonoBehaviour
 {
-    private BeeController beeController;
-    private BeeAIStates BeeAIState => beeController.CurrentAIState;
+    private BeeController bee => GetComponent<BeeController>();
+    private BeeAIStates CurrentState => bee.CurrentAIState;
 
     private void Start()
     {
-        beeController = GetComponent<BeeController>();
-        SetNewState(new BeeIdle(beeController));
+        SetNewState(new BeeIdle(bee));
     }
 
     private void Update()
     {
-        beeController.CurrentAIState.Tick();
+        bee.CurrentAIState.Tick();
     }
 
     public void SetNewState(BeeAIStates newState)
     {
-        beeController.CurrentAIState = newState;
+        BeeAIStates temp = newState;
+        newState.Initialise();
+        bee.CurrentAIState = temp;
     }
 }

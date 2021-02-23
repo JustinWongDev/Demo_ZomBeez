@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class BeeIdle : BeeAIStates
+public class BeeFlee : BeeAIStates
 {
-    public BeeIdle(BeeController bee) : base(bee)
+    public BeeFlee(BeeController bee) : base(bee)
     {
     }
     

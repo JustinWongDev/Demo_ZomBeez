@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GameManager
   - Floor
+  - Human
   layers:
   - Default
   - TransparentFX

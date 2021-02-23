@@ -12,6 +12,9 @@ public class BeeSettings : MonoBehaviour
     
     [SerializeField]private float _health = 100;
     public static float Health => Instance._health;
+    
+    [SerializeField]private float _attackTime = 0.5f;
+    public static float AttackTime => Instance._attackTime;
 
     [Header("Movement")] ////////////////////////////
     [SerializeField] private float _speed = 50.0f;
@@ -63,7 +66,7 @@ public class BeeSettings : MonoBehaviour
     [SerializeField]private float _scoutTime = 5.0f;
     public static float ScoutTime => Instance._scoutTime;
 
-    [SerializeField]private Vector3 _idlePosition = FindObjectOfType<HiveController>().transform.position;
+    [SerializeField] private Vector3 _idlePosition = new Vector3(0, 11.7f, -41.29f);
     public static Vector3 IdlePosition => Instance._idlePosition;
     
     public static BeeSettings Instance { get; private set; }

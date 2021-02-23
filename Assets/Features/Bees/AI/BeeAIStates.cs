@@ -8,6 +8,7 @@ public abstract class BeeAIStates
     protected HiveController hive;
     protected HiveResources hResource;
     
+    public abstract void Initialise();
     public abstract void Tick();
 
     public BeeAIStates(BeeController bee)

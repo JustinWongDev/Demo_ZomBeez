@@ -7,18 +7,33 @@ public class BeeForage : BeeAIStates
     public BeeForage(BeeController bee) : base(bee)
     {
     }
+    
+    public override void Initialise()
+    {
+        bee.Target = hive.ClosestDetectedHuman(bee.transform.position).gameObject;
+    }
 
     public override void Tick()
     {
-        Timers();        
-        
-        if (AbleToForage())
+        if (bee.Target == null)
         {
-            bee.Target.GetComponent<HumanController>().LoseBrains(1);
-            bResource.AddResource(1);
-
-            collectionTimer = 0.0f;
+            brain.SetNewState(new BeeIdle(bee));
+            return;
         }
+
+        Timers();
+        
+        bee.OrbitPos(bee.Target.transform.position);
+        
+        if (AbleToForage()) Forage();
+            
+    }
+
+    private void Forage()
+    {
+        bee.Target.GetComponent<HumanController>().LoseBrains(1);
+        bResource.AddResource(1);
+        collectionTimer = 0.0f;
     }
 
     private void Timers()

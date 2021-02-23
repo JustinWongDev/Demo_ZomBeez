@@ -10,6 +10,11 @@ public class BeeScout : BeeAIStates
     {
     }
 
+    public override void Initialise()
+    {
+        
+    }
+
     private void Timers()
     {
         scoutTimer += Time.deltaTime;
@@ -23,7 +28,7 @@ public class BeeScout : BeeAIStates
         if (!bResource.NewHuman)
         { 
             if (ReadyForNewScoutLocation()) NewScoutLocation();
-            else bee.MoveTowardsTarget(location);
+            else bee.MoveToPos(location);
             
             if (detectTimer >= BeeSettings.DetectTime) 
             { 
@@ -34,7 +39,7 @@ public class BeeScout : BeeAIStates
         else
         {
             location = hive.transform.position;
-            bee.MoveTowardsTarget(location);
+            bee.MoveToPos(location);
 
             if (Vector3.Distance(bee.transform.position, hive.transform.position) < BeeSettings.TargetRadius)
             {

@@ -31,6 +31,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Features/Tutorial/TutorialController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Camera/CameraManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Bees/AI/BeeBrain.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Features/Bees/AI/BeeFlee.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Bees/BeeSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/General/FaceCamera.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Features/Camera/CinemachineController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -43,8 +44,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Features/General/FaceCamera.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Tutorial/TutorialController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Tutorial/TutorialTextController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Depot/DepotAnimController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/GameManager.cs" />
@@ -77,23 +76,25 @@
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanBrain.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanAnimController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/Depot.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanMove.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Worker.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Humans/AI/HumanObjective.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeBrain.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeAttack.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeIdle.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Bee.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/BeeSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeResource.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/BeeVisualiser.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeAIStates.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveController.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/Enemy.cs" />
-      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeForage.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeResources.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeAIStates.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeIdle.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeScout.cs" />
       <option value="$PROJECT_DIR$/Assets/Features/Bees/BeeController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeForage.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeIdle - Copy.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeFlee.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Humans/HumanMove.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeAttack.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/BeeSettings.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/AI/BeeBrain.cs" />
+      <option value="$PROJECT_DIR$/Assets/Features/Bees/HiveController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mtUWPo80ZfTkCqEWXBUiwSo08s" />
@@ -197,6 +198,7 @@
       <workItem from="1614043381384" duration="4779000" />
       <workItem from="1614087476482" duration="1050000" />
       <workItem from="1614089275450" duration="8699000" />
+      <workItem from="1614112449099" duration="7605000" />
     </task>
     <servers />
   </component>

@@ -28,6 +28,7 @@
               <e p="BeeAIStates.cs" t="Include" />
               <e p="BeeAttack.cs" t="Include" />
               <e p="BeeBrain.cs" t="Include" />
+              <e p="BeeFlee.cs" t="Include" />
               <e p="BeeForage.cs" t="Include" />
               <e p="BeeIdle.cs" t="Include" />
               <e p="BeeResources.cs" t="Include" />

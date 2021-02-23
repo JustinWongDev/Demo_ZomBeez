@@ -186,5 +186,10 @@ public class HumanMove : NavAgent
     {
         SetPathFinding(val ? Pathfinding.None : Pathfinding.Astar);
     }
+
+    public float DistanceToDepot()
+    {
+        return Vector3.Distance(transform.position, DepotLocation().position);
+    }
 }
 
