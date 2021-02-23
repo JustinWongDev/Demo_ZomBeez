@@ -20,13 +20,11 @@ public class HumanObjective : HumanAIState
 
             if (_move.NearDestination(20.0f))
             {
-                Debug.Log("2");
                 _animController.Trig_Deposit();
                 _move.Moveable(false);
 
                 if (_animController.IsAnimOnBlendTree())
                 {
-                    Debug.Log("3");
                     _move.Moveable(true);
                     _human.Settings.SetHasJelly(false);
                 }

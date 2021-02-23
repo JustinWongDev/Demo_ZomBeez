@@ -19,9 +19,10 @@ public class HiveController : MonoBehaviour
     [SerializeField] private int initCount = 5;
     [SerializeField] private int maxScoutCount = 5;
     [SerializeField] private int maxAttackerCount = 2;
-    private List<Worker> workers = new List<Worker>();
-    private List<Worker> scouts = new List<Worker>();
-    private List<Worker> attackers = new List<Worker>();
+    private List<BeeBrain> beeBrains = new List<BeeBrain>();
+    private List<BeeController> workers = new List<BeeController>();
+    private List<BeeController> scouts = new List<BeeController>();
+    private List<BeeController> attackers = new List<BeeController>();
 
     private List<HumanController> activeHumans = new List<HumanController>();
     private List<HumanController> detectedHumans = new List<HumanController>();
@@ -47,15 +48,10 @@ public class HiveController : MonoBehaviour
         detectedHumans.Remove(deadHuman);
     }
 
-    public void AddActiveHuman(HumanController newHuman)
-    {
-        activeHumans.Add(newHuman);
-    }
+    public void AddActiveHuman(HumanController newHuman) => activeHumans.Add(newHuman);
+    
 
-    public void AddDetectedHuman(HumanController newHuman)
-    {
-        detectedHumans.Add(newHuman);
-    }
+    public void AddDetectedHuman(HumanController newHuman) => detectedHumans.Add(newHuman);
 
     public List<HumanController> DetectedHumans => detectedHumans;
     public List<HumanController> ActiveHumans => activeHumans;
@@ -118,12 +114,12 @@ public class HiveController : MonoBehaviour
 
             for (int j = 0; j < numToInstruct; j++)
             {
-                if (workers[j].beeBehaviour == Worker.BeeBehaviours.Idle)
+                if (workers[j].CurrentAIState.GetType() == typeof(BeeIdle))
                 {
-                    workers[j].SetTarget(listTargets[i]);
+                    workers[j].Target = listTargets[i];
                     listTargets[i].GetComponent<HumanController>().OnHumanDeath += workers[j].RemoveTarget;
-                    workers[j].beeBehaviour = Worker.BeeBehaviours.Forage;
-                    workers[j].humanEmpty = false;
+                    workers[j].CurrentAIState = new BeeForage(workers[j]);
+                    //workers[j].humanEmpty = false;
                 }
             }
         }
@@ -135,16 +131,16 @@ public class HiveController : MonoBehaviour
         if (scouts.Count < maxScoutCount && GameManager.live.hasGameStarted())
         { 
             //Sort bees in order of scoutFit
-            List<Worker> potentialScouts = new List<Worker>();
-            workers.Sort(delegate (Worker a, Worker b)
+            List<BeeController> potentialScouts = new List<BeeController>();
+            workers.Sort(delegate (BeeController a, BeeController b)
             {
                 return (b.scoutFit.CompareTo(a.scoutFit));
             });
 
             scouts.Add(workers[0]);
             workers.Remove(workers[0]);
-
-            scouts[scouts.Count - 1].beeBehaviour = Worker.BeeBehaviours.Scout;
+            
+            scouts[scouts.Count - 1].CurrentAIState = new BeeScout(scouts[scouts.Count - 1]);
         }    
     }
 
@@ -153,7 +149,7 @@ public class HiveController : MonoBehaviour
         for (int i = 0; i < initCount; i++)
         {
             GameObject bee = ObjPool.SharedInstance.GetPooledObj();
-            // if (bee == null)
+            // if (BeeController == null)
             //     return;
 
             
@@ -161,8 +157,9 @@ public class HiveController : MonoBehaviour
             bee.transform.rotation = this.transform.rotation;
             bee.SetActive(true);
         
-            bee.GetComponent<Worker>().Initialise(this, resources, gameObject);
-            workers.Add(bee.GetComponent<Worker>());   
+            bee.GetComponent<BeeController>().Initialise(this, resources, gameObject);
+            bee.GetComponent<BeeResources>().Initialise(this, bee.GetComponent<BeeController>());
+            workers.Add(bee.GetComponent<BeeController>());   
         }
     }
 }

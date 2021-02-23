@@ -102,7 +102,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2152678095961845931}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2835579, y: 0.2835579, z: 0.2835579}
   m_Children:
@@ -112,7 +112,7 @@ Transform:
   - {fileID: 2152678095665661643}
   m_Father: {fileID: 2152678096591918964}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2152678096591918965
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,7 +125,9 @@ GameObject:
   - component: {fileID: 332865186874857098}
   - component: {fileID: 1087905691122744679}
   - component: {fileID: 6355484422610935795}
+  - component: {fileID: 5139553595746812242}
   - component: {fileID: -3890095809398609282}
+  - component: {fileID: 8869106938369611992}
   - component: {fileID: 7280439654528099397}
   m_Layer: 0
   m_Name: BeePrefab
@@ -279,11 +281,23 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2152678096591918965}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
+  m_IsTrigger: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.32826644, y: 0.3, z: 0.6024892}
   m_Center: {x: 0.0036444291, y: 0, z: 0.009111106}
+--- !u!114 &5139553595746812242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2152678096591918965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0cc871082ddbb14bb0f278e7fadcb12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-3890095809398609282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,15 +312,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathEffect: {fileID: 0}
   deathSound: {fileID: 0}
-  health: 100
-  beeBehaviour: 0
-  hive: {fileID: 0}
   scoutFit: 0
   attackFit: 0
-  detectTimer: 0.25
-  target: {fileID: 0}
-  collectedResource: 0
-  humanEmpty: 0
+--- !u!114 &8869106938369611992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2152678096591918965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1421f0e8b2a48b54b9a854f6e8123ef4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7280439654528099397
 MonoBehaviour:
   m_ObjectHideFlags: 0

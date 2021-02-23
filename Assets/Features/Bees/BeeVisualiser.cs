@@ -8,7 +8,9 @@ public class BeeVisualiser : MonoBehaviour
     [SerializeField] private Material mat_Attack = null;
 
     private TrailRenderer trail => GetComponent<TrailRenderer>();
-    private Worker bee => GetComponent<Worker>();
+    private BeeController bee => GetComponent<BeeController>();
+    private BeeBrain brain => GetComponent<BeeBrain>();
+    private BeeResources resources => GetComponent<BeeResources>();
 
     void Update()
     {
@@ -17,20 +19,25 @@ public class BeeVisualiser : MonoBehaviour
 
     void VisualiseDetectedHuman()
     {
-        switch (bee.beeBehaviour)
+        if (bee.CurrentAIState.GetType() == typeof(BeeAttack))
         {
-            case Worker.BeeBehaviours.Attack:
-                trail.material = mat_Attack;
-                break;
-            case Worker.BeeBehaviours.Forage:
-                trail.material = mat_Forage;
-                break;
-            case Worker.BeeBehaviours.Idle:
-                trail.material = mat_normal;
-                break;
-            case Worker.BeeBehaviours.Scout:
-                trail.material = bee.NewHuman ? mat_Detect : mat_normal;
-                break;
+            trail.material = mat_Attack;
+            return;
+        }
+        if (bee.CurrentAIState.GetType() == typeof(BeeForage))
+        {
+            trail.material = mat_Forage;
+            return;
+        }
+        if (bee.CurrentAIState.GetType() == typeof(BeeIdle))
+        {
+            trail.material = mat_normal;
+            return;
+        }
+        if (bee.CurrentAIState.GetType() == typeof(BeeScout))
+        {
+            trail.material = resources.NewHuman ? mat_Detect : mat_normal;
+            return;
         }
     }
 }

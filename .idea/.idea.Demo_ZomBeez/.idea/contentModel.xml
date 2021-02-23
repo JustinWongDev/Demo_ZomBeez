@@ -24,12 +24,21 @@
         </e>
         <e p="Features" t="Include">
           <e p="Bees" t="Include">
+            <e p="AI" t="Include">
+              <e p="BeeAIStates.cs" t="Include" />
+              <e p="BeeAttack.cs" t="Include" />
+              <e p="BeeBrain.cs" t="Include" />
+              <e p="BeeForage.cs" t="Include" />
+              <e p="BeeIdle.cs" t="Include" />
+              <e p="BeeResources.cs" t="Include" />
+              <e p="BeeScout.cs" t="Include" />
+            </e>
+            <e p="BeeController.cs" t="Include" />
             <e p="BeeSettings.cs" t="Include" />
             <e p="BeeVisualiser.cs" t="Include" />
             <e p="Enemy.cs" t="Include" />
             <e p="HiveController.cs" t="Include" />
             <e p="HiveResources.cs" t="Include" />
-            <e p="Worker.cs" t="Include" />
           </e>
           <e p="Camera" t="Include">
             <e p="CameraManager.cs" t="Include" />

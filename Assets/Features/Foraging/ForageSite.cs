@@ -23,7 +23,7 @@ public class ForageSite : MonoBehaviour
     //  weapon: inc damage
     //  salve:  heal
     //  smoke   bomb: bees flee
-    //  helmet: stop bee foraging
+    //  helmet: stop BeeController foraging
     //  boots:  speed
     //  vest:   armour 
 

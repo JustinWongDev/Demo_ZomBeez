@@ -45,7 +45,7 @@ public class BeeSettings : MonoBehaviour
 
     [Header("Detection")] //////////////////////////
     [SerializeField]
-    private float _detectionTime = 3.0f;
+    private float _detectionTime = 0.25f;
     public static float DetectTime => Instance._detectionTime;
     
     [SerializeField]private float _detectionRad = 20.0f;
@@ -63,6 +63,9 @@ public class BeeSettings : MonoBehaviour
     [SerializeField]private float _scoutTime = 5.0f;
     public static float ScoutTime => Instance._scoutTime;
 
+    [SerializeField]private Vector3 _idlePosition = FindObjectOfType<HiveController>().transform.position;
+    public static Vector3 IdlePosition => Instance._idlePosition;
+    
     public static BeeSettings Instance { get; private set; }
     private void Awake() => Instance = this;
 }

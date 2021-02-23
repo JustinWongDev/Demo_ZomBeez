@@ -4,7 +4,7 @@ public class HumanOffensive : HumanAIState
 {
     private float attackTimer = 0.0f;
     private float abilityTimer  = 0.0f;
-    private Worker attackTarget = null;
+    private BeeController attackTarget = null;
     
     public HumanOffensive(HumanBrain humanBrain) : base(humanBrain)
     {
@@ -15,7 +15,7 @@ public class HumanOffensive : HumanAIState
         
     }
 
-    public void SetTarget(Worker targ)
+    public void SetTarget(BeeController targ)
     {
         attackTarget = targ;
     }

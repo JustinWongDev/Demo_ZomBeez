@@ -5,11 +5,13 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("FX")]
-    public GameObject deathEffect;
-    public GameObject deathSound;
+    [SerializeField]
+    private GameObject deathEffect;
+    [SerializeField]
+    private GameObject deathSound;
 
     [Header("Stats")]
-    public float health = 100;
+    protected float health = 100;
 
     public virtual void takeDamage(float dmg)
     {
